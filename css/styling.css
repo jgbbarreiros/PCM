@@ -1,52 +1,44 @@
-* {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
+/** {*/
+    /*-webkit-box-sizing: border-box;*/
+    /*-moz-box-sizing: border-box;*/
+    /*box-sizing: border-box;*/
+/*}*/
 
 body {
     /*background*/
-    background-color: seashell;
+    background: seashell url(../imgs/red-pattern3.png);
 
-    /*Font imported font from google*/
+    /*font*/
     font-family: 'Lato', sans-serif;
-
-    /*bold*/
     font-weight: 400;
+    font-size: 14px;
+    color: #333;
 
-    /*remove margins*/
+    /*size*/
+    min-height: 2000px;
+
+    /*layout*/
+    padding-top: 50px;
     margin: 0;
     display: block;
-
-    min-height: 2000px;
-    padding-top: 70px;
 }
 
-nav {
-    /*background*/
-    /*background-color: #222222;*/
-    background-color: rgba(1, 1, 1, 0.8);
-    color: rgba(1, 1, 1, 0.8);
+a {
+    /*font*/
+    color: #337ab7;
+    text-decoration: none;
+}
 
-    /*The element is positioned relative to its first positioned (not static) ancestor element*/
-    position: fixed;
-    display: block;
+a:hover,
+a:focus {
+    /*font*/
+    color: #23527c;
+    text-decoration: underline;
+}
 
-    /*sixe*/
-
-    /*heigth*/
-    top: 0;
-    min-height: 50px;
-
-    /*width*/
-    right: 0;
-    left: 0;
-
-    /*margin*/
+ul {
+    /*layout*/
     margin: 0;
-
-    /*margin-bottom: 20px;*/
-    /*float: left;*/
 }
 
 @media (min-width: 768px) {
@@ -60,78 +52,22 @@ nav {
         width: 970px;
     }
 }
+@media (min-width: 1200px) {
+    .container {
+        width: 1170px;
+    }
+}
 
 .container {
+    /*layout*/
     padding-right: 15px;
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto;
 }
 
-.navbar-header {
-    float: left;
-}
-
-.navbar-brand {
-    float: left;
-    /*height: 50px;*/
-    padding: 5px 5px 2px;
-}
-
-.navbar-brand > a {
-    display: block;
-    line-height: 0;
-}
-
-.navbar-right {
-    padding-left: 0;
-    float: right;
-    margin: 0;
-    display: block;
-    list-style: none initial initial;
-}
-
-/*a{*/
-    /*text-decoration: none;*/
-    /*position: relative;*/
-    /*display: block;*/
-    /*padding: 15px 15px;*/
-    /*line-height: 20px;*/
-    /*font-size: 14px;*/
-/*}*/
-
-li {
-    position: relative;
-    text-align: left;
-    float: left;
-    display: block;
-    line-height: 20px;
-    list-style: none outside none;
-}
-
-ul {
-    display: block;
-    margin: 0;
-    padding-left: 0;
-    line-height: 20px;
-    list-style: none outside none;
-    float: left;
-}
-
-header {
-    /*background*/
-    background-color: #F47D31;
-
-    /*position*/
-    display: block;
-    margin: 0;
-}
-
-h1 {
-    margin: 0;
-}
-
-.container:after, .container:before {
+.container:after,
+.container:before {
     display: table;
     content: " ";
 }
@@ -140,6 +76,162 @@ h1 {
     clear: both;
 }
 
+nav {
+    /*background*/
+    /*background-color: #222222;*/
+    background-color: rgba(255, 255, 255, 1.0);
+
+    /*The element is positioned relative to the browser page*/
+    position: fixed;
+    display: block;
+
+    /*layout*/
+    margin: 0;
+
+    /*heigth*/
+    top: 0;
+    height: 50px;
+
+    /*width*/
+    right: 0;
+    left: 0;
+}
+
+.navbar-header {
+    /*layout*/
+    float: left;
+}
+
+.navbar-brand-logo {
+    /*layout*/
+    float: left;
+    padding: 5px 5px 2px;
+}
+
+.navbar-brand {
+    /*font*/
+    color: #777;
+    font-size: 18px;
+    text-decoration: none;
+
+    /*layout*/
+    padding: 15px 15px;
+    line-height: 20px;
+    float: left;
+}
+
+.navbar-header > a:hover,
+.navbar-header > a:focus {
+    /*font*/
+    text-decoration: none;
+    color: #999;
+}
+
+.navbar-right {
+    /*styles*/
+    list-style: none outside;
+
+    /*layout*/
+    margin: 0;
+    padding-left: 0;
+    float: right;
+    display: block;
+}
+
+.navbar-right > li {
+    /*layout*/
+    float: left;
+    display: block; /*?*/
+    position: relative; /*?*/
+
+    /*styles*/
+    list-style-type: none;
+}
+
+.navbar-right > li > a {
+    /*font*/
+    color: #888;
+
+    /*effects*/
+    transition: all .25s ease;
+
+    /*layout*/
+    position: relative;
+    display: block;
+    padding: 15px 15px;
+    line-height: 20px;
+}
+
+.navbar-right > li > a:hover,
+.navbar-right > li > a:focus {
+    /*font*/
+    text-decoration: none;
+    color: #000;
+
+    /*background*/
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.navbar > li:hover > ul,
+.navbar > li:focus > ul{
+    /*layout*/
+    display: block;
+}
+
+.navbar-dropdown {
+    /*layout*/
+    display: none;
+    padding: 0;
+    /*min-width: 160px;*/
+}
+
+.navbar-dropdown > li {
+    /*layout*/
+    float: none;
+    display: block;
+    position: relative;
+
+    /*styles*/
+    list-style-type: none;
+}
+
+.navbar-dropdown > li > a {
+    /*font*/
+    color: #888;
+
+    /*effects*/
+    transition: all .25s ease;
+
+    /*layout*/
+    position: relative;
+    display: block;
+    padding: 15px 15px;
+    line-height: 20px;
+}
+
+.navbar-dropdown > li > a:hover {
+    /*font*/
+    text-decoration: none;
+    color: #000;
+
+    /*background*/
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+header {
+    /*background*/
+    background: #b84d45 url(../imgs/header-bg.png);
+
+    /*layout*/
+    padding: 48px 60px;
+    display: block;
+    margin: 0;
+}
+
+h1 {
+    /*position*/
+    margin: 0;
+}
 
 /*header:after, header:before {*/
     /*display: table;*/
