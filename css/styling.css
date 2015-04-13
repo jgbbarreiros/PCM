@@ -226,6 +226,8 @@ nav {
     display: none;
     padding: 0;
     /*min-width: 160px;*/
+    position: absolute;
+    top: 50px;
 }
 
 .navbar-dropdown > li {
