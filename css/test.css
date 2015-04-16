@@ -213,31 +213,49 @@ h2 {
     color: #999;
     padding: 24px 30px;
     margin: 0 75px 50px;
-    min-height: 300px;
+    height: 220px;
     position: relative;
 }
 
-@media (min-width: 768px) {
-    .article-main {
-        min-height: 350px;
-    }
-}
-
-@media (min-width: 992px) {
-    .article-main {
-        min-height: 400px;
-    }
-}
-
-.article-main > p {
+.padding-box {
     background: rgba(0, 0, 0, 0.8);
     position: absolute;
     bottom: 0;
     right: 0;
     left: 0;
+    padding: 10px 20px;
+    height: 60px;
+}
+
+.padding-box > p {
     margin: 0;
-    padding: 20px;
+    height: 40px;
+    overflow: hidden;
     text-align: justify;
+}
+
+@media (min-width: 768px) {
+    .article-main {
+        height: 270px;
+    }
+    .padding-box {
+        height: 80px;
+    }
+    .padding-box > p {
+        height: 60px;
+    }
+}
+
+@media (min-width: 992px) {
+    .article-main {
+        height: 320px;
+    }
+    .padding-box {
+        height: 100px;
+    }
+    .padding-box > p {
+        height: 80px;
+    }
 }
 
 .contact {
