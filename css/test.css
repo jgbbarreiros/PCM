@@ -10,6 +10,7 @@ body {
     margin: 0;
     padding-top: 70px;
     /*min-height: 2000px;*/
+    position: relative;
 }
 
 a {
@@ -17,8 +18,23 @@ a {
     text-decoration: none;
 }
 
+h1 {
+    font-size: 50px;
+    color: #fff;
+    display: block;
+    margin: 0 0 20px;
+    line-height: 50px;
+}
+
+h2 {
+    font-size: 18px;
+    color: #eee;
+    display: block;
+    margin: 0 0 20px;
+    line-height: 18px;
+}
+
 .container {
-    position: relative;
     padding-right: 15px;
     padding-left: 15px;
     margin-right: auto;
@@ -54,15 +70,16 @@ a {
 }
 
 .navbar {
+    background: rgb(255, 255, 255);
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
+    z-index: 1000;
 }
 
 .navbar-left {
     float: left;
-
 }
 
 .navbar-logo {
@@ -150,15 +167,89 @@ a {
     background-color: rgba(255, 255, 255, 0.8);
 }
 
+.header-main {
+    background: rgba(155, 15,  0,1) url(../imgs/header_bg.png);
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 30px;
+}
+
+.header-main > section > h1 {
+    margin-top: 40px;
+}
+
+.header-main > section > p {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (min-width: 768px) {
+    .header-main > section > p {
+        width: 640px;
+        text-align: center;
+    }
+}
+
+.arrow-down {
+    margin: 20px 0 40px;
+    transition: all .25s ease;
+    opacity: 0.5;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+}
+
+.arrow-down:hover,
+.arrow-down:focus {
+    opacity: 0.8;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+}
+
+.articles {
+    margin-bottom: 30px;
+}
+
+.article-main {
+    background: #ffa931 url("../imgs/header_bg.png");
+    color: #999;
+    padding: 24px 30px;
+    margin: 0 75px 50px;
+    min-height: 300px;
+    position: relative;
+}
+
+@media (min-width: 768px) {
+    .article-main {
+        min-height: 350px;
+    }
+}
+
+@media (min-width: 992px) {
+    .article-main {
+        min-height: 400px;
+    }
+}
+
+.article-main > p {
+    background: rgba(0, 0, 0, 0.8);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: 0;
+    padding: 20px;
+    text-align: justify;
+}
+
 .contact {
     /*background: url(../imgs/brushe.jpg);*/
     background: #c8c8c8;
     background-size: cover;
-    position: absolute;
-    top: 25%;
+    /*position: absolute;*/
+    top: 200px;
     bottom: auto;
     right: 0;
     left: 0;
+    margin: 50px 0;
 }
 
 .circular-foto {
@@ -220,15 +311,15 @@ a {
     margin: 20px;
 }
 
-.main-footer {
-    position: absolute;
+.footer-main {
+    /*position: absolute;*/
     bottom: 0;
     right: 0;
     left: 0;
     margin: 42px 0;
 }
 
-.main-footer > section > p {
+.footer-main > section > p {
     margin: 0;
     font-size: 16px;
     line-height: 16px;
