@@ -379,13 +379,28 @@ h2 {
 }
 
 .contact-details {
-    /*background: rgba(0, 0, 0, 0.8);*/
-    /*float: left;*/
-    /*margin: 40px;*/
-    padding: 40px;
-    border-left: solid;
-    border-color: rgb(255, 255, 255);
+    padding: 5px;
+    border: rgb(255, 255, 255);
+    border-left-style: solid;
     white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+    .contact-details {
+        padding: 20px;
+    }
+}
+
+@media (min-width: 992px) {
+    .contact-details {
+        padding: 40px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .contact-details {
+        padding: 63px;
+    }
 }
 
 .contact-details > p {
@@ -393,24 +408,31 @@ h2 {
     margin: 20px;
 }
 
-.portfolio {
-
-}
-
 .category {
     background: #356194 url(../imgs/header_bg.png);
     margin: 0 0 50px;
+    padding: 30px 0;
 }
 
-.category-title {
-    margin: 40px 0;
-    /*background: rgba(224, 3, 0, 0.6);*/
-    /*border-radius: 5px;*/
-    /*-webkit-border-radius: 5px;*/
-    /*-moz-border-radius: 5px;*/
+.category > div > article > figure {
+    text-align: center;
+    margin: 20px;
+    background: url(../imgs/brushe.jpg);
+    background-size: cover;
 }
 
-.project-art > p {
+.category > div > article > figure > img {
+    width: 100%;
+    visibility: hidden;
+}
+
+.category > div > article > h1 {
+    margin-top: 20px;
+    font-size: 20px;
+    line-height: 20px;
+}
+
+.category > div > article > p {
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -419,37 +441,14 @@ h2 {
     padding: 10px;
 }
 
-.project-art > h1 {
-    margin-top: 20px;
-}
-
-.project-thumb {
-    text-align: center;
-    margin: 20px;
-    background: url(../imgs/brushe.jpg);
-    background-size: cover;
-}
-
-.project-thumb > img {
-    background-size: cover;
-    width: 100%;
-    visibility: hidden;
-}
-
 .about {
     background: #ff6905 url(../imgs/header_bg.png);
-    /*background: #c8c8c8;*/
-    /*background-size: cover;*/
     margin: 7% 0;
 }
 
 .about-details {
-    /*background: rgba(0, 0, 0, 0.8);*/
-    /*float: left;*/
-    /*margin: 40px;*/
     padding: 40px;
-    border-left: solid;
-    border-color: rgb(255, 255, 255);
+
 }
 
 .about-details > p {
