@@ -78,6 +78,10 @@ h2 {
     left: 0;
     right: 0;
     z-index: 1000;
+    border-radius: 50px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-bottom: 2px solid rgba(0, 0, 0, .4);
 }
 
 .navbar-left {
