@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Portfolio</title>
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="../css/gi_stylesheet.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="container">
+        <div class="navbar-left">
+            <a class="navbar-name" href="#">Google Images</a>
+        </div>
+        <div class="navbar-right">
+            <ul class="navbar-ul">
+                <li><a href="#">New Tab</a></li>
+                <li>
+                    <a href="#">New Tab</a>
+                    <ul class="navbar-dropdown">
+                        <li><a href="#">New Sub Tab</a></li>
+                        <li><a href="#">New Sub Tab</a></li>
+                        <li><a href="#">New Sub Tab</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">New Tab</a></li>
+                <li><a href="#">New Tab</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section class="form-header">
+    <div class="container">
+        <p>O site My_Google_Images tem como objectivo apresentar imagens relevantes para o utilizador. Assim, são disponibilizados três métodos de pesquisa: por categoria, por cor e por semelhança. O utilizador pode procurar as imagens mais relevantes de uma determinada categoria, as imagens com mais percentagem de certa cor, e as imagens mais parecidas com uma imagem introduzida pelo utilizador.</p>
+        <p>Este questionário destina-se a avaliar a usabilidade do site. Pedimos-lhe que execute as tarefas abaixo descritas e, preenchendo este questionário, nos informe acerca das dificuldades que encontrou ao interagir com o sistema e nos dê a sua opinião sincera acerca da interface e das funcionalidades disponíveis.</p>
+        <p>Obrigada pela sua participação.</p>
+    </div>
+</section>
+
+<section class="form-category">
+    <div class="container">
+        <h1>Dados pessoais</h1>
+        <form id="frm1">
+            <fieldset>
+                <h2>Qual é a sua idade?</h2>
+                <input type="radio" name="age" value="<18"><18
+                <br>
+                <input type="radio" name="age" value="18-25">18-25
+                <br>
+                <input type="radio" name="age" value="26-33">26-33
+                <br>
+                <input type="radio" name="age" value="34-40">34-40
+                <br>
+                <input type="radio" name="age" value=">40">>40
+            </fieldset>
+            <fieldset>
+                <h2>Género</h2>
+                <input type="radio" name="sex" value="male">male
+                <br>
+                <input type="radio" name="sex" value="female">female
+            </fieldset>
+            <fieldset>
+                <h2>1 - Com que frequência usa a internet?</h2>
+                <input type="radio" name="internet" value="male">Diariamente
+                <br>
+                <input type="radio" name="internet" value="male">Algumas vezes por semana
+                <br>
+                <input type="radio" name="internet" value="male">Algumas vezes por mês
+                <br>
+                <input type="radio" name="internet" value="male">Raramente
+            </fieldset>
+            <fieldset>
+                <h2>2 - Indique, por ordem de preferência, os Web Browsers que mais utiliza. Pode indicar 3. Utilize valores de 1 a 3, sendo 1 o mais preferido e 3 o menos.</h2>
+                <input type="radio" name="browser" value="Chrome">Chrome
+                <br>
+                <input type="radio" name="browser" value="Firefox">Firefox
+                <br>
+                <input type="radio" name="browser" value="Internet Explorer">Internet Explorer
+                <br>
+                <input type="radio" name="browser" value="Opera">Opera
+                <br>
+                <input type="radio" name="browser" value="Safari">Safari
+                <br>
+            </fieldset>
+            <fieldset>
+                <h2>3 - Conhece outros sites de pesquisa de imagem?</h2>
+                <input type="radio" name="sites" value="sim">Sim
+                <br>
+                <input type="radio" name="sites" value="Não">Não
+                <br>
+                Em caso afirmativo quais: <input type="text" name="firstname" value="" disabled>
+            </fieldset>
+            <input type="submit" value="Submit" onclick="validateDP()">
+        </form>
+    </div>
+</section>
+
+<section class="form-category">
+    <div class="container">
+        <h1>Tarefas</h1>
+        <p>Por favor, realiza as seguintes tarefas e descreva-nos os resultados obtidos.</p>
+        <form>
+            <fieldset>
+                <h2>Tarefa 1 - Explorar</h2>
+                <p>Explore o site livremente e indique se encontrou algum erro ou se sentiu alguma dificuldade em perceber a funcionalidade das opções.</p>
+                <textarea name="message" rows="5" cols="40"></textarea>
+            </fieldset>
+            <fieldset>
+                <h2>Tarefa 2 - Pesquisa Categorias</h2>
+                <p>Explore o site livremente e indique se encontrou algum erro ou se sentiu alguma dificuldade em perceber a funcionalidade das opções.</p>
+                <p>Que dificuldades encontrou?</p>
+                <textarea name="message" rows="5" cols="40"></textarea>
+            </fieldset>
+            <fieldset>
+                <h2>Tarefa 3 - Pesquisa Cor</h2>
+                <p>Escolha a opção de pesquisa por cor dominante, selecione uma cor à sua escolha e observe os resultados.</p>
+                <p>Que dificuldades encontrou?</p>
+                <textarea name="message" rows="5" cols="40"></textarea>
+            </fieldset>
+            <fieldset>
+                <h2>Tarefa 4 - Pesquisa Imagens Semelhantes</h2>
+                <p>Escolha a opção de pesquisa por imagens semelhantes, selecione uma imagem à sua escolha e observe os resultados.</p>
+                <p>Que dificuldades encontrou?</p>
+                <textarea name="message" rows="5" cols="40"></textarea>
+                <p>Qual o tipo de pesquisa que acha mais adequado?</p>
+                <textarea name="message" rows="5" cols="40"></textarea>
+            </fieldset>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</section>
+
+<section class="form-category">
+    <div class="container">
+        <h1>Avaliação Global</h1>
+        <p>Por favor, realiza as seguintes tarefas e descreva-nos os resultados obtidos.</p>
+        <form>
+            <fieldset>
+                <h2>1 - Para cada par de adjetivos, coloque um cruz no ponto que melhor descreve a sua experiência de utilização deste site.</h2>
+                <li class="rating">
+                    Fantástica
+                    <input type="radio" name="rating1-1" value="0" /><span></span>
+                    <input type="radio" name="rating1-1" value="1" /><span></span>
+                    <input type="radio" name="rating1-1" value="2" /><span></span>
+                    <input type="radio" name="rating1-1" value="3" /><span></span>
+                    <input type="radio" name="rating1-1" value="4" /><span></span>
+                    <input type="radio" name="rating1-1" value="5" /><span></span>
+                    Horrível
+                </li>
+                <li class="rating">
+                    Estimulante
+                    <input type="radio" name="rating1-2" value="0" /><span></span>
+                    <input type="radio" name="rating1-2" value="1" /><span></span>
+                    <input type="radio" name="rating1-2" value="2" /><span></span>
+                    <input type="radio" name="rating1-2" value="3" /><span></span>
+                    <input type="radio" name="rating1-2" value="4" /><span></span>
+                    <input type="radio" name="rating1-2" value="5" /><span></span>
+                    Aborrecida
+                </li>
+                <li class="rating">
+                    Gratificante
+                    <input type="radio" name="rating1-3" value="0" /><span></span>
+                    <input type="radio" name="rating1-3" value="1" /><span></span>
+                    <input type="radio" name="rating1-3" value="2" /><span></span>
+                    <input type="radio" name="rating1-3" value="3" /><span></span>
+                    <input type="radio" name="rating1-3" value="4" /><span></span>
+                    <input type="radio" name="rating1-3" value="5" /><span></span>
+                    Frustrante
+                </li>
+                <li class="rating">
+                    Fácil
+                    <input type="radio" name="rating1-4" value="0" /><span></span>
+                    <input type="radio" name="rating1-4" value="1" /><span></span>
+                    <input type="radio" name="rating1-4" value="2" /><span></span>
+                    <input type="radio" name="rating1-4" value="3" /><span></span>
+                    <input type="radio" name="rating1-4" value="4" /><span></span>
+                    <input type="radio" name="rating1-4" value="5" /><span></span>
+                    Difícil
+                </li>
+            </fieldset>
+            <fieldset>
+                <h2>2 - Como classifica a pesquisa por Categoria?</h2>
+                <li class="rating">
+                    Mau
+                    <input type="radio" name="rating2" value="0" /><span></span>
+                    <input type="radio" name="rating2" value="1" /><span></span>
+                    <input type="radio" name="rating2" value="2" /><span></span>
+                    <input type="radio" name="rating2" value="3" /><span></span>
+                    <input type="radio" name="rating2" value="4" /><span></span>
+                    <input type="radio" name="rating2" value="5" /><span></span>
+                    Excelente
+                </li>
+            </fieldset>
+            <fieldset>
+                <h2>3 - Como classifica a pesquisa por Cor?</h2>
+                <li class="rating">
+                    Mau
+                    <input type="radio" name="rating3" value="0" /><span></span>
+                    <input type="radio" name="rating3" value="1" /><span></span>
+                    <input type="radio" name="rating3" value="2" /><span></span>
+                    <input type="radio" name="rating3" value="3" /><span></span>
+                    <input type="radio" name="rating3" value="4" /><span></span>
+                    <input type="radio" name="rating3" value="5" /><span></span>
+                    Excelente
+                </li>
+            </fieldset>
+            <fieldset>
+                <h2>4 - Como classifica a pesquisa por Imagens Semelhantes?</h2>
+                <li class="rating">
+                    Mau
+                    <input type="radio" name="rating4" value="0" /><span></span>
+                    <input type="radio" name="rating4" value="1" /><span></span>
+                    <input type="radio" name="rating4" value="2" /><span></span>
+                    <input type="radio" name="rating4" value="3" /><span></span>
+                    <input type="radio" name="rating4" value="4" /><span></span>
+                    <input type="radio" name="rating4" value="5" /><span></span>
+                    Excelente
+                </li>
+            </fieldset>
+            <fieldset>
+                <h2>5 - Como classifica os resultados das pesquisas?</h2>
+                <li class="rating">
+                    Mau
+                    <input type="radio" name="rating5" value="0" /><span></span>
+                    <input type="radio" name="rating5" value="1" /><span></span>
+                    <input type="radio" name="rating5" value="2" /><span></span>
+                    <input type="radio" name="rating5" value="3" /><span></span>
+                    <input type="radio" name="rating5" value="4" /><span></span>
+                    <input type="radio" name="rating5" value="5" /><span></span>
+                    Excelente
+                </li>
+            </fieldset>
+            <fieldset>
+                <h2>6 - Como classifica a facilidade de navegação no site?</h2>
+                <li class="rating">
+                    Mau
+                    <input type="radio" name="rating6" value="0" /><span></span>
+                    <input type="radio" name="rating6" value="1" /><span></span>
+                    <input type="radio" name="rating6" value="2" /><span></span>
+                    <input type="radio" name="rating6" value="3" /><span></span>
+                    <input type="radio" name="rating6" value="4" /><span></span>
+                    <input type="radio" name="rating6" value="5" /><span></span>
+                    Excelente
+                </li>
+            </fieldset>
+            <fieldset>
+                <h2>7 - Como classifica o design do site?</h2>
+                <li class="rating">
+                    Mau
+                    <input type="radio" name="rating7" value="0" /><span></span>
+                    <input type="radio" name="rating7" value="1" /><span></span>
+                    <input type="radio" name="rating7" value="2" /><span></span>
+                    <input type="radio" name="rating7" value="3" /><span></span>
+                    <input type="radio" name="rating7" value="4" /><span></span>
+                    <input type="radio" name="rating7" value="5" /><span></span>
+                    Excelente
+                </li>
+            </fieldset>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</section>
+
+<footer class="footer-main">
+    <div class="container">
+        <p>Copyright © Joao Barreiros 2015. All Rights Reserved</p>
+    </div>
+</footer>
+
+<script>
+    function validateDP() {
+        var x = document.getElementById("frm1");
+        for (var i = 0; i < x.length ;i++) {
+            if (x.elements[i].value + "<br>";
+        }
+    }
+</script>
+</body>
+</html>
