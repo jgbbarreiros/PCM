@@ -1,8 +1,5 @@
-imgs/Thumbs.db
-css/bootstrap.css
-css/dropdown.css
-dropdown.html
-
+# Created by .ignore support plugin (hsz.mobi)
+### JetBrains template
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm
 
 *.iml
@@ -49,3 +46,5 @@ atlassian-ide-plugin.xml
 com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
+
+

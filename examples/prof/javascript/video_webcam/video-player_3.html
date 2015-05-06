@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Playing a Video File </title>
+		<style>
+			#progressBar { border:1px solid #aaa; color:#fff; width:292px; height:20px; }
+			#played { background-color:#aaa; height:20px; display:inline-block; }
+		</style>
+	</head>
+	<body>
+		<video controls>
+			<source src="video/13_MissionImpossible_KyleCooper.ogv" type="video/ogg">
+		</video>
+		
+		<div id="controls">
+		    <div id="progressBar"><span id="played"></span></div>
+			<button id="playpause" alt="play" title="play" onclick="togglePlay()">play</button>
+			<button id="stop" alt="stop" title="stop" onclick="stopVideo()">stop</button>
+		</div>
+		
+		<script>
+			var video = document.getElementsByTagName("video")[0];
+			video.controls = false;
+			var ppbutton = document.getElementById("playpause");		
+			
+			video.addEventListener('play', function() {
+				ppbutton.title = "pause";
+				ppbutton.innerHTML = "pause";
+			}, false);
+			video.addEventListener('pause', function() {
+				ppbutton.title = "play";
+				ppbutton.innerHTML = "play";
+			}, false);
+			
+			video.addEventListener('timeupdate', updateProgress, false);
+			video.addEventListener('ended', function() { this.pause(); }, false);
+
+		    function togglePlay() {
+				if (video.paused || video.ended) {
+					if (video.ended) video.currentTime = 0;
+					video.play();
+				}
+				else {
+					video.pause();
+				}
+			}
+			
+			function stopVideo() {
+				video.pause();
+				video.currentTime = 0;
+			}
+			
+			function updateProgress() {
+				var value = 0;
+				if (video.currentTime > 0) {
+					value = Math.floor((100 / video.duration) * video.currentTime);
+				}
+				document.getElementById("played").style.width = value + "%";
+			}
+			
+		</script>
+	</body>
+</html>

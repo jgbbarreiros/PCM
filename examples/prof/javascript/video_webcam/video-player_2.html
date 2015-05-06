@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Playing a Video File</title>
+	</head>
+	<body>
+		<video controls>
+			<source src="video/13_MissionImpossible_KyleCooper.ogv" type="video/ogg">
+		</video>
+		
+		<div id="controls">
+			<button id="playpause" alt="play" title="play" onclick="togglePlay()">play</button>
+			<button id="stop" alt="stop" title="stop" onclick="stopVideo()">stop</button>
+		</div>
+		
+		<script>
+			var video = document.getElementsByTagName("video")[0];
+			video.controls = false;
+			var ppbutton = document.getElementById("playpause");		
+			
+			video.addEventListener('play', function() {
+				ppbutton.title = "pause";
+				ppbutton.innerHTML = "pause";
+			}, false);
+			video.addEventListener('pause', function() {
+				ppbutton.title = "play";
+				ppbutton.innerHTML = "play";
+			}, false);
+			
+		    function togglePlay() {
+				if (video.paused || video.ended) {
+					if (video.ended) video.currentTime = 0;
+					video.play();
+				}
+				else {
+					video.pause();
+				}
+			}
+			
+			video.addEventListener('ended', function() { this.pause(); }, false);
+
+			function stopVideo() {
+				video.pause();
+				video.currentTime = 0;
+			}
+			
+		</script>
+	</body>
+</html>
