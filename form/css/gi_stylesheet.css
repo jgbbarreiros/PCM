@@ -6,6 +6,7 @@
 
 html {
     overflow-y: scroll;
+
 }
 
 body {
@@ -15,6 +16,7 @@ body {
     padding-top: 70px;
     /*min-height: 2000px;*/
     position: relative;
+    background: url(../imgs/eight_horns.png);
 }
 
 a {
@@ -30,10 +32,37 @@ h1 {
 }
 
 h2 {
-    font-size: 18px;
+    font-size: 16px;
     display: block;
     margin: 0 0 20px;
-    line-height: 18px;
+    line-height: 20px;
+}
+
+button {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    margin: 0 20px;
+}
+
+button:focus,
+button:hover {
+    color: #333;
+}
+
+label {
+    white-space: nowrap;
+}
+
+td {
+    /*padding: 0 50px 0 0;*/
 }
 
 /*CONTAINER*/
@@ -78,10 +107,14 @@ h2 {
     left: 0;
     right: 0;
     z-index: 1000;
-    border-radius: 50px;
-    -webkit-border-radius: 50px;
-    -moz-border-radius: 50px;
-    border-bottom: 2px solid rgba(0, 0, 0, .4);
+    border-bottom-left-radius: 50px;
+    -webkit-border-bottom-left-radius: 50px;
+    -moz-border-radius-bottomleft: 50px;
+    border-bottom-right-radius: 50px;
+    -webkit-border-bottom-right-radius: 50px;
+    -moz-border-radius-bottomright: 50px;
+    border-bottom: 2px solid rgba(0, 0, 0, .1);
+
 }
 
 .navbar-left {
@@ -176,7 +209,7 @@ h2 {
 /*FORM*/
 
 .form-header {
-    margin-bottom: 50px;
+    margin: 50px 0;
 }
 
 .form-header > div {
@@ -199,18 +232,35 @@ h2 {
 }
 
 .form-category > div {
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border: solid rgb(0, 0, 0);
-    padding: 20px;
+    /*border-radius: 5px;*/
+    /*-webkit-border-radius: 5px;*/
+    /*-moz-border-radius: 5px;*/
+    /*border: 1px solid rgba(0, 0, 0, .2);*/
+    padding: 0 100px;
+}
+
+form {
+    font-family: 'Open Sans', sans-serif;
+
 }
 
 fieldset {
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    margin: 20px 0;
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-bottom: 3px solid rgba(0, 0, 0, .3);
+    border-right: 2px solid rgba(0, 0, 0, .3);
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    margin: 30px 0;
+    padding: 20px;
+    background: #FFF;
+    font-size: 14px;
+}
+
+input {
+    margin-bottom: 20px;
+    margin-right: 20px;
+    /*padding: 0 50px 0 0;*/
 }
 
 .form-category > div > h1{
@@ -244,6 +294,24 @@ li {
 }
 
 /*FOOTER*/
+
+.footer-main {
+    margin: 42px 0;
+    right: 0;
+    left: 0;
+}
+
+.fixed-bottom {
+    position: fixed;
+    bottom: 0;
+}
+
+@media (max-height: 700px) {
+    .fixed-bottom {
+        position: static;
+        bottom: auto;
+    }
+}
 
 .footer-text {
     margin: 0;

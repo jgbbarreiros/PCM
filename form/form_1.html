@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Google Images Form</title>
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="css/gi_stylesheet.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="container">
+        <div class="navbar-left">
+            <a class="navbar-name" href="#">Google Images</a>
+        </div>
+        <div class="navbar-right">
+            <ul class="navbar-ul">
+                <li><a href="#">New Tab</a></li>
+                <li>
+                    <a href="#">New Tab</a>
+                    <ul class="navbar-dropdown">
+                        <li><a href="#">New Sub Tab</a></li>
+                        <li><a href="#">New Sub Tab</a></li>
+                        <li><a href="#">New Sub Tab</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">New Tab</a></li>
+                <li><a href="#">New Tab</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section class="form-category">
+    <div class="container">
+        <h1>Dados pessoais</h1>
+        <form id="frm1">
+            <fieldset>
+                <h2>Qual é a sua idade?</h2>
+                <input type="radio" name="age" value="<18"><18
+                <br>
+                <input type="radio" name="age" value="18-25">18-25
+                <br>
+                <input type="radio" name="age" value="26-33">26-33
+                <br>
+                <input type="radio" name="age" value="34-40">34-40
+                <br>
+                <input type="radio" name="age" value=">40">>40
+            </fieldset>
+            <fieldset>
+                <h2>Género</h2>
+                <input type="radio" name="sex" value="male">male
+                <br>
+                <input type="radio" name="sex" value="female">female
+            </fieldset>
+            <fieldset>
+                <h2>1 - Com que frequência usa a internet?</h2>
+                <input type="radio" name="internet" value="male">Diariamente
+                <br>
+                <input type="radio" name="internet" value="male">Algumas vezes por semana
+                <br>
+                <input type="radio" name="internet" value="male">Algumas vezes por mês
+                <br>
+                <input type="radio" name="internet" value="male">Raramente
+            </fieldset>
+            <fieldset>
+                <h2>2 - Indique, por ordem de preferência, os Web Browsers que mais utiliza. Pode indicar 3. Utilize valores de 1 a 3, sendo 1 o mais preferido e 3 o menos.</h2>
+                <table>
+                    <thead>
+                    <tr>
+                        <td></td>
+                        <td><label>1</label></td>
+                        <td><label>2</label></td>
+                        <td><label>3</label></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Chrome</td>
+                        <td><input type="radio" name="Column 1"></td>
+                        <td><input type="radio" name="Column 2"></td>
+                        <td><input type="radio" name="Column 3"></td>
+                    </tr>
+                    <tr>
+                        <td>Firefox</td>
+                        <td><input type="radio" name="Column 1"></td>
+                        <td><input type="radio" name="Column 2"></td>
+                        <td><input type="radio" name="Column 3"></td>
+                    </tr>
+                    <tr>
+                        <td>Internet Explorer</td>
+                        <td><input type="radio" name="Column 1"></td>
+                        <td><input type="radio" name="Column 2"></td>
+                        <td><input type="radio" name="Column 3"></td>
+                    </tr>
+                    <tr>
+                        <td>Opera</td>
+                        <td><input type="radio" name="Column 1"></td>
+                        <td><input type="radio" name="Column 2"></td>
+                        <td><input type="radio" name="Column 3"></td>
+                    </tr>
+                    <tr>
+                        <td>Safari</td>
+                        <td><input type="radio" name="Column 1"></td>
+                        <td><input type="radio" name="Column 2"></td>
+                        <td><input type="radio" name="Column 3"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+            <fieldset>
+                <h2>3 - Conhece outros sites de pesquisa de imagem?</h2>
+                <input type="radio" name="sites" value="sim">Sim
+                <br>
+                <input type="radio" name="sites" value="Não">Não
+                <br>
+                Em caso afirmativo quais: <input type="text" name="firstname" value="" disabled>
+            </fieldset>
+            <input type="submit" value="Next" onclick="validateDP()">
+        </form>
+    </div>
+</section>
+
+<footer class="footer-main">
+    <div class="container">
+        <p>Copyright © Joao Barreiros 2015. All Rights Reserved</p>
+    </div>
+</footer>
+
+</body>
+</html>
