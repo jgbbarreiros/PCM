@@ -6,6 +6,7 @@
     <title>Google Images Form</title>
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="css/gi_stylesheet.css">
+    <script src="js/validate_form.js"></script>
 </head>
 <body>
 
@@ -35,10 +36,10 @@
 <section class="form-category">
     <div class="container">
         <h1>Dados pessoais</h1>
-        <form id="frm1">
+        <form id="f22321" name="frm1" onsubmit="return validatefrm1()" method="post">
             <fieldset>
                 <h2>Qual é a sua idade?</h2>
-                <input type="radio" name="age" value="<18"><18
+                <input type="radio" name="age" value="18" required><18
                 <br>
                 <input type="radio" name="age" value="18-25">18-25
                 <br>
@@ -50,19 +51,19 @@
             </fieldset>
             <fieldset>
                 <h2>Género</h2>
-                <input type="radio" name="sex" value="male">male
+                <input type="radio" name="sex" value="male" required>male
                 <br>
                 <input type="radio" name="sex" value="female">female
             </fieldset>
             <fieldset>
                 <h2>1 - Com que frequência usa a internet?</h2>
-                <input type="radio" name="internet" value="male">Diariamente
+                <input type="radio" name="internet" value="i1">Diariamente
                 <br>
-                <input type="radio" name="internet" value="male">Algumas vezes por semana
+                <input type="radio" name="internet" value="i2">Algumas vezes por semana
                 <br>
-                <input type="radio" name="internet" value="male">Algumas vezes por mês
+                <input type="radio" name="internet" value="i3">Algumas vezes por mês
                 <br>
-                <input type="radio" name="internet" value="male">Raramente
+                <input type="radio" name="internet" value="i4">Raramente
             </fieldset>
             <fieldset>
                 <h2>2 - Indique, por ordem de preferência, os Web Browsers que mais utiliza. Pode indicar 3. Utilize valores de 1 a 3, sendo 1 o mais preferido e 3 o menos.</h2>
@@ -78,47 +79,46 @@
                     <tbody>
                     <tr>
                         <td>Chrome</td>
-                        <td><input type="radio" name="Column 1"></td>
-                        <td><input type="radio" name="Column 2"></td>
-                        <td><input type="radio" name="Column 3"></td>
+                        <td><input id="f1" type="radio" name="Column 1" value="1" onclick="firstOption()"></td>
+                        <td><input id="s1" type="radio" name="Column 2" value="1" onclick="secondOption()"></td>
+                        <td><input id="t1" type="radio" name="Column 3" value="1" onclick="thirdOption()"></td>
                     </tr>
                     <tr>
                         <td>Firefox</td>
-                        <td><input type="radio" name="Column 1"></td>
-                        <td><input type="radio" name="Column 2"></td>
-                        <td><input type="radio" name="Column 3"></td>
+                        <td><input id="f2" type="radio" name="Column 1" value="2" onclick="firstOption()"></td>
+                        <td><input id="s2" type="radio" name="Column 2" value="2" onclick="secondOption()"></td>
+                        <td><input id="t2" type="radio" name="Column 3" value="2" onclick="thirdOption()"></td>
                     </tr>
                     <tr>
                         <td>Internet Explorer</td>
-                        <td><input type="radio" name="Column 1"></td>
-                        <td><input type="radio" name="Column 2"></td>
-                        <td><input type="radio" name="Column 3"></td>
+                        <td><input id="f3" type="radio" name="Column 1" value="3" onclick="firstOption()"></td>
+                        <td><input id="s3" type="radio" name="Column 2" value="3" onclick="secondOption()"></td>
+                        <td><input id="t3" type="radio" name="Column 3" value="3" onclick="thirdOption()"></td>
                     </tr>
                     <tr>
                         <td>Opera</td>
-                        <td><input type="radio" name="Column 1"></td>
-                        <td><input type="radio" name="Column 2"></td>
-                        <td><input type="radio" name="Column 3"></td>
+                        <td><input id="f4" type="radio" name="Column 1" value="4" onclick="firstOption()"></td>
+                        <td><input id="s4" type="radio" name="Column 2" value="4" onclick="secondOption()"></td>
+                        <td><input id="t4" type="radio" name="Column 3" value="4" onclick="thirdOption()"></td>
                     </tr>
                     <tr>
                         <td>Safari</td>
-                        <td><input type="radio" name="Column 1"></td>
-                        <td><input type="radio" name="Column 2"></td>
-                        <td><input type="radio" name="Column 3"></td>
+                        <td><input id="f5" type="radio" name="Column 1" value="5" onclick="firstOption()"></td>
+                        <td><input id="s5" type="radio" name="Column 2" value="5" onclick="secondOption()"></td>
+                        <td><input id="t5" type="radio" name="Column 3" value="5" onclick="thirdOption()"></td>
                     </tr>
                     </tbody>
                 </table>
             </fieldset>
             <fieldset>
                 <h2>3 - Conhece outros sites de pesquisa de imagem?</h2>
-                <input type="radio" name="sites" value="sim">Sim
-                <br>
-                <input type="radio" name="sites" value="Não">Não
-                <br>
-                Em caso afirmativo quais: <input type="text" name="firstname" value="" disabled>
+                <input type="radio" name="sites" value="y" onclick="enableField()">Sim<br>
+                <input type="radio" name="sites" value="n" onclick="disableField()">Não<br>
+                Em caso afirmativo quais: <input type="text" name="psqimg"disabled>
             </fieldset>
-            <input type="submit" value="Next" onclick="validateDP()">
+            <input type="submit" value="Next">
         </form>
+        <button onclick="getdataForm()">Ola</button>
     </div>
 </section>
 
