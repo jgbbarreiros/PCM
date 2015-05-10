@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Google Images Form</title>
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="css/gi_stylesheet.css">
+    <script src="js/validate_form.js"></script>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="container">
+        <div class="navbar-left">
+            <a class="navbar-name" href="#">Google Images</a>
+        </div>
+        <div class="navbar-right">
+            <ul class="navbar-ul">
+                <li><a href="#">New Tab</a></li>
+                <li>
+                    <a href="#">New Tab</a>
+                    <ul class="navbar-dropdown">
+                        <li><a href="#">New Sub Tab</a></li>
+                        <li><a href="#">New Sub Tab</a></li>
+                        <li><a href="#">New Sub Tab</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">New Tab</a></li>
+                <li><a href="#">New Tab</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section class="form-header">
+    <div class="container">
+        <script>
+            var todo_index = window.localStorage.length;
+            console.log(todo_index);
+            for (var i = 0; i < todo_index; i++) {
+                var localStorageRow=window.localStorage.getItem(window.localStorage.key(i));
+                if (window.DOMParser) {
+                    var parser=new DOMParser();
+                    var xmlDoc=parser.parseFromString(localStorageRow,"text/xml");
+                    console.log(xmlDoc);
+                    var x = xmlDoc.getElementsByTagName("q");
+                    switch (i) {
+                        case 0:
+                            document.write("<p> Age: " + x[0].childNodes[0].nodeValue + "</p>");
+                            document.write("<p> Gender: " + x[1].childNodes[0].nodeValue + "</p>");
+                            document.write("<p> Internet Freq: " + x[2].childNodes[0].nodeValue + "</p>");
+                            document.write("<p> Fav browser 1: " + x[3].childNodes[0].nodeValue + "</p>");
+                            document.write("<p> Fav browser 2: " + x[4].childNodes[0].nodeValue + "</p>");
+                            document.write("<p> Fav browser 3: " + x[5].childNodes[0].nodeValue + "</p>");
+                            document.write("<p> Sites: " + x[6].childNodes[0].nodeValue + "</p>");
+                            break;
+                        case 1:
+                            document.write("<p> t1: " + x[0].childNodes[0].nodeValue + "</p>");
+                            document.write("<p> t2: " + x[1].childNodes[0].nodeValue + "</p>");
+                            document.write("<p> t3: " + x[2].childNodes[0].nodeValue + "</p>");
+                            document.write("<p> t41: " + x[3].childNodes[0].nodeValue + "</p>");
+                            document.write("<p> t42: " + x[4].childNodes[0].nodeValue + "</p>");
+                            break;
+                        case 2:
+                            document.write("<p> r11: " + x[0].childNodes[0].nodeValue + "</p>");
+                            document.write("<p> r12: " + x[1].childNodes[0].nodeValue + "</p>");
+                            document.write("<p> r13: " + x[2].childNodes[0].nodeValue + "</p>");
+                            document.write("<p> r14: " + x[3].childNodes[0].nodeValue + "</p>");
+                            document.write("<p> r2: " + x[4].childNodes[0].nodeValue + "</p>");
+                            document.write("<p> r3r: " + x[5].childNodes[0].nodeValue + "</p>");
+                            document.write("<p> r4: " + x[6].childNodes[0].nodeValue + "</p>");
+                            document.write("<p> r5: " + x[7].childNodes[0].nodeValue + "</p>");
+                            document.write("<p> r6: " + x[8].childNodes[0].nodeValue + "</p>");
+                            document.write("<p> r7: " + x[9].childNodes[0].nodeValue + "</p>");
+                            break;
+                    }
+                }
+            }
+            localStorage.clear();
+        </script>
+    </div>
+</section>
+
+<footer class="footer-main">
+    <div class="container">
+        <p>Copyright © Joao Barreiros 2015. All Rights Reserved</p>
+    </div>
+</footer>
+
+</body>
+</html>

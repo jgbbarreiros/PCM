@@ -6,6 +6,7 @@
     <title>Google Images Form</title>
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="css/gi_stylesheet.css">
+    <script src="js/validate_form.js"></script>
 </head>
 <body>
 
@@ -36,52 +37,52 @@
     <div class="container">
         <h1>Avaliação Global</h1>
         <p>Por favor, realiza as seguintes tarefas e descreva-nos os resultados obtidos.</p>
-        <form id="frm3" onsubmit="return validatefrm3()" action="form_end.html" method="post">
+        <form id="frm3" onsubmit="validatefrm3()" action="form_aws.html" method="post">
             <fieldset>
                 <h2>1 - Para cada par de adjetivos, coloque um cruz no ponto que melhor descreve a sua experiência de utilização deste site.</h2>
                 <table>
                     <tr>
                         <td>Fantástica</td>
-                        <td><input type="radio" name="fh"></td>
-                        <td><input type="radio" name="fh"></td>
-                        <td><input type="radio" name="fh"></td>
-                        <td><input type="radio" name="fh"></td>
-                        <td><input type="radio" name="fh"></td>
-                        <td><input type="radio" name="fh"></td>
-                        <td><input type="radio" name="fh"></td>
+                        <td><input type="radio" name="fh" value="6"></td>
+                        <td><input type="radio" name="fh" value="5"></td>
+                        <td><input type="radio" name="fh" value="4"></td>
+                        <td><input type="radio" name="fh" value="3"></td>
+                        <td><input type="radio" name="fh" value="2"></td>
+                        <td><input type="radio" name="fh" value="1"></td>
+                        <td><input type="radio" name="fh" value="0"></td>
                         <td>Horrível</td>
                     </tr>
                     <tr>
                         <td>Estimulante</td>
-                        <td><input type="radio" name="ea"></td>
-                        <td><input type="radio" name="ea"></td>
-                        <td><input type="radio" name="ea"></td>
-                        <td><input type="radio" name="ea"></td>
-                        <td><input type="radio" name="ea"></td>
-                        <td><input type="radio" name="ea"></td>
-                        <td><input type="radio" name="ea"></td>
+                        <td><input type="radio" name="ea" value="6"></td>
+                        <td><input type="radio" name="ea" value="5"></td>
+                        <td><input type="radio" name="ea" value="4"></td>
+                        <td><input type="radio" name="ea" value="3"></td>
+                        <td><input type="radio" name="ea" value="2"></td>
+                        <td><input type="radio" name="ea" value="1"></td>
+                        <td><input type="radio" name="ea" value="0"></td>
                         <td>Aborrecida</td>
                     </tr>
                     <tr>
                         <td>Gratificante</td>
-                        <td><input type="radio" name="gf"></td>
-                        <td><input type="radio" name="gf"></td>
-                        <td><input type="radio" name="gf"></td>
-                        <td><input type="radio" name="gf"></td>
-                        <td><input type="radio" name="gf"></td>
-                        <td><input type="radio" name="gf"></td>
-                        <td><input type="radio" name="gf"></td>
+                        <td><input type="radio" name="gf" value="6"></td>
+                        <td><input type="radio" name="gf" value="5"></td>
+                        <td><input type="radio" name="gf" value="4"></td>
+                        <td><input type="radio" name="gf" value="3"></td>
+                        <td><input type="radio" name="gf" value="2"></td>
+                        <td><input type="radio" name="gf" value="1"></td>
+                        <td><input type="radio" name="gf" value="0"></td>
                         <td>Frustrante</td>
                     </tr>
                     <tr>
                         <td>Fácil</td>
-                        <td><input type="radio" name="fd"></td>
-                        <td><input type="radio" name="fd"></td>
-                        <td><input type="radio" name="fd"></td>
-                        <td><input type="radio" name="fd"></td>
-                        <td><input type="radio" name="fd"></td>
-                        <td><input type="radio" name="fd"></td>
-                        <td><input type="radio" name="fd"></td>
+                        <td><input type="radio" name="fd" value="6"></td>
+                        <td><input type="radio" name="fd" value="5"></td>
+                        <td><input type="radio" name="fd" value="4"></td>
+                        <td><input type="radio" name="fd" value="3"></td>
+                        <td><input type="radio" name="fd" value="2"></td>
+                        <td><input type="radio" name="fd" value="1"></td>
+                        <td><input type="radio" name="fd" value="0"></td>
                         <td>Difícil</td>
                     </tr>
                 </table>
@@ -166,6 +167,8 @@
             </fieldset>
             <input type="submit" value="Submit">
         </form>
+        <button onclick="validatefrm3()">VF3</button>
+        <button onclick="clearLocal()">Clear Local Storage</button>
     </div>
 </section>
 

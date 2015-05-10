@@ -6,6 +6,7 @@
     <title>Google Images Form</title>
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="css/gi_stylesheet.css">
+    <script src="js/validate_form.js"></script>
 </head>
 <body>
 
@@ -36,33 +37,35 @@
     <div class="container">
         <h1>Tarefas</h1>
         <p>Por favor, realiza as seguintes tarefas e descreva-nos os resultados obtidos.</p>
-        <form id="frm2" onsubmit="return validatefrm2()" action="form_3.html" method="post">
+        <form id="frm2" onsubmit="validatefrm2()" action="form_3.html" method="post">
             <fieldset>
                 <h2>Tarefa 1 - Explorar</h2>
                 <p>Explore o site livremente e indique se encontrou algum erro ou se sentiu alguma dificuldade em perceber a funcionalidade das opções.</p>
-                <textarea name="message" rows="5" cols="40"></textarea>
+                <textarea name="t1" rows="5" cols="40"></textarea>
             </fieldset>
             <fieldset>
                 <h2>Tarefa 2 - Pesquisa Categorias</h2>
                 <p>Explore o site livremente e indique se encontrou algum erro ou se sentiu alguma dificuldade em perceber a funcionalidade das opções.</p>
                 <p>Que dificuldades encontrou?</p>
-                <textarea name="message" rows="5" cols="40"></textarea>
+                <textarea name="t2" rows="5" cols="40"></textarea>
             </fieldset>
             <fieldset>
                 <h2>Tarefa 3 - Pesquisa Cor</h2>
                 <p>Escolha a opção de pesquisa por cor dominante, selecione uma cor à sua escolha e observe os resultados.</p>
                 <p>Que dificuldades encontrou?</p>
-                <textarea name="message" rows="5" cols="40"></textarea>
+                <textarea name="t3" rows="5" cols="40"></textarea>
             </fieldset>
             <fieldset>
                 <h2>Tarefa 4 - Pesquisa Imagens Semelhantes</h2>
                 <p>Escolha a opção de pesquisa por imagens semelhantes, selecione uma imagem à sua escolha e observe os resultados.</p>
                 <p>Que dificuldades encontrou?</p>
-                <textarea name="message" rows="5" cols="40"></textarea>
+                <textarea name="t41" rows="5" cols="40"></textarea>
                 <p>Qual o tipo de pesquisa que acha mais adequado?</p>
-                <textarea name="message" rows="5" cols="40"></textarea>
+                <textarea name="t42" rows="5" cols="40"></textarea>
             </fieldset>
             <input type="submit" value="Next">
+            <button onclick="clearLocal()">Clear Local Storage</button>
+            <button onclick="validatefrm2()">VF2</button>
         </form>
     </div>
 </section>

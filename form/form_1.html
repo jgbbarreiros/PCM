@@ -36,34 +36,26 @@
 <section class="form-category">
     <div class="container">
         <h1>Dados pessoais</h1>
-        <form id="f22321" name="frm1" onsubmit="return validatefrm1()" method="post">
+        <form id="frm1" onsubmit="validatefrm1()" action="form_2.html" method="post">
             <fieldset>
                 <h2>Qual é a sua idade?</h2>
-                <input type="radio" name="age" value="18" required><18
-                <br>
-                <input type="radio" name="age" value="18-25">18-25
-                <br>
-                <input type="radio" name="age" value="26-33">26-33
-                <br>
-                <input type="radio" name="age" value="34-40">34-40
-                <br>
-                <input type="radio" name="age" value=">40">>40
+                <label><input type="radio" name="age" value="18" required><18</label><br>
+                <label><input type="radio" name="age" value="18-25">18-25</label><br>
+                <label><input type="radio" name="age" value="26-33">26-33</label><br>
+                <label><input type="radio" name="age" value="34-40">34-40</label><br>
+                <label><input type="radio" name="age" value=">40">>40</label>
             </fieldset>
             <fieldset>
                 <h2>Género</h2>
-                <input type="radio" name="sex" value="male" required>male
-                <br>
-                <input type="radio" name="sex" value="female">female
+                <label><input type="radio" name="sex" value="male" required>male</label><br>
+                <label><input type="radio" name="sex" value="female">female</label>
             </fieldset>
             <fieldset>
                 <h2>1 - Com que frequência usa a internet?</h2>
-                <input type="radio" name="internet" value="i1">Diariamente
-                <br>
-                <input type="radio" name="internet" value="i2">Algumas vezes por semana
-                <br>
-                <input type="radio" name="internet" value="i3">Algumas vezes por mês
-                <br>
-                <input type="radio" name="internet" value="i4">Raramente
+                <input type="radio" name="internet" value="i1"><label id="i1">Diariamente</label><br>
+                <input type="radio" name="internet" value="i2"><label id="i2">Algumas vezes por semana</label><br>
+                <input type="radio" name="internet" value="i3"><label id="i3">Algumas vezes por mês</label><br>
+                <input type="radio" name="internet" value="i4"><label id="i4">Raramente</label>
             </fieldset>
             <fieldset>
                 <h2>2 - Indique, por ordem de preferência, os Web Browsers que mais utiliza. Pode indicar 3. Utilize valores de 1 a 3, sendo 1 o mais preferido e 3 o menos.</h2>
@@ -78,47 +70,47 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td>Chrome</td>
-                        <td><input id="f1" type="radio" name="Column 1" value="1" onclick="firstOption()"></td>
-                        <td><input id="s1" type="radio" name="Column 2" value="1" onclick="secondOption()"></td>
-                        <td><input id="t1" type="radio" name="Column 3" value="1" onclick="thirdOption()"></td>
+                        <td id="b1">Chrome</td>
+                        <td><input id="f1" type="radio" name="browser1" value="1" onclick="firstOption()"></td>
+                        <td><input id="s1" type="radio" name="browser2" value="1" onclick="secondOption()"></td>
+                        <td><input id="t1" type="radio" name="browser3" value="1" onclick="thirdOption()"></td>
                     </tr>
                     <tr>
-                        <td>Firefox</td>
-                        <td><input id="f2" type="radio" name="Column 1" value="2" onclick="firstOption()"></td>
-                        <td><input id="s2" type="radio" name="Column 2" value="2" onclick="secondOption()"></td>
-                        <td><input id="t2" type="radio" name="Column 3" value="2" onclick="thirdOption()"></td>
+                        <td id="b2">Firefox</td>
+                        <td><input id="f2" type="radio" name="browser1" value="2" onclick="firstOption()"></td>
+                        <td><input id="s2" type="radio" name="browser2" value="2" onclick="secondOption()"></td>
+                        <td><input id="t2" type="radio" name="browser3" value="2" onclick="thirdOption()"></td>
                     </tr>
                     <tr>
-                        <td>Internet Explorer</td>
-                        <td><input id="f3" type="radio" name="Column 1" value="3" onclick="firstOption()"></td>
-                        <td><input id="s3" type="radio" name="Column 2" value="3" onclick="secondOption()"></td>
-                        <td><input id="t3" type="radio" name="Column 3" value="3" onclick="thirdOption()"></td>
+                        <td id="b3">Internet Explorer</td>
+                        <td><input id="f3" type="radio" name="browser1" value="3" onclick="firstOption()"></td>
+                        <td><input id="s3" type="radio" name="browser2" value="3" onclick="secondOption()"></td>
+                        <td><input id="t3" type="radio" name="browser3" value="3" onclick="thirdOption()"></td>
                     </tr>
                     <tr>
-                        <td>Opera</td>
-                        <td><input id="f4" type="radio" name="Column 1" value="4" onclick="firstOption()"></td>
-                        <td><input id="s4" type="radio" name="Column 2" value="4" onclick="secondOption()"></td>
-                        <td><input id="t4" type="radio" name="Column 3" value="4" onclick="thirdOption()"></td>
+                        <td id="b4">Opera</td>
+                        <td><input id="f4" type="radio" name="browser1" value="4" onclick="firstOption()"></td>
+                        <td><input id="s4" type="radio" name="browser2" value="4" onclick="secondOption()"></td>
+                        <td><input id="t4" type="radio" name="browser3" value="4" onclick="thirdOption()"></td>
                     </tr>
                     <tr>
-                        <td>Safari</td>
-                        <td><input id="f5" type="radio" name="Column 1" value="5" onclick="firstOption()"></td>
-                        <td><input id="s5" type="radio" name="Column 2" value="5" onclick="secondOption()"></td>
-                        <td><input id="t5" type="radio" name="Column 3" value="5" onclick="thirdOption()"></td>
+                        <td id="b5">Safari</td>
+                        <td><input id="f5" type="radio" name="browser1" value="5" onclick="firstOption()"></td>
+                        <td><input id="s5" type="radio" name="browser2" value="5" onclick="secondOption()"></td>
+                        <td><input id="t5" type="radio" name="browser3" value="5" onclick="thirdOption()"></td>
                     </tr>
                     </tbody>
                 </table>
             </fieldset>
             <fieldset>
                 <h2>3 - Conhece outros sites de pesquisa de imagem?</h2>
-                <input type="radio" name="sites" value="y" onclick="enableField()">Sim<br>
-                <input type="radio" name="sites" value="n" onclick="disableField()">Não<br>
-                Em caso afirmativo quais: <input type="text" name="psqimg"disabled>
+                <input type="radio" name="sites" value="Nao" onclick="disableField()"><label>Não</label><br>
+                <input type="radio" name="sites" value="Sim" onclick="enableField()"><label>Sim</label><br>
+                <label>Em caso afirmativo quais:<input type="text" name="psqimg" disabled></label>
             </fieldset>
             <input type="submit" value="Next">
+            <button onclick="clearLocal()">Clear Local Storage</button>
         </form>
-        <button onclick="getdataForm()">Ola</button>
     </div>
 </section>
 
