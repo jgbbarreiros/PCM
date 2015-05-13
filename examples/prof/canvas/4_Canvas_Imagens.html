@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<canvas id="myCanvas" width="400" height="300" style="border:1px solid #000000;"></canvas>
+<script>
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+
+    var im = new Image();
+    im.onload = function () {
+        Picture(0, 0, 100, 100, im);
+        Picture(100, 100, 100, 100, im);
+    }
+    im.src = "images/annika.jpg"
+
+    function Picture(x,y,w,h,imagename) {
+        ctx.drawImage(imagename,x,y,w,h);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<body>
+		<script>
+			function Person(firstname,lastname,age,eyecolor)
+			{
+				this.firstname=firstname;
+			    this.lastname=lastname;
+				this.age=age;
+				this.eyecolor=eyecolor;
+
+			    this.changeName = function (name) {
+					this.lastname=name;
+				}
+			}
+			myMother=new Person("Sally","Rally",48,"green");
+			myMother.age=50;
+			document.write(myMother.age);
+		</script>
+	</body>
+</html>
+

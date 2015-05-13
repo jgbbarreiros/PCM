@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head lang="pt">
+    <meta charset="UTF-8">
+    <title> Função para desenhar Retângulos </title>
+</head>
+<body>
+<canvas id="myCanvas" width="400" height="300" style="border:1px solid #000000;"></canvas>
+<script>
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+
+    Rect(20, 20, 40, 40, "green");
+    Rect(70, 20, 40, 40, "#FF0000");
+    Rect(120, 20, 40, 40, "purple");
+
+
+    function Rect(x, y, w, h, color) {
+        ctx.fillStyle = color;
+        ctx.fillRect(x, y, w, h);
+    }
+</script>
+
+</body>
+
+</html>

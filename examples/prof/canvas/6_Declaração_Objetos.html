@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <script>
+        function Person(name) {
+            this.name = name;
+        }
+
+        Person.prototype.say = function() {
+            return this.name;
+        }
+
+        var dude = new Person('dude');
+        document.writeln(dude.name);
+        document.write(dude.say());
+
+        console.log(dude.hasOwnProperty('name'));
+        console.log(dude.hasOwnProperty('say'));
+
+        document.write(dude.__proto__.hasOwnProperty('say'));
+
+    </script>
+</body>
+</html>
