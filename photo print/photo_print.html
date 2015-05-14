@@ -5,7 +5,16 @@
     <title> Exemplo - Canvas  </title>
 </head>
 <body>
-<canvas id="myCanvas" width="400" height="300" style="border:1px solid #000000;"> </canvas>
-<script src="js/canvas_objects.js"></script>
+    <canvas id="myCanvas" width="1280" height="720" style="border:1px solid #000000;"> </canvas>
+    <script src="js/canvas_objects.js" charset="UTF-8"></script>
+    <script>
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+
+        ctx.fillStyle = "black";
+
+        ctx.font = "100px Arial";
+        ctx.fillText("(◕‿◕✿)",75,150);
+    </script>
 </body>
 </html>

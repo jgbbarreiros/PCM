@@ -1,11 +1,12 @@
 var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
 
-Bear(20, 50, 10, "green");
-Bear(100, 50, 30, "#752953");
-Bear(300, 80, 60, "red");
-Bear(130, 200, 80, "#452200");
-// Oval(50, 50, 20, 10, "pink");
+//Bear(20, 50, 10, "green");
+//Bear(100, 50, 30, "#752953");
+//Bear(300, 80, 60, "red");
+Bear(900, 300, 200, "#452200");
+Cat(350, 500, 150, "grey");
+
 
 function Bear(x, y, r, color) {
     ctx.save();
@@ -50,38 +51,123 @@ function Bear(x, y, r, color) {
     //eyes
     Oval(l_eye[0], l_eye[1], radius_eye, 1, 1, "black");
     Oval(r_eye[0], r_eye[1], radius_eye, 1, 1, "black");
-    Oval(l_eye_glare[0], l_eye_glare[1], radius_eye_glare, 1, 1, "#fff");
-    Oval(r_eye_glare[0], r_eye_glare[1], radius_eye_glare, 1, 1, "#fff");
+    Oval(l_eye_glare[0], l_eye_glare[1], radius_eye_glare, 1, 1, "white");
+    Oval(r_eye_glare[0], r_eye_glare[1], radius_eye_glare, 1, 1, "white");
     // nose
     Oval(nose[0], nose[1], radius_nose, 1.4, 1, "#black");
-    Oval(nose_glare[0], nose_glare[1], radius_nose_glare, 1.4, 1, "#fff");
+    Oval(nose_glare[0], nose_glare[1], radius_nose_glare, 1.4, 1, "white");
     // mouth
     ctx.beginPath();
     ctx.arc(mouth[0], mouth[1], radius_mouth, start_ang_mouth, end_ang_mouth, true);
     ctx.arc(mouth[0]+radius_mouth*2, mouth[1], radius_mouth, start_ang_mouth, end_ang_mouth, true);
     ctx.lineWidth = r*.05;
-
-    // line color
     ctx.strokeStyle = 'black';
     ctx.stroke();
-
     ctx.restore();
 }
 
-function Oval(x, y, r, hor, ver, color) {
+function Cat(x, y, r, color) {
     ctx.save();
-    ctx.translate(x, y);
-    ctx.scale(hor, ver);
+    var ang_ear = .40*Math.PI;
+    var ang_l_whiskers = 1.05*Math.PI;
+    var ang_r_whiskers = 1.95*Math.PI;
+    var radius_eye = r*.4;
+    var radius_eyeball = radius_eye*.35;
+
+    var l_ear = [[x, y-r *.5], [x - r*(Math.cos(ang_ear) + .7), y - r*(Math.sin(ang_ear) +.7)], [x-.75*r, y]];
+    var r_ear = [[x, y-r *.5], [x + r*(Math.cos(ang_ear) + .7), y - r*(Math.sin(ang_ear) +.7)], [x+.75*r, y]];
+    var l_eye = [x - radius_eye - r *.05, y];
+    var r_eye = [x + radius_eye + r *.05, y];
+    var l_whiskers = [x - r *1.6, y - r *1.6*Math.sin(ang_l_whiskers)];
+    var r_whiskers = [x + r *1.6, y - r *1.6*Math.sin(ang_r_whiskers)];
+
+    ctx.lineWidth = r*.03;
+    // ears
     ctx.fillStyle = color;
     ctx.beginPath();
-    ctx.arc(0, 0, r, 0, 2 * Math.PI, true);
+    ctx.moveTo(x,y);
+    for (var i = 0; i < l_ear.length; i++) {
+        ctx.lineTo(l_ear[i][0], l_ear[i][1]);
+    }
     ctx.closePath();
     ctx.fill();
+    ctx.fillStyle = 'white';
+    ctx.beginPath();
+    ctx.moveTo(x +r*.2,y+r*.4);
+    for (i = 0; i < l_ear.length; i++) {
+        ctx.lineTo(l_ear[i][0]+r*.2, l_ear[i][1]+r*.4);
+    }
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.moveTo(x,y);
+    for (i = 0; i < r_ear.length; i++) {
+        ctx.lineTo(r_ear[i][0], r_ear[i][1]);
+    }
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = 'white';
+    ctx.beginPath();
+    ctx.moveTo(x -r*.2,y+r*.4);
+    for (i = 0; i < r_ear.length; i++) {
+        ctx.lineTo(r_ear[i][0]-r*.2, r_ear[i][1]+r*.4);
+    }
+    ctx.closePath();
+    ctx.fill();
+    // whiskers
+    ctx.strokeStyle = 'black';
+    ctx.beginPath();
+    ctx.moveTo(x,y);
+    ctx.lineTo(l_whiskers[0], l_whiskers[1]);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.strokeStyle = 'black';
+    ctx.beginPath();
+    ctx.moveTo(x,y+ r *.15);
+    ctx.lineTo(l_whiskers[0], l_whiskers[1] + r *.15);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.strokeStyle = 'black';
+    ctx.beginPath();
+    ctx.moveTo(x,y+ r *.3);
+    ctx.lineTo(l_whiskers[0], l_whiskers[1] + r *.3);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.strokeStyle = 'black';
+    ctx.beginPath();
+    ctx.moveTo(x,y);
+    ctx.lineTo(r_whiskers[0], r_whiskers[1]);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.strokeStyle = 'black';
+    ctx.beginPath();
+    ctx.moveTo(x,y+ r *.15);
+    ctx.lineTo(r_whiskers[0], r_whiskers[1] + r *.15);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.strokeStyle = 'black';
+    ctx.beginPath();
+    ctx.moveTo(x,y+ r *.3);
+    ctx.lineTo(r_whiskers[0], r_whiskers[1] + r *.3);
+    ctx.closePath();
+    ctx.stroke();
+    // head
+    Oval(x, y, r, 1.1,.9, color);
+    // eyes
+    Oval(l_eye[0], l_eye[1], radius_eye, 1, 1.1, "white");
+    Oval(r_eye[0], r_eye[1], radius_eye, 1, 1.1, "white");
+    Oval(l_eye[0] + radius_eye *.6, l_eye[1], radius_eyeball, 1, 1.1, "black");
+    Oval(r_eye[0] + radius_eye *.6, r_eye[1], radius_eyeball, 1, 1.1, "black");
+
     ctx.restore();
 }
 
-// Heart(100,100,80,30,"pink");
-// Heart(200,100,60,20,"pink");
+function Flower(x, y, s, color) {
+    ctx.fillStyle = color;
+    ctx.font = s+"px Arial";
+    ctx.fillText("(????)", x, y);
+}
 
 function Heart(x,y,h,drx,color) {
     var ang = .25*Math.PI;
@@ -99,4 +185,16 @@ function Heart(x,y,h,drx,color) {
     ctx.arc(rightctrx,y,drx,ang,Math.PI,true);
     ctx.closePath();
     ctx.fill();
+}
+
+function Oval(x, y, r, hor, ver, color) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(hor, ver);
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(0, 0, r, 0, 2 * Math.PI, true);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
 }
