@@ -4,8 +4,10 @@ var ctx = c.getContext("2d");
 //Bear(20, 50, 10, "green");
 //Bear(100, 50, 30, "#752953");
 //Bear(300, 80, 60, "red");
-Bear(900, 300, 200, "#452200");
+Bear(900, 300, 150, "#452200");
 Cat(350, 500, 150, "grey");
+//Flower(750, 600, 50, 5, "red");
+FlowerDonger(900, 600, 150, "green");
 
 
 function Bear(x, y, r, color) {
@@ -54,7 +56,7 @@ function Bear(x, y, r, color) {
     Oval(l_eye_glare[0], l_eye_glare[1], radius_eye_glare, 1, 1, "white");
     Oval(r_eye_glare[0], r_eye_glare[1], radius_eye_glare, 1, 1, "white");
     // nose
-    Oval(nose[0], nose[1], radius_nose, 1.4, 1, "#black");
+    Oval(nose[0], nose[1], radius_nose, 1.4, 1, "black");
     Oval(nose_glare[0], nose_glare[1], radius_nose_glare, 1.4, 1, "white");
     // mouth
     ctx.beginPath();
@@ -163,10 +165,52 @@ function Cat(x, y, r, color) {
     ctx.restore();
 }
 
-function Flower(x, y, s, color) {
-    ctx.fillStyle = color;
-    ctx.font = s+"px Arial";
-    ctx.fillText("(????)", x, y);
+function FlowerDonger(x, y, r, color) {
+
+    ctx.save();
+    Flower(x+Math.cos(.95*Math.PI)* r *.9, y - Math.sin(.95*Math.PI)* r *.75, r *.1, 5, color);
+
+    ctx.strokeStyle = color;
+
+    // head
+    ctx.lineWidth = r*.06;
+    ctx.beginPath();
+    ctx.arc(x-r *.3, y, r*1,.8*Math.PI, 1.2*Math.PI, false);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(x+r *.3, y, r*1,.2*Math.PI, 1.8*Math.PI, true);
+    ctx.stroke();
+
+    // eyes
+    ctx.lineWidth = r*.03;
+    ctx.beginPath();
+    ctx.arc(x- r*.2, y - r*.1, r *.25,-.05*Math.PI,-.95*Math.PI, true);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(x + r *.7, y - r*.1, r *.25,-.05*Math.PI,-.95*Math.PI, true);
+    ctx.stroke();
+
+    // mouth
+    ctx.beginPath();
+    ctx.arc(x+ r*.265, y + r*.2, r *.25,.2*Math.PI,.8*Math.PI, false);
+    ctx.stroke();
+
+    ctx.restore();
+}
+
+function Flower(x, y, r, p, color) {
+    ctx.save();
+    var ang_init = .5*Math.PI;
+    var ang = 2*Math.PI/p;
+    var hip = 1.5*r;
+    for (var i = 0; i < p; i++) {
+        var ang_current = ang_init + ang*i;
+        var w = Math.cos(ang_current)*hip;
+        var h = Math.sin(ang_current)*hip;
+        Oval(x+w, y-h, r, .9, .9, color);
+    }
+    Oval(x, y, r, 1, 1, "white");
+    ctx.restore();
 }
 
 function Heart(x,y,h,drx,color) {
