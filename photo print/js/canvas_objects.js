@@ -4,10 +4,10 @@ var ctx = c.getContext("2d");
 //Bear(20, 50, 10, "green");
 //Bear(100, 50, 30, "#752953");
 //Bear(300, 80, 60, "red");
-Bear(900, 300, 150, "#452200");
-Cat(350, 500, 150, "grey");
+Bear(900, 200, 15, "#452200");
+Cat(350, 500, 15, "grey");
 //Flower(750, 600, 50, 5, "red");
-FlowerDonger(900, 600, 150, "green");
+FlowerDonger(850, 500, 100, "green");
 
 
 function Bear(x, y, r, color) {
@@ -59,11 +59,11 @@ function Bear(x, y, r, color) {
     Oval(nose[0], nose[1], radius_nose, 1.4, 1, "black");
     Oval(nose_glare[0], nose_glare[1], radius_nose_glare, 1.4, 1, "white");
     // mouth
+    ctx.lineWidth = r*.05;
+    ctx.strokeStyle = 'black';
     ctx.beginPath();
     ctx.arc(mouth[0], mouth[1], radius_mouth, start_ang_mouth, end_ang_mouth, true);
     ctx.arc(mouth[0]+radius_mouth*2, mouth[1], radius_mouth, start_ang_mouth, end_ang_mouth, true);
-    ctx.lineWidth = r*.05;
-    ctx.strokeStyle = 'black';
     ctx.stroke();
     ctx.restore();
 }
@@ -86,8 +86,8 @@ function Cat(x, y, r, color) {
     ctx.lineWidth = r*.03;
     // ears
     ctx.fillStyle = color;
-    ctx.beginPath();
     ctx.moveTo(x,y);
+    ctx.beginPath();
     for (var i = 0; i < l_ear.length; i++) {
         ctx.lineTo(l_ear[i][0], l_ear[i][1]);
     }

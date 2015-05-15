@@ -1,20 +1,42 @@
 <!DOCTYPE html>
 <html>
-<head lang="pt">
+<head lang="en">
     <meta charset="UTF-8">
-    <title> Exemplo - Canvas  </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Photo Print</title>
+    <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
 </head>
 <body>
-    <canvas id="myCanvas" width="1280" height="720" style="border:1px solid #000000;"> </canvas>
-    <script src="js/canvas_objects.js" charset="UTF-8"></script>
-    <script>
-        var c = document.getElementById("myCanvas");
-        var ctx = c.getContext("2d");
 
-        ctx.fillStyle = "black";
+<nav class="navbar">
+    <div class="container">
+        <div class="navbar-left">
+            <a class="navbar-name" href="#">Photo Print</a>
+        </div>
+        <div class="navbar-right">
+            <ul class="navbar-ul">
+                <li><a href="#">New Tab</a></li>
+                <li>
+                    <a href="#">New Tab</a>
+                    <ul class="navbar-dropdown">
+                        <li><a href="#">New Sub Tab</a></li>
+                        <li><a href="#">New Sub Tab</a></li>
+                        <li><a href="#">New Sub Tab</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">New Tab</a></li>
+                <li><a href="#">New Tab</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
-        ctx.font = "100px Arial";
-        ctx.fillText("(◕‿◕✿)",75,150);
-    </script>
+<section>
+    <div class="container">
+        <canvas id="scratch" width="1100" height="650" style="border:1px solid #000000;"></canvas>
+        <script src="js/figures.js" charset="UTF-8"></script>
+    </div>
+</section>
+
 </body>
 </html>
