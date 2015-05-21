@@ -26,6 +26,7 @@ function FotoPrint()
         var pic5 = new Picture(450, 100, 100, 100, this.aImg.daughter);
         var hrt = new Heart(510, 30, 60, 20, "pink");
         var bear = new Bear(100, 100, 50, "#452200", this.canvas1);
+        var cat = new Cat(350, 300, 150, "grey", this.canvas1);
 
         this.shpinDrawing.insertObj(pic1);
         this.shpinDrawing.insertObj(pic2);
@@ -38,6 +39,7 @@ function FotoPrint()
         this.shpinDrawing.insertObj(cir1);
         this.shpinDrawing.insertObj(hrt);
         this.shpinDrawing.insertObj(bear);
+        this.shpinDrawing.insertObj(cat);
 
         this.canvas1.addEventListener('mousedown', drag, false);
         this.canvas1.addEventListener('dblclick', makenewitem, false);

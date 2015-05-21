@@ -25,6 +25,32 @@ function Figure() {
     };
 }
 
+function Poligon(points, s, color, canvas) {
+
+    this.init(points[0][0], points[0][1], s, color, canvas);
+
+    this.draw = function() {
+        var ctx = this.canvas.getContext("2d");
+        ctx.save();
+        ctx.lineWidth = this.s;
+        ctx.fillStyle = this.color;
+        ctx.moveTo(this.x, this.y);
+        ctx.beginPath();
+        for (var i = 0; i<points.length; i++) {
+            ctx.lineTo(points[i][0], points[i][1]);
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+    };
+
+    this.overcheck = function(mx,my) {
+
+    };
+}
+
+Poligon.prototype = new Figure();
+
 function Oval(x, y, s, hor, ver, color, canvas) {
 
     this.init(x, y, s, color, canvas);
@@ -101,3 +127,28 @@ function Bear(x, y, s, color, canvas) {
 
 }
 Bear.prototype = new Figure();
+
+function Cat(x, y, s, color, canvas) {
+
+    this.init(x, y, s, color, canvas);
+
+    this.draw = function() {
+        var earlbp = [[this.x, this.y-this.s*.5], [this.x - this.s*(Math.cos(.40*Math.PI)+ .7), this.y - this.s*(Math.sin(.40*Math.PI)+.7)], [this.x-.75*this.s, this.y]];
+        this.earlb = new Poligon(earlbp, this.s*.3, this.color, this.canvas);
+        this.earlb.draw();
+        var earlsp = [[this.x+this.s*.2, this.y+this.s*.4], [this.x - this.s*(Math.cos(.40*Math.PI)+ .7)+this.s*.2, this.y - this.s*(Math.sin(.40*Math.PI)+.7)+this.s*.4], [this.x-.75*this.s+this.s*.2, this.y+this.s*.4]];
+        //var p = [[earlbp[0][0]+earlbp[2][0]*.2, (earlbp[0][1]+earlbp[2][1]) *.8], [this.x - this.s*(Math.cos(.40*Math.PI)+ .7)+this.s*.2, this.y - this.s*(Math.sin(.40*Math.PI)+.7)+this.s*.4], [(earlbp[0][0]+earlbp[2][0]) *.5, (earlbp[0][1]+earlbp[2][1]) *.5]];
+        this.earls = new Poligon(earlsp, this.s*.3, "black", this.canvas);
+        this.earls.draw();
+        var earrbp = [[this.x, this.y-this.s*.5], [this.x+this.s*(Math.cos(.40*Math.PI)+ .7), this.y - this.s*(Math.sin(.40*Math.PI)+.7)], [this.x+.75*this.s, this.y]];
+        this.earrb = new Poligon(earrbp, this.s*.3, this.color, this.canvas);
+        this.earrb.draw();
+    };
+
+    this.overcheck = function(mx, my) {
+        return true;
+    };
+
+}
+
+Cat.prototype = new Figure();
