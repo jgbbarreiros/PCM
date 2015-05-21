@@ -1,9 +1,7 @@
-var canvas = document.getElementById("figures");
+//var canvas = document.getElementById("figures");
 
-Oval.prototype = new Figure();
-Bear.prototype = new Figure();
-var bear = new Bear(100, 100, 50, "#452200", canvas);
-bear.draw();
+//var bear = new Bear(100, 100, 50, "#452200", canvas);
+//bear.draw();
 
 function Figure() {
 
@@ -17,9 +15,7 @@ function Figure() {
 
     this.draw = function() {};
 
-    this.overcheck = function(mx,my) {
-        return mx>=this.x-this.w/2 && mx<=this.x+this.w/2 && my>=this.y-this.h/2 && my<=this.y+this.h/2;
-    };
+    this.overcheck = function(mx,my) {};
 
     this.distsq = function (x1,y1,x2,y2) {
         //done to avoid taking square roots
@@ -57,61 +53,51 @@ function Oval(x, y, s, hor, ver, color, canvas) {
         ctx.restore();
     };
 }
-
+Oval.prototype = new Figure();
 
 function Bear(x, y, s, color, canvas) {
 
     this.init(x, y, s, color, canvas);
 
-    var outside = function(x,y,w,h,mx,my) {
-        return ((mx<x) || (mx > (x+w)) || (my < y) || (my > (y+h)));
-    };
-
-    this.overcheck = function(mx, my) {
-    };
-
     this.draw = function() {
-        ear(this.x - (this.s*Math.cos(.25*Math.PI)), this.y - (this.s*Math.sin(.25*Math.PI)), this.s*.4, this.color);
-        ear(this.x + (this.s*Math.cos(.25*Math.PI)), this.y - (this.s*Math.sin(.25*Math.PI)), this.s*.4, this.color);
-        head(this.x, this.y, this.s, this.color);
-        eye(this.x - (this.s*.4*Math.cos(.20*Math.PI)), this.y - (this.s*.4*Math.sin(.20*Math.PI)), this.s*.15);
-        eye(this.x + (this.s*.4*Math.cos(.20*Math.PI)), this.y - (this.s*.4*Math.sin(.20*Math.PI)), this.s*.15);
-        nose(this.x, this.y+this.s*.2, this.s*.22);
-        mouth(this.x, this.y+this.s*.42, this.s*.3);
-    };
-
-    var ear = function(x, y, s, color) {
-        new Oval(x, y, s, 1.3, 1.2, color, canvas).draw();
-        new Oval(x, y, s*.5, 1.3, 1.2, "#D19F74", canvas).draw();
-    };
-
-    var head = function(x, y, s, color) {
-        new Oval(x, y, s, 1.05, 1, color, canvas).draw();
-    };
-
-    var eye = function(x, y, s) {
-        new Oval(x, y, s, 1, 1, "black", canvas).draw();
-        new Oval(x-s*.6*Math.cos(.25*Math.PI), y-s*.6*Math.cos(.25*Math.PI), s*.4, 1, 1, "white", canvas).draw();
-    };
-
-    var nose = function(x, y, s) {
-        new Oval(x, y, s, 1.4, 1, "black", canvas).draw();
-        new Oval(x-s*.7*Math.cos(.25*Math.PI), y-s*.7*Math.cos(.25*Math.PI), s*.3, 1.4, 1, "white", canvas).draw();
-    };
-
-    var mouth = function(x, y, s) {
-        var ctx = canvas.getContext("2d");
+        this.earlb = new Oval(this.x-(this.s*Math.cos(.25*Math.PI)), this.y-(this.s*Math.sin(.25*Math.PI)), this.s*.4, 1.3, 1.2, this.color, this.canvas);
+        this.earlb.draw();
+        this.earls = new Oval(this.x-(this.s*Math.cos(.25*Math.PI)), this.y-(this.s*Math.sin(.25*Math.PI)), this.s*.2, 1.3, 1.2, "#D19F74", this.canvas);
+        this.earls.draw();
+        this.earrb = new Oval(this.x+(this.s*Math.cos(.25*Math.PI)), this.y-(this.s*Math.sin(.25*Math.PI)), this.s*.4, 1.3, 1.2, this.color, this.canvas);
+        this.earrb.draw();
+        this.earrs = new Oval(this.x+(this.s*Math.cos(.25*Math.PI)), this.y-(this.s*Math.sin(.25*Math.PI)), this.s*.2, 1.3, 1.2, "#D19F74", this.canvas);
+        this.earrs.draw();
+        this.head  = new Oval(this.x, this.y, this.s, 1.05, 1, this.color, this.canvas);
+        this.head.draw();
+        this.eyelb = new Oval(this.x-(this.s*.4*Math.cos(.20*Math.PI)), this.y-(this.s*.4*Math.sin(.20*Math.PI)), this.s*.15, 1, 1, "black", this.canvas);
+        this.eyelb.draw();
+        this.eyels = new Oval(this.x-(this.s*.4*Math.cos(.20*Math.PI))-this.s*.09*Math.cos(.25*Math.PI), this.y-(this.s*.4*Math.sin(.20*Math.PI))-this.s*.09*Math.cos(.25*Math.PI), this.s*.06, 1, 1, "white", this.canvas);
+        this.eyels.draw();
+        this.eyerb = new Oval(this.x+(this.s*.4*Math.cos(.20*Math.PI)), this.y-(this.s*.4*Math.sin(.20*Math.PI)), this.s*.15, 1, 1, "black", this.canvas);
+        this.eyerb.draw();
+        this.eyers = new Oval(this.x+(this.s*.4*Math.cos(.20*Math.PI))-this.s*.09*Math.cos(.25*Math.PI), this.y-(this.s*.4*Math.sin(.20*Math.PI))-this.s*.09*Math.cos(.25*Math.PI), this.s*.06, 1, 1, "white", this.canvas);
+        this.eyers.draw();
+        this.noseb = new Oval(this.x, this.y+this.s*.2, this.s*.22, 1.4, 1, "black", this.canvas);
+        this.noseb.draw();
+        this.noses = new Oval(this.x-this.s*.154*Math.cos(.25*Math.PI), this.y+this.s*.2-this.s*.154*Math.cos(.25*Math.PI), this.s *.066, 1.4, 1, "white", this.canvas);
+        this.noses.draw();
+        var ctx = this.canvas.getContext("2d");
         ctx.save();
-        ctx.lineWidth = s*.05;
+        ctx.lineWidth = this.s*.3*.05;
         ctx.strokeStyle = 'black';
         ctx.beginPath();
-        ctx.arc(x - s, y-Math.sin(2.1 * Math.PI)*s, s, .9*Math.PI, 2.1*Math.PI, true);
+        ctx.arc(this.x - this.s*.3, this.y+this.s*.42-Math.sin(2.1 * Math.PI)*this.s*.3, this.s*.3, .9*Math.PI, 2.1*Math.PI, true);
         ctx.stroke();
         ctx.beginPath();
-        ctx.arc(x + s, y-Math.sin(2.1 * Math.PI)*s, s, .9*Math.PI, 2.1*Math.PI, true);
+        ctx.arc(this.x + this.s*.3, this.y+this.s*.42-Math.sin(2.1 * Math.PI)*this.s*.3, this.s*.3, .9*Math.PI, 2.1*Math.PI, true);
         ctx.stroke();
         ctx.restore();
     };
 
-}
+    this.overcheck = function(mx, my) {
+        return this.earlb.overcheck(mx, my) || this.earrb.overcheck(mx, my) || this.head.overcheck(mx, my);
+    };
 
+}
+Bear.prototype = new Figure();
