@@ -136,17 +136,50 @@ function Cat(x, y, s, color, canvas) {
         var earlbp = [[this.x, this.y-this.s*.5], [this.x - this.s*(Math.cos(.40*Math.PI)+ .7), this.y - this.s*(Math.sin(.40*Math.PI)+.7)], [this.x-.75*this.s, this.y]];
         this.earlb = new Poligon(earlbp, this.s*.3, this.color, this.canvas);
         this.earlb.draw();
-        var earlsp = [[this.x+this.s*.2, this.y+this.s*.4], [this.x - this.s*(Math.cos(.40*Math.PI)+ .7)+this.s*.2, this.y - this.s*(Math.sin(.40*Math.PI)+.7)+this.s*.4], [this.x-.75*this.s+this.s*.2, this.y+this.s*.4]];
-        //var p = [[earlbp[0][0]+earlbp[2][0]*.2, (earlbp[0][1]+earlbp[2][1]) *.8], [this.x - this.s*(Math.cos(.40*Math.PI)+ .7)+this.s*.2, this.y - this.s*(Math.sin(.40*Math.PI)+.7)+this.s*.4], [(earlbp[0][0]+earlbp[2][0]) *.5, (earlbp[0][1]+earlbp[2][1]) *.5]];
-        this.earls = new Poligon(earlsp, this.s*.3, "black", this.canvas);
+        var earlsp = [[this.x, this.y-this.s*.2], [this.x - this.s*(Math.cos(.40*Math.PI)+ .7)+this.s*.2, this.y - this.s*(Math.sin(.40*Math.PI)+.7)+this.s*.4], [this.x-.75*this.s+this.s*.2, this.y+this.s*.2]];
+        this.earls = new Poligon(earlsp, this.s*.3, "white", this.canvas);
         this.earls.draw();
         var earrbp = [[this.x, this.y-this.s*.5], [this.x+this.s*(Math.cos(.40*Math.PI)+ .7), this.y - this.s*(Math.sin(.40*Math.PI)+.7)], [this.x+.75*this.s, this.y]];
         this.earrb = new Poligon(earrbp, this.s*.3, this.color, this.canvas);
         this.earrb.draw();
+        var earrsp = [[this.x, this.y-this.s*.2], [this.x + this.s*(Math.cos(.40*Math.PI)+ .7)-this.s*.2, this.y - this.s*(Math.sin(.40*Math.PI)+.7)+this.s*.4], [this.x+.75*this.s-this.s*.2, this.y+this.s*.2]];
+        this.earrs = new Poligon(earrsp, this.s*.3, "white", this.canvas);
+        this.earrs.draw();
+
+        var ctx = this.canvas.getContext("2d");
+        ctx.save();
+        ctx.strokeStyle = 'black';
+        for (var i = 0; i < 3; i++) {
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y+this.s*.15*i);
+            ctx.lineTo(this.x - this.s * 1.6, this.y - this.s * 1.6 * Math.sin(1.05 * Math.PI) + this.s*.15*i);
+            ctx.closePath();
+            ctx.stroke();
+        }
+        for (i = 0; i < 3; i++) {
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y+this.s*.15*i);
+            ctx.lineTo(this.x + this.s * 1.6, this.y - this.s * 1.6 * Math.sin(1.95 * Math.PI) + this.s*.15*i);
+            ctx.closePath();
+            ctx.stroke();
+        }
+        ctx.restore();
+        this.head = new Oval(this.x, this.y, this.s, 1.1,.9, this.color, this.canvas);
+        this.head.draw();
+
+        //var radius_eye = r*.4;
+        //var radius_eyeball = radius_eye*.35;
+        //var l_eye = [x - radius_eye - r *.05, y];
+        //var r_eye = [x + radius_eye + r *.05, y];
+        //this.eyelb = new Oval(this.x - this.s *.4- this.s *.05, l_eye[1], this.s, 1, 1.1, "white");
+        //this.eyels = new Oval(r_eye[0], r_eye[1], radius_eye, 1, 1.1, "white");
+        //this.eyerb = new Oval(l_eye[0] + radius_eye *.6, l_eye[1], radius_eyeball, 1, 1.1, "black");
+        //this.eyels = new Oval(r_eye[0] + radius_eye *.6, r_eye[1], radius_eyeball, 1, 1.1, "black");
+
     };
 
     this.overcheck = function(mx, my) {
-        return true;
+        return this.head.overcheck(mx, my);
     };
 
 }

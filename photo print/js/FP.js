@@ -4,6 +4,7 @@ function FotoPrint()
 {
     this.aImg = new AppImages();
     this.thingInMotion;
+    this.thingSelectet;
 
     this.offsetx;
     this.offsetx;
@@ -17,16 +18,15 @@ function FotoPrint()
 
         var r1 = new Rect(2, 10, 50, 50,"red");
         var s1 = new Rect(60, 10, 50, 50, "green");
-        var oval1 = new Oval(200, 30, 20, 2.0, 1.0, "teal");
-        var cir1 = new Oval(300, 30, 20, 1.0, 1.0, "purple");
+        //var oval1 = new Oval(200, 30, 20, 2.0, 1.0, "teal");
+        //var cir1 = new Oval(300, 30, 20, 1.0, 1.0, "purple");
         var pic1 = new Picture(10, 100, 100, 100, this.aImg.dad);
         var pic2 = new Picture(120, 100, 100, 100, this.aImg.mom);
         var pic3 = new Picture(230, 100, 100, 100, this.aImg.son1);
         var pic4 = new Picture(340, 100, 100, 100, this.aImg.son2);
         var pic5 = new Picture(450, 100, 100, 100, this.aImg.daughter);
-        var hrt = new Heart(510, 30, 60, 20, "pink");
-        var bear = new Bear(100, 100, 50, "#452200", this.canvas1);
-        var cat = new Cat(350, 300, 150, "grey", this.canvas1);
+        //var hrt = new Heart(510, 30, 60, 20, "pink");
+
 
         this.shpinDrawing.insertObj(pic1);
         this.shpinDrawing.insertObj(pic2);
@@ -35,14 +35,20 @@ function FotoPrint()
         this.shpinDrawing.insertObj(pic5);
         this.shpinDrawing.insertObj(r1);
         this.shpinDrawing.insertObj(s1);
-        this.shpinDrawing.insertObj(oval1);
-        this.shpinDrawing.insertObj(cir1);
-        this.shpinDrawing.insertObj(hrt);
-        this.shpinDrawing.insertObj(bear);
-        this.shpinDrawing.insertObj(cat);
+        //this.shpinDrawing.insertObj(oval1);
+        //this.shpinDrawing.insertObj(cir1);
+        //this.shpinDrawing.insertObj(hrt);
 
         this.canvas1.addEventListener('mousedown', drag, false);
         this.canvas1.addEventListener('dblclick', makenewitem, false);
+
+        this.shpinDrawing2 = new Pool(20);
+        this.canvas2 = document.getElementById('figures');
+        var bear = new Bear(100, 90, 50, "#452200", this.canvas2);
+        var cat = new Cat(100, 250, 50, "brown", this.canvas2);
+        this.shpinDrawing2.insertObj(bear);
+        this.shpinDrawing2.insertObj(cat);
+        this.canvas2.addEventListener('mousedown', select, false);
     };
 
     this.drawCanvasRect = function() {
@@ -174,39 +180,39 @@ function Picture(x,y,w,h,imagename) {
 }
 Picture.prototype = new DrawingShape();
 
-function Oval(x,y,r,hor,ver,c) {
-    this.init(x,y,c);
-    this.r = r;
-    this.radsq = r*r;
-    this.hor = hor;
-    this.ver = ver;
-
-    this.overcheck = function overoval(mx,my) {
-        var x1 = 0;  //this is this.x - this.x
-        var y1 = 0;
-        var x2 = (mx-this.x)/this.hor;
-        var y2 = (my-this.y)/this.ver;
-        if (this.distsq(x1,y1,x2,y2)<=(this.radsq) ){
-            return true;
-        }
-        else {
-            return false;
-        }
-    };
-
-    this.draw = function() {
-        app.ctx.save();
-        app.ctx.translate(this.x,this.y);
-        app.ctx.scale(this.hor,this.ver);
-        app.ctx.fillStyle = this.color;
-        app.ctx.beginPath();
-        app.ctx.arc(0,0,this.r,0,2*Math.PI,true);
-        app.ctx.closePath();
-        app.ctx.fill();
-        app.ctx.restore();
-    };
-}
-Oval.prototype = new DrawingShape();
+//function Oval(x,y,r,hor,ver,c) {
+//    this.init(x,y,c);
+//    this.r = r;
+//    this.radsq = r*r;
+//    this.hor = hor;
+//    this.ver = ver;
+//
+//    this.overcheck = function overoval(mx,my) {
+//        var x1 = 0;  //this is this.x - this.x
+//        var y1 = 0;
+//        var x2 = (mx-this.x)/this.hor;
+//        var y2 = (my-this.y)/this.ver;
+//        if (this.distsq(x1,y1,x2,y2)<=(this.radsq) ){
+//            return true;
+//        }
+//        else {
+//            return false;
+//        }
+//    };
+//
+//    this.draw = function() {
+//        app.ctx.save();
+//        app.ctx.translate(this.x,this.y);
+//        app.ctx.scale(this.hor,this.ver);
+//        app.ctx.fillStyle = this.color;
+//        app.ctx.beginPath();
+//        app.ctx.arc(0,0,this.r,0,2*Math.PI,true);
+//        app.ctx.closePath();
+//        app.ctx.fill();
+//        app.ctx.restore();
+//    };
+//}
+//Oval.prototype = new DrawingShape();
 
 function Heart(x,y,h,drx,color) {
     this.init(x,y,color);
@@ -371,3 +377,48 @@ function saveasimage() {
     }
 }
 
+function select(ev) {
+
+    var mx;
+    var my;
+    if ( ev.layerX ||  ev.layerX == 0) {
+        mx= ev.layerX;
+        my = ev.layerY;
+    } else if (ev.offsetX || ev.offsetX == 0) {
+        mx = ev.offsetX;
+        my = ev.offsetY;
+    }
+    var endpt = app.shpinDrawing2.stuff.length-1;
+    for (var i=endpt;i>=0;i--) {
+        if (app.shpinDrawing2.stuff[i].overcheck(mx,my)) {
+            app.offsetx = mx-app.shpinDrawing2.stuff[i].x;
+            app.offsety = my-app.shpinDrawing2.stuff[i].y;
+            var item = app.shpinDrawing2.stuff[i];
+            app.thingSelectet = item;
+            //app.shpinDrawing2.stuff.push(item);
+            app.canvas1.style.cursor = "pointer";   // change to finger when dragging
+            app.canvas1.removeEventListener('mousedown', drag, false);
+            app.canvas1.addEventListener('mousedown',insert,false);
+            break;
+        }
+    }
+
+}
+
+function insert(ev) {
+    var mx;
+    var my;
+    if ( ev.layerX ||  ev.layerX == 0) {
+        mx= ev.layerX;
+        my = ev.layerY;
+    } else if (ev.offsetX || ev.offsetX == 0) {
+        mx = ev.offsetX;
+        my = ev.offsetY;
+    }
+    //app.thingSelectet.init(mx, my);
+    var item = app.thingSelectet;
+    app.thingSelectet.init(mx, my, app.thingSelectet.s,  document.forms["frm1"]["color"].value, app.canvas1);
+    app.shpinDrawing.insertObj(item);
+    app.canvas1.removeEventListener('mousedown',insert,false);
+    app.canvas1.addEventListener('mousedown', drag, false);
+}
