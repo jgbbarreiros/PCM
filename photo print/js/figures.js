@@ -185,3 +185,29 @@ function Cat(x, y, s, color, canvas) {
 }
 
 Cat.prototype = new Figure();
+
+
+function Text(x, y, s, text, color, canvas) {
+
+    this.init(x, y, s, color, canvas);
+    this.text = text;
+
+    this.draw = function() {
+        var ctx = this.canvas.getContext("2d");
+        ctx.save();
+        ctx.font = s.toString()+"px Arial";
+        ctx.fillStyle = this.color;
+        ctx.fillText(this.text,this.x,this.y+this.s);
+        ctx.restore();
+    };
+
+    this.overcheck = function(mx, my) {
+        var l = this.text.length;
+        var w = this.s*l;
+        var h = this.s;
+        return ((mx>=this.x)&&(mx<=(this.x+w))&&(my>=this.y)&&(my<=(this.y+h)));
+    };
+
+}
+
+Text.prototype = new Figure();

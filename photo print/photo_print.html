@@ -8,17 +8,20 @@
     <script src="js/figures.js" charset="UTF-8"></script>
 </head>
 <body>
+<button onclick="insertText();">Text</button>
+<button onclick="saveasimage();"> Save Image </button>
+<button onclick="removeobj();"> Delete </button>
 <form name="frm1">
     <label>
         <input type="color" name="color">
     </label>
-</form>
-<button onclick="prompt('Please enter your text', 'text');">Text</button>
-<button onclick="saveasimage();"> Save Image </button>
-<button onclick="removeobj();"> Delete </button><br>
+    <label>
+        <input onchange="inserirImagem();" type="file" accept="images/*" name="img" id="img">
+    </label>
+</form><br>
 <canvas id="scratch" width="800" height="600" style="border:1px solid #000000;"></canvas>
 <canvas id="figures" width="200" height="600" style="border:1px solid #000000;"></canvas>
-<script src="js/FP.js"></script>
+<script src="js/PhotoPrint.js"></script>
 
 </body>
 </html>

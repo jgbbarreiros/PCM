@@ -5,6 +5,7 @@ function FotoPrint()
     this.aImg = new AppImages();
     this.thingInMotion;
     this.thingSelectet;
+    this.text;
 
     this.offsetx;
     this.offsetx;
@@ -86,20 +87,20 @@ function AppImages() {
 
     this.dad.onload = function () {
         imageLoaded();
-    }
+    };
 
     this.mom.onload = function () {
         imageLoaded();
-    }
+    };
     this.son1.onload = function () {
         imageLoaded();
-    }
+    };
     this.son2.onload = function () {
         imageLoaded();
-    }
+    };
     this.daughter.onload = function () {
         imageLoaded();
-    }
+    };
     this.dad.src = "imgs/daniel1.jpg";
     this.mom.src = "imgs/allison1.jpg";
     this.son1.src = "imgs/grant1.jpg";
@@ -393,8 +394,7 @@ function select(ev) {
         if (app.shpinDrawing2.stuff[i].overcheck(mx,my)) {
             app.offsetx = mx-app.shpinDrawing2.stuff[i].x;
             app.offsety = my-app.shpinDrawing2.stuff[i].y;
-            var item = app.shpinDrawing2.stuff[i];
-            app.thingSelectet = item;
+            app.thingSelectet = app.clone(app.shpinDrawing2.stuff[i]);
             //app.shpinDrawing2.stuff.push(item);
             app.canvas1.style.cursor = "pointer";   // change to finger when dragging
             app.canvas1.removeEventListener('mousedown', drag, false);
@@ -417,8 +417,77 @@ function insert(ev) {
     }
     //app.thingSelectet.init(mx, my);
     var item = app.thingSelectet;
-    app.thingSelectet.init(mx, my, app.thingSelectet.s,  document.forms["frm1"]["color"].value, app.canvas1);
+    item.init(mx, my, item.s, document.forms["frm1"]["color"].value, app.canvas1);
     app.shpinDrawing.insertObj(item);
+    app.canvas1.style.cursor = "crosshair";
     app.canvas1.removeEventListener('mousedown',insert,false);
     app.canvas1.addEventListener('mousedown', drag, false);
+}
+
+function insertText() {
+    app.text = prompt('Please enter your text', 'text');
+    if (app.text != null) {
+        app.canvas1.style.cursor = "pointer";
+        app.canvas1.removeEventListener('mousedown', insert, false);
+        app.canvas1.removeEventListener('mousedown', drag, false);
+        app.canvas1.addEventListener('mousedown', insertTextEV, false);
+    }
+}
+
+function insertTextEV(ev) {
+
+    var mx;
+    var my;
+    if ( ev.layerX ||  ev.layerX == 0) {
+        mx= ev.layerX;
+        my = ev.layerY;
+    } else if (ev.offsetX || ev.offsetX == 0) {
+        mx = ev.offsetX;
+        my = ev.offsetY;
+    }
+
+    var item = new Text(mx, my, 30, app.text, document.forms["frm1"]["color"].value, app.canvas1);
+    app.shpinDrawing.insertObj(item);
+    app.canvas1.style.cursor = "crosshair";
+    app.canvas1.removeEventListener('mousedown', insertTextEV, false);
+    app.canvas1.addEventListener('mousedown', drag, false);
+}
+
+function inserirImagem() {
+    app.image = new Image();
+    var filea = document.getElementById('img');
+    var coisa = filea.files[0];
+    var fileURLa = createObjectURL(coisa);
+    app.image.src = fileURLa;
+    app.image.onload = function () {
+        app.canvas1.removeEventListener('mousedown', drag, false);
+        app.canvas1.addEventListener('mousedown', insertImageEV, false);
+    };
+}
+
+function insertImageEV(ev) {
+    var mx;
+    var my;
+    if ( ev.layerX ||  ev.layerX == 0) {
+        mx= ev.layerX;
+        my = ev.layerY;
+    } else if (ev.offsetX || ev.offsetX == 0) {
+        mx = ev.offsetX;
+        my = ev.offsetY;
+    }
+    var pic = new Picture(mx, my, app.image.width, app.image.height, app.image);
+    app.shpinDrawing.insertObj(pic);
+    app.canvas1.style.cursor = "crosshair";
+    app.canvas1.removeEventListener('mousedown', insertImageEV, false);
+    app.canvas1.addEventListener('mousedown', drag, false);
+}
+
+function createObjectURL ( file ) {
+    if ( window.webkitURL ) {
+        return window.webkitURL.createObjectURL( file );
+    } else if ( window.URL && window.URL.createObjectURL ) {
+        return window.URL.createObjectURL( file );
+    } else {
+        return null;
+    }
 }
