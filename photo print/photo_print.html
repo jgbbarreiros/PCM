@@ -13,7 +13,8 @@
 <button onclick="fp.save();">Save Image</button>
 <button onclick="fp.addText();">Text</button>
 <button onclick="fp.remove();">Delete</button>
-<label><input onchange="fp.color();" type="color" name="color" id="color" value="#ff0000"></label>
+<input onchange="fp.setColor();" type="color" name="color" id="color" value="#ff0000">
+<label><input onchange="fp.setFillBucket();" type="checkbox" name="bucket" id="bucket"/>Fill Bucket</label>
 <input onchange="fp.addImage();" type="file" accept="images/*" name="img" id="img"><br>
 <canvas id="scratch" width="800" height="600" style="border:1px solid #000000;"></canvas>
 <canvas id="fpallet" width="200" height="600" style="border:1px solid #000000;"></canvas>
