@@ -148,6 +148,7 @@ function Cat(x, y, s, color, canvas) {
 
         var ctx = this.canvas.getContext("2d");
         ctx.save();
+        ctx.lineWidth = this.s*.01;
         ctx.strokeStyle = 'black';
         for (var i = 0; i < 3; i++) {
             ctx.beginPath();
@@ -167,14 +168,14 @@ function Cat(x, y, s, color, canvas) {
         this.head = new Oval(this.x, this.y, this.s, 1.1,.9, this.color, this.canvas);
         this.head.draw();
 
-        //var radius_eye = r*.4;
-        //var radius_eyeball = radius_eye*.35;
-        //var l_eye = [x - radius_eye - r *.05, y];
-        //var r_eye = [x + radius_eye + r *.05, y];
-        //this.eyelb = new Oval(this.x - this.s *.4- this.s *.05, l_eye[1], this.s, 1, 1.1, "white");
-        //this.eyels = new Oval(r_eye[0], r_eye[1], radius_eye, 1, 1.1, "white");
-        //this.eyerb = new Oval(l_eye[0] + radius_eye *.6, l_eye[1], radius_eyeball, 1, 1.1, "black");
-        //this.eyels = new Oval(r_eye[0] + radius_eye *.6, r_eye[1], radius_eyeball, 1, 1.1, "black");
+        this.eyelb = new Oval(this.x - this.s *.4- this.s *.05, this.y, this.s *.4, 1, 1.1, "white", this.canvas);
+        this.eyelb.draw();
+        this.eyels = new Oval(this.x - this.s *.4- this.s *.05 + this.s *.4 *.6, this.y, this.s *.4 *.35, 1, 1.1, "black", this.canvas);
+        this.eyels.draw();
+        this.eyerb = new Oval(this.x + this.s *.4 + this.s *.05, this.y, this.s *.4, 1, 1.1, "white", this.canvas);
+        this.eyerb.draw();
+        this.eyers = new Oval(this.x + this.s *.4 + this.s *.05 + this.s *.4 *.6, this.y, this.s *.4 *.35, 1, 1.1, "black", this.canvas);
+        this.eyers.draw();
 
     };
 
@@ -187,27 +188,46 @@ function Cat(x, y, s, color, canvas) {
 Cat.prototype = new Figure();
 
 
-function Text(x, y, s, text, color, canvas) {
+function Text(text, x, y, s, color, canvas) {
 
     this.init(x, y, s, color, canvas);
     this.text = text;
+    this.w = undefined;
+    this.h = undefined;
 
     this.draw = function() {
         var ctx = this.canvas.getContext("2d");
         ctx.save();
-        ctx.font = s.toString()+"px Arial";
+        var a = this.s;
+        ctx.font = a.toString()+"px Arial";
+        this.w = ctx.measureText(this.text).width;
         ctx.fillStyle = this.color;
-        ctx.fillText(this.text,this.x,this.y+this.s);
+        ctx.fillText(this.text,this.x,this.y+this.s *.8);
         ctx.restore();
     };
 
     this.overcheck = function(mx, my) {
-        var l = this.text.length;
-        var w = this.s*l;
-        var h = this.s;
-        return ((mx>=this.x)&&(mx<=(this.x+w))&&(my>=this.y)&&(my<=(this.y+h)));
+        return ((mx>=this.x)&&(mx<=(this.x+this.w))&&(my>=this.y)&&(my<=(this.y+this.s)));
     };
 
 }
 
 Text.prototype = new Figure();
+
+function Picture(src, w, h, x, y, s, color, canvas) {
+
+    this.init(x, y, s, color, canvas);
+    this.w = w ;
+    this.h = h ;
+    this.src = src;
+
+    this.draw = function() {
+        var ctx = this.canvas.getContext("2d");
+        ctx.drawImage(this.src, this.x, this.y, this.w + this.s - 1000, this.h + this.s - 1000);
+    };
+
+    this.overcheck = function(mx, my) {
+        return ((mx>=this.x)&&(mx<=(this.x+this.w))&&(my>=this.y)&&(my<=(this.y+this.h)));
+    };
+}
+Picture.prototype = new Figure();

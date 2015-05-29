@@ -5,23 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Photo Print</title>
     <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
-    <script src="js/figures.js" charset="UTF-8"></script>
+    <script src="js/Canvas.js" charset="UTF-8"></script>
+    <script src="js/Figure.js" charset="UTF-8"></script>
+    <script src="js/PhotoPrint.js" charset="UTF-8"></script>
 </head>
 <body>
-<button onclick="insertText();">Text</button>
-<button onclick="saveasimage();"> Save Image </button>
-<button onclick="removeobj();"> Delete </button>
-<form name="frm1">
-    <label>
-        <input type="color" name="color">
-    </label>
-    <label>
-        <input onchange="inserirImagem();" type="file" accept="images/*" name="img" id="img">
-    </label>
-</form><br>
+<button onclick="fp.save();">Save Image</button>
+<button onclick="fp.addText();">Text</button>
+<button onclick="fp.remove();">Delete</button>
+<label><input onchange="fp.color();" type="color" name="color" id="color" value="#ff0000"></label>
+<input onchange="fp.addImage();" type="file" accept="images/*" name="img" id="img"><br>
 <canvas id="scratch" width="800" height="600" style="border:1px solid #000000;"></canvas>
-<canvas id="figures" width="200" height="600" style="border:1px solid #000000;"></canvas>
-<script src="js/PhotoPrint.js"></script>
+<canvas id="fpallet" width="200" height="600" style="border:1px solid #000000;"></canvas>
+<script src="js/init.js"></script>
 
 </body>
 </html>
