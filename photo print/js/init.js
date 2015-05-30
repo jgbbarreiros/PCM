@@ -5,13 +5,18 @@ var scratch = new Canvas(document.getElementById('scratch'));
 var fp = new PhotoPrint(scratch);
 
 fpallet.style('black', 5);
+fpallet.setColor('white');
 
 
 var bear = new Bear(100, 90, 50, "#452200", fpallet.canvas);
 var cat = new Cat(100, 250, 50, "brown", fpallet.canvas);
+var flowerDonger = new FlowerDonger(100, 365, 50, "black", fpallet.canvas);
+var flower = new Flower(6, 100, 500, 50, "#FFB32B", fpallet.canvas);
 
 fpallet.add(cat);
 fpallet.add(bear);
+fpallet.add(flowerDonger);
+fpallet.add(flower);
 
 var bear2 = new Bear(100, 100, 50, '#452200', scratch.canvas);
 

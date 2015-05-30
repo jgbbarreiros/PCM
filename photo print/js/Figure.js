@@ -25,6 +25,7 @@ function Figure() {
     };
 }
 
+
 function Poligon(points, s, color, canvas) {
 
     this.init(points[0][0], points[0][1], s, color, canvas);
@@ -48,7 +49,6 @@ function Poligon(points, s, color, canvas) {
 
     };
 }
-
 Poligon.prototype = new Figure();
 
 function Oval(x, y, s, hor, ver, color, canvas) {
@@ -124,7 +124,6 @@ function Bear(x, y, s, color, canvas) {
     this.overcheck = function(mx, my) {
         return this.earlb.overcheck(mx, my) || this.earrb.overcheck(mx, my) || this.head.overcheck(mx, my);
     };
-
 }
 Bear.prototype = new Figure();
 
@@ -182,11 +181,93 @@ function Cat(x, y, s, color, canvas) {
     this.overcheck = function(mx, my) {
         return this.head.overcheck(mx, my);
     };
-
 }
-
 Cat.prototype = new Figure();
 
+function Flower(p, x, y, s, color, canvas) {
+
+    this.init(x, y, s, color, canvas);
+    this.p = p;
+
+    this.draw = function() {
+        var ctx = this.canvas.getContext("2d");
+        ctx.save();
+        var ang_init = .5*Math.PI;
+        var ang = 2*Math.PI/this.p;
+        var hip = .825*this.s;
+        for (var i = 0; i < this.p; i++) {
+            var ang_current = ang_init + ang*i;
+            var w = Math.cos(ang_current)*hip;
+            var h = Math.sin(ang_current)*hip;
+            this.petal_outside = new Oval(this.x+w, this.y-h, this.s *.55, .9, .9, this.color, this.canvas);
+            this.petal_outside.draw();
+        }
+        this.petal_inside = new Oval(this.x, this.y, this.s *.55, 1, 1, "white", this.canvas);
+        this.petal_inside.draw();
+        ctx.restore();
+    };
+
+    this.overcheck = function(mx, my) {
+        var ang_init = .5*Math.PI;
+        var ang = 2*Math.PI/this.p;
+        var hip = .825*this.s;
+        for (var i = 0; i < this.p; i++) {
+            var ang_current = ang_init + ang*i;
+            var w = Math.cos(ang_current)*hip;
+            var h = Math.sin(ang_current)*hip;
+            if (this.petal_inside.overcheck(mx-w, my+h)) {
+                return true;
+            }
+        }
+        return this.petal_inside.overcheck(mx, my);
+    };
+}
+Flower.prototype = new Figure();
+
+function FlowerDonger(x, y, s, color, canvas) {
+
+    this.init(x, y, s, color, canvas);
+
+    this.draw = function() {
+        this.flower = new Flower(5 ,this.x+Math.cos(.95*Math.PI)* this.s *.9, this.y - Math.sin(.95*Math.PI)* this.s *.75, this.s *.2, this.color, this.canvas);
+        this.flower.draw();
+
+        var ctx = this.canvas.getContext("2d");
+        ctx.save();
+        ctx.strokeStyle = this.color;
+
+        // head
+        ctx.lineWidth = this.s*.06;
+        ctx.beginPath();
+        ctx.arc(this.x-this.s *.3, this.y, this.s*1,.8*Math.PI, 1.2*Math.PI, false);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(this.x+this.s *.3, this.y, this.s*1,.2*Math.PI, 1.8*Math.PI, true);
+        ctx.stroke();
+
+        // eyes
+        ctx.lineWidth = this.s*.04;
+        ctx.beginPath();
+        ctx.arc(this.x- this.s*.2, this.y - this.s*.1, this.s *.25,-.05*Math.PI,-.95*Math.PI, true);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(this.x + this.s *.7, this.y - this.s*.1, this.s *.25,-.05*Math.PI,-.95*Math.PI, true);
+        ctx.stroke();
+
+        // mouth
+        ctx.beginPath();
+        ctx.arc(this.x+ this.s*.265, this.y + this.s*.2, this.s *.25,.2*Math.PI,.8*Math.PI, false);
+        ctx.stroke();
+
+        ctx.restore();
+    };
+
+    this.overcheck = function(mx,my) {
+        //
+        return (mx >= this.x-this.s *1.35) && (mx <= this.x+this.s *1.35) && my>=this.y - this.s*.625 && my<= this.y + this.s*.625;
+    };
+}
+FlowerDonger.prototype = new Figure();
 
 function Text(text, x, y, s, color, canvas) {
 
@@ -199,7 +280,7 @@ function Text(text, x, y, s, color, canvas) {
         var ctx = this.canvas.getContext("2d");
         ctx.save();
         var a = this.s;
-        ctx.font = a.toString()+"px Arial";
+        ctx.font = a.toString()+"px Lato";
         this.w = ctx.measureText(this.text).width;
         ctx.fillStyle = this.color;
         ctx.fillText(this.text,this.x,this.y+this.s *.8);
@@ -209,9 +290,7 @@ function Text(text, x, y, s, color, canvas) {
     this.overcheck = function(mx, my) {
         return ((mx>=this.x)&&(mx<=(this.x+this.w))&&(my>=this.y)&&(my<=(this.y+this.s)));
     };
-
 }
-
 Text.prototype = new Figure();
 
 function Picture(src, w, h, x, y, s, color, canvas) {
@@ -223,11 +302,11 @@ function Picture(src, w, h, x, y, s, color, canvas) {
 
     this.draw = function() {
         var ctx = this.canvas.getContext("2d");
-        ctx.drawImage(this.src, this.x, this.y, this.w + this.s - 1000, this.h + this.s - 1000);
+        ctx.drawImage(this.src, this.x, this.y, this.w * this.s *.001, this.h * this.s *.001);
     };
 
     this.overcheck = function(mx, my) {
-        return ((mx>=this.x)&&(mx<=(this.x+this.w))&&(my>=this.y)&&(my<=(this.y+this.h)));
+        return ((mx>=this.x)&&(mx<=(this.x+this.w* this.s *.001))&&(my>=this.y)&&(my<=(this.y+this.h* this.s *.001)));
     };
 }
 Picture.prototype = new Figure();
