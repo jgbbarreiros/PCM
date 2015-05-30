@@ -53,6 +53,13 @@ function Canvas(canvas) {
         this.ctx.clearRect(0, 0, this.w, this.h);
     };
 
+    this.clearAll = function() {
+        this.clear();
+        this.selected = undefined;
+        this.figures = [];
+        this.color = undefined;
+    };
+
 
     this.setColor = function(color) {
         // set background color

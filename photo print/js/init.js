@@ -55,7 +55,7 @@ function insert(ev) {
         mx = ev.offsetX;
         my = ev.offsetY;
     }
-    fpallet.selected.init(mx, my, fpallet.selected.s, document.getElementById('color').value, scratch.canvas);
+    fpallet.selected.init(mx, my, fpallet.selected.s, fpallet.selected.color, scratch.canvas);
     scratch.add(fpallet.selected);
     scratch.canvas.style.cursor = "crosshair";
     scratch.canvas.removeEventListener('mousedown',insert, false);
@@ -79,7 +79,9 @@ function drag(ev) {
             scratch.offsetY = my-figures[i].y;
             var figure = figures[i];
             scratch.remove(figure);
-            //figure.color = document.getElementById('color').value;
+            if (fp.fillBucket) {
+                figure.color = fp.color;
+            }
             scratch.add(figure);
             scratch.canvas.style.cursor = "move";
             scratch.canvas.addEventListener('mousemove', move, false);
@@ -87,7 +89,9 @@ function drag(ev) {
             return;
         }
     }
-    //scratch.setColor(document.getElementById('color').value);
+    if (fp.fillBucket) {
+        scratch.setColor(fp.color);
+    }
 }
 
 function move(ev) {
@@ -169,6 +173,7 @@ function insertImage(ev) {
     var pic = new Picture(fp.myImage, fp.myImage.width, fp.myImage.height, mx, my, 1000, 'white',scratch.canvas);
     scratch.add(pic);
     scratch.canvas.style.cursor = "crosshair";
+    document.getElementById('img').value = null;
     scratch.canvas.removeEventListener('mousedown', insertImage, false);
     scratch.canvas.addEventListener('mousedown', drag, false);
 }
@@ -184,7 +189,7 @@ function insertText(ev) {
         my = ev.offsetY;
     }
 
-    var item = new Text(fp.myText, mx, my, 30, document.getElementById('color').value, scratch.canvas);
+    var item = new Text(fp.myText, mx, my, 30, 'black', scratch.canvas);
     scratch.add(item);
     scratch.canvas.style.cursor = "crosshair";
     scratch.canvas.removeEventListener('mousedown', insertText, false);

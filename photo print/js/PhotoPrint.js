@@ -1,9 +1,10 @@
 function PhotoPrint(canvas) {
 
     this.canvas = canvas;
-    this.color = undefined;
+    this.color = '#ff0000';
     this.myImage = undefined;
     this.myText = undefined;
+    this.fillBucket = false;
 
     this.save = function() {
         try {
@@ -21,7 +22,7 @@ function PhotoPrint(canvas) {
         }
     };
 
-    this.addText = function() {
+    this.setText = function() {
         this.myText = prompt('Please enter your text', 'text');
         if (this.myText != null) {
             this.canvas.canvas.style.cursor = "pointer";
@@ -32,11 +33,15 @@ function PhotoPrint(canvas) {
         }
     };
 
-    this.color = function() {
+    this.setColor = function() {
         this.color = document.getElementById('color').value;
     };
 
-    this.addImage = function() {
+    this.setFillBucket = function() {
+        this.fillBucket = document.getElementById('fillBucket').checked;
+    };
+
+    this.setImage = function() {
         this.myImage = new Image();
         var fileURL = window.URL.createObjectURL(document.getElementById('img').files[0]);
         this.myImage.src = fileURL;
