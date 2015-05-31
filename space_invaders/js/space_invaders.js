@@ -129,9 +129,10 @@ function Bullet(object) {
 Bullet.prototype = new Drawable();
 
 function Enemy() {
-    var percentFire = 0.01;
+    var percentFire = 0.005;
     var chance = 0;
     this.alive = false;
+    this.checkBottom = true;
     this.spawn = function(x, y, speed) {
         this.x = x;
         this.y = y;
@@ -153,10 +154,10 @@ function Enemy() {
         else if (this.x >= this.rightEdge + this.width) {
             this.speedX = -this.speed;
         }
-        else if (this.y >= this.bottomEdge) {
-            this.speed = 1.5;
+        else if (this.y >= this.bottomEdge && this.checkBottom) {
+            this.speed = 1.0;
             this.speedY = 0;
-            this.y -= 5;
+            this.checkBottom = false;
             this.speedX = -this.speed;
         }
         this.context.drawImage(imageRepository.enemy, this.x, this.y);
@@ -332,10 +333,10 @@ function Game() {
             var x = 100;
             var y = -height;
             var spacer = y * 1.5;
-            for (var i = 1; i <= 18; i++) {
-                this.enemyPool.get(x,y,0.5);
+            for (var i = 1; i <= 10; i++) {
+                this.enemyPool.get(x+width,y-height,0.5);
                 x += width + 25;
-                if (i % 6 == 0) {
+                if (i % 5 == 0) {
                     x = 100;
                     y += spacer
                 }
