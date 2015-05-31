@@ -1,0 +1,1621 @@
+Licenciatura em Engenharia de Redes de Comunicação e Multimédia
+Produção de Conteúdos Multimédia
+ISEL / DEETC
+
+Aula de Laboratório
+de
+Produção de Conteúdos
+Multimédia
+
+Space Invaders – HTML5 e JavaScript
+Rui Jesus
+
+Introdução
+Este trabalho visa introduzir o HTML5 e a manipulação das novas tags, de forma programática
+em JavaScript utilizando o DOM. É também objectivo aprender a fazer animações e a trabalhar
+com imagens utilizando APIs em JavaScript e o objecto canvas. São utilizadas as técnicas mais
+comuns relativamente à utilização de áudio, de eventos, do teclado e do rato. Em geral, são
+introduzidos os princípios básicos para desenvolver aplicações multimédia (particularmente
+jogos) em HTML5/JavaScript. Em baixo são enumerados dois links que deve consultar durante
+o desenvolvimento deste trabalho.
+w3schools.com – HTML5
+http://www.w3schools.com/html/html5_intro.asp
+w3schools.com – JavaScript
+http://www.w3schools.com/js/default.asp
+
+Trabalho Laboratorial
+Space Invaders
+Este guia descreve os passos principais para implementar em HTML5 uma versão do
+tradicional jogo Space Invaders. O objectivo do jogo é destruir um conjunto de naves inimigas
+(aliens) para ganhar o maior número de pontos possível. O jogador controla os movimentos de
+uma nave que se movimenta na parte inferior da tela. Da parte superior marcham em direção à
+nave os aliens. O objectivo do jogador é evitar que os aliens atinjam a parte inferior da tela, para
+essa tarefa, a nave possui munição infinita para atirar.
+A figura seguinte exemplifica um aspecto possível da interface do jogo a desenvolver.
+Também são indicadas algumas das entidades que compõem o jogo:
+Ship - nave controlada pelo utilizador (teclado e rato);
+Enemy - nave inimigas que marcha do topo para a parte inferior;
+Background - animação com partículas que descem aleatóriamente do topo;
+Bullet - bala da nave para destruir as naves inimigas;
+Enemy_Bullet - balas das naves inimigas para destruir a nave controlada pelo utilizador;
+Score - espaço da interface onde são apresentados alguns dados do jogo (e.g.,
+pontuação).
+
+Game - motor de jogo;
+Estas entidades representam algumas das funções construtoras a desenvolver. É
+necessário implementar também função construtora principal que vai servir de motor de jogo
+(Game).
+
+Score
+
+Enemy
+
+Background
+
+Bullet
+
+Enemy_Bullet
+
+Ship
+
+Intellij IDEA – JavaScript IDE
+1. Faça
+
+download
+
+do
+
+Intellij
+
+IDEA
+
+(versão
+
+Ultimate)
+
+seguindo
+
+o
+
+link,
+
+http://www.jetbrains.com/idea/download/ .
+2. Instale a ferramenta de desenvolvimento no seu PC.
+Nota: Pedir o nº de licença ao docente.
+Projecto no IntelliJ IDEA
+3. Execute o IntelliJ IDEA. E selecione a opção “Create New Project” (ver figura 1) para
+criar um novo projeto.
+
+Figura 1.
+4. No ecrã seguinte (figura 2) selecione a opção “Web” no painel do lado esquerdo. Indique
+o nome do projeto e a diretoria e clique no botão “Finish”.
+
+Figura 2.
+
+5. Na painel “Project” crie quatro directorias (MRB sobre o título do projecto, seleccione
+“NEW e depois “Directory”) com os seguintes nomes:
+•
+
+“css” - directoria para guardar os ficheiros com os estilos;
+
+•
+
+“js” - directoria para guardar os ficheiros JavaScript;
+
+•
+
+“imgs” - directoria para guardar as imagens necessárias no projecto;
+
+•
+
+“sounds” - directoria para guardar os ficheiros de áudio necessários no
+projecto.
+
+6. Faça novamente MRB (Mouse Right Button) sobre o nome do projecto na janela de
+projecto e “NEW”. A seguir, seleccione “HTML FILE” para criar um ficheiro HTML
+onde iremos colocar os elementos HTML e onde faremos a ligação ao JavaScript. Dê o
+nome de “Space_Invaders” ao ficheiro.
+7. Faça MRB sobre a directoria “css”, seleccione “NEW” e depois “FILE”. Dê o nome de
+“styling.css” ao ficheiro que acabou de criar.
+8. Proceda da mesma forma que no ponto anterior mas agora sobre a directoria “js” e
+seleccionando a opção “JavaScript File”. Crie um ficheiro JavaScript com o nome,
+“space_invaders.js”.
+9. Faça download do ficheiro “data.zip” na página da unidade curricular no Moodle. Copie as
+imagens para a directoria do projecto “imgs” e os ficheiros de áudio para a directoria
+“sounds”.
+
+Background do jogo e objecto game
+10. Copie o seguinte código para o ficheiro “space_invaders.html”:
+<!DOCTYPE html>
+<html>
+<head>
+<title>Space Invaders</title>
+<meta name="description" content="PCM tutorial- Space
+Invaders Game">
+<meta name="keywords" content="HTML5, CSS, JavaScript">
+<meta name="author" content="Rui Jesus">
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css"
+href="css/styling.css">
+<script src="js/space_invaders_1.js"> </script>
+</head>
+<body>
+<canvas id="background" width="600" height="360">
+Your browser does not support canvas. Please try again
+with a different browser.
+</canvas>
+<script> window.onload = init(); </script>
+</body>
+</html>
+
+No código em cima, no bloco <head>, aparecem elementos que permitem introduzir
+meta-informação na página e as ligações à folha de estilo e ao código em JavaScript. No
+bloco <body> temos a definição do canvas porque o jogo é implementado utilizando o
+elemento <canvas>. Finalmente, é chamada a função init() (que será definida em
+JavaScript) como resposta ao evento onload que é activado quando a página HTML
+estiver totalmente carregada.
+11. Coloque o seguinte código na folha de estilo (styling.css):
+canvas {
+position: absolute;
+top: 150px;
+left: 150px;
+background: transparent;
+}
+
+Explique as linhas anteriores relativas à formatação do canvas. Utilize o site
+http://www.w3schools.com/ para ajudar a perceber o código.
+12. No ficheiro space_invaders.js coloque o seguinte código:
+
+function init() {
+document.write("Welcome to the Space
+Invaders Tutorial");
+}
+
+Execute o programa. A forma mais simples é selecionar o tab com o ficheiro “.html” é
+aproximar o rato do canto superior direito do ecrã (no espaço reservado ao ficheiro). Ao
+proceder desta forma aparecem 4 botões (uma para cada browser). Selecione o browser
+onde pretende correr a aplicação clicando num do botões. Em alternativa pode recorrer
+ao menu “RUN”.
+Qual o resultado do programa? Para poder ver o elemento <canvas> altere a sua cor de
+fundo para vermelho. Experimente variar a localização e as dimensões do canvas.
+13. No jogo vamos utilizar várias imagens (e.g., background e ship) e algumas são reutilizadas
+várias vezes. Por isso, vamos criar um objecto (imageRepository) para guardar em memória
+as várias imagens. Desta forma, apenas utilizamos um objecto image e não é necessário
+fazer a leitura do ficheiro cada vez que fôr necessário utilizar a imagem. Copie a função
+construtora seguinte para o ficheiro JavaScript:
+var imageRepository = new App_images();
+function App_images() {
+// Define images
+this.empty = null;
+this.background = new Image();
+// Set images src
+this.background.src = "imgs/bg.png";
+}
+
+14. Para desenhar os vários objectos no canvas vamos criar o objecto Drawable. Este objecto é
+um objecto abstrato. Os restantes objectos do jogo vão herdar as suas propriedades e
+redefinir ou criar novos métodos. Copie o seguinte código para o ficheiro JavaScript:
+function Drawable() {
+this.init = function(x, y) {
+// Defualt variables
+this.x = x;
+this.y = y;
+}
+this.speed = 0;
+this.canvasWidth = 0;
+this.canvasHeight = 0;
+// Define abstract function to be implemented in child objects
+this.draw = function() {
+};
+}
+
+15. Coloque o código em baixo no ficheiro JavaScript:
+function Background() {
+this.speed = .5;
+// Implement abstract function
+this.draw = function() {
+this.y += this.speed;
+this.context.drawImage(imageRepository.background, this.x,
+this.y);
+this.context.drawImage(imageRepository.background, this.x,
+this.y - this.canvasHeight);
+if (this.y >= this.canvasHeight)
+this.y = 0;
+};
+}
+// Set Background to inherit properties from Drawable
+Background.prototype = new Drawable();
+
+O objecto Background serve para desenhar a imagem de fundo. Vamos fazer uma
+animação com o fundo. Por isso, desenhamos duas vezes a imagem, a primeira vez a
+ocupar todo o espaço do canvas e na segunda vez a ocupar o espaço em cima do canvas.
+Com a animação as duas imagens vão se movimentando para baixo, e desta forma temos
+um efeito de scrolling.
+16. O objecto principal do jogo é o objecto game. Copie a função construtora para o ficheiro
+JavaScript:
+
+function Game() {
+this.init = function() {
+// Get the canvas element
+this.bgCanvas = document.getElementById('background');
+// Test to see if canvas is supported
+if (this.bgCanvas.getContext) {
+this.bgContext = this.bgCanvas.getContext('2d');
+// Initialize objects to contain their context and
+canvas
+// information
+Background.prototype.context = this.bgContext;
+Background.prototype.canvasWidth =
+this.bgCanvas.width;
+Background.prototype.canvasHeight =
+this.bgCanvas.height;
+// Initialize the background object
+this.background = new Background();
+this.background.init(0,0); // Set draw point to 0,0
+return true;
+} else {
+return false;
+}
+};
+// Start the animation loop
+this.start = function() {
+animate();
+};
+}
+
+Nesta a função construtora Game apenas tem dois métodos. O método init() que vai
+buscar o elemento html <canvas>, verifica se o browser o suporta e de seguida constrói
+o objecto Background. O método start() chama a função global animate() que é responsável
+pela animação.
+17. A animação é realizada com o seguinte código:
+
+// This function must be global
+function animate() {
+requestAnimFrame( animate );
+game.background.draw();
+}
+//Finds the first API that works to optimize the animation loop,
+//otherwise defaults to setTimeout().
+window.requestAnimFrame = (function(){
+return window.requestAnimationFrame
+||
+window.webkitRequestAnimationFrame ||
+window.mozRequestAnimationFrame
+||
+window.oRequestAnimationFrame
+||
+window.msRequestAnimationFrame
+||
+function(/* function */ callback, /* DOMElement */
+element){
+window.setTimeout(callback, 1000 / 60);
+};
+})();
+
+A função animate() é utilizada na função/evento requestAnimFrame() que se repete. Caso o
+browser não seja compatível é utilizado um timer.
+18. Antes de executar o programa, é necessário construir o objecto game (utilizando a função
+construtora Game) e na função init() verificar se é possível iniciar o jogo (if game.init()). Em
+caso afirmativo, é preciso chamar o método start() do objecto game.
+19. Altere a velocidade do scrolling do Background. Experimente outras imagens como
+background.
+
+Ship e Bullet
+20. O jogo tem vários elementos com diversos tipos de movimento. Por isso, vamos criar 3
+canvas: (1) movimento do background; (2) movimento dos inimigos (Enemy) e das balas
+(Enemy_Bullet); (3) movimento da nave controlada pelo utilizador (Ship) e as balas
+(Bullet). Assim, sempre que existe um movimento não é preciso redesenhar todo o jogo.
+O ficheiro html fica assim:
+<!DOCTYPE html>
+<html>
+<head>
+<title>Space Invaders</title>
+<meta name="description" content="PCM tutorial- Space Invaders
+Game">
+<meta name="keywords" content="HTML5, CSS, JavaScript">
+<meta name="author" content="Rui Jesus">
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="css/styling.css">
+</head>
+<body>
+<!-- The canvas for the background -->
+<canvas id="background" width="600" height="360">
+Your browser does not support canvas. Please try again with
+a different browser.
+</canvas>
+<!-- The canvas for all enemy ships and bullets -->
+<canvas id="main" width="600" height="360"> </canvas>
+<!-- The canvas the ship uses (can only move up -->
+<canvas id="ship" width="600" height="360"> </canvas>
+<script src="js/space_invaders_2.js"></script>
+</body>
+</html>
+
+Para além de criar os três <canvas>, foi retirado o evento window.onload que permitia
+chamar a função init() após a página ter sido carregada. Agora, fazemos ligação ao
+ficheiro JavaScript que começa a ser executado. Vamos ver a seguir porque é que tem de
+ser assim.
+21. O repositório de imagens fica com três imagens. Assim, a função construtora
+App_Images() fica com o código em baixo:
+
+this.background = new Image();
+this.spaceship = new Image();
+this.bullet = new Image();
+var numImages = 3;
+var numLoaded = 0;
+function imageLoaded() {
+numLoaded++;
+if (numLoaded === numImages) {
+window.init();
+}
+}
+this.background.onload = function() {
+imageLoaded();
+}
+this.spaceship.onload = function() {
+imageLoaded();
+}
+this.bullet.onload = function() {
+imageLoaded();
+}
+this.background.src = "imgs/bg.png";
+this.spaceship.src = "imgs/ship.png";
+this.bullet.src = "imgs/bullet.png";
+
+O que acontece é que é necessário fazer o load das imagens antes das utilizar. Por isso,
+temos de utilizar o evento onload. O jogo só começa após as imagens terem sido
+carregadas. Explique a sequência de código que é executado após a link para o JavaScript
+em HTML até ao início do jogo.
+22. Actualize a folha de estilo com o código em baixo:
+canvas {
+position: absolute;
+top: 100px;
+left: 100px;
+background: transparent;
+}
+#background {
+z-index: -2;
+}
+#main {
+z-index: -1;
+}
+#ship {
+z-index: 0;
+}
+
+Para cada elemento <canvas> é definido um z-index diferente. Recorrendo ao site do
+W3Schools, diga porque razão os três elementos devem ter um z-index diferente. Não se
+esqueça que os três canvas estão sobrepostos.
+23. O objecto abstrato Drawable fica da seguinte forma:
+function Drawable() {
+this.init = function(x, y, width, height) {
+// Defualt variables
+this.x = x;
+this.y = y;
+this.width = width;
+this.height = height;
+}
+this.speed = 0;
+this.canvasWidth = 0;
+this.canvasHeight = 0;
+// Define abstract function to be implemented in child
+objects
+this.draw = function() {
+};
+this.move = function() {
+};
+}
+
+Foi acrescentado um novo método abstracto, move(), e no método init() foram
+acrescentados dois novos parâmetros.
+24. Em baixo a função construtora Bullet:
+
+function Bullet() {
+this.alive = false;
+this.spawn = function(x, y, speed) {
+this.x = x;
+this.y = y;
+this.speed = speed;
+this.alive = true;
+};
+this.draw = function() {
+this.context.clearRect(this.x, this.y, this.width,
+this.height);
+this.y -= this.speed;
+if (this.y <= 0 - this.height) {
+return true;
+}
+else {
+this.context.drawImage(imageRepository.bullet,
+this.x, this.y);
+}
+};
+this.clear = function() {
+this.x = 0;
+this.y = 0;
+this.speed = 0;
+this.alive = false;
+};
+}
+Bullet.prototype = new Drawable();
+
+O objecto Bullet tem 3 métodos:
+•
+
+spawn – para atribuir os valores da localização, velocidade e tornalo vivo novamente;
+
+•
+
+draw – para desenhar o bullet. É utilizado um rectângulo para
+apagar e depois é desenhado na nova posição;
+
+•
+
+clear – para fazer reset aos atributos do Bullet.
+
+25. O jogo utiliza vários Bullets, por isso, é preciso definir um pool de Bullets. Adicione a
+função construtora pool ao código JavaScript.
+
+function Pool(maxSize) {
+var size = maxSize; // Max bullets allowed in the pool
+var pool = [];
+this.init = function() {
+for (var i = 0; i < size; i++) {
+// Initalize the bullet object
+var bullet = new Bullet();
+bullet.init(0,0,
+imageRepository.bullet.width,imageRepository.bullet.height);
+pool[i] = bullet;
+}
+};
+this.get = function(x, y, speed) {
+if(!pool[size - 1].alive) {
+pool[size - 1].spawn(x, y, speed);
+pool.unshift(pool.pop());
+}
+};
+this.getTwo = function(x1, y1, speed1, x2, y2, speed2) {
+if(!pool[size - 1].alive &&
+!pool[size - 2].alive) {
+this.get(x1, y1, speed1);
+this.get(x2, y2, speed2);
+}
+};
+this.animate = function() {
+for (var i = 0; i < size; i++) {
+// Only draw until we find a bullet that is not alive
+if (pool[i].alive) {
+if (pool[i].draw()) {
+pool[i].clear();
+pool.push((pool.splice(i,1))[0]);
+}
+}
+else
+break;
+}
+};
+}
+
+Quando o pool é inicializado, é preenchido um array com objectos Bullet. Quando é
+preciso um Bullet é utilizado o último elemento do array se não estiver a ser utilizado. Se
+não estiver a ser utilizado, é feito o pop do fim do array e é feito o push no inicío do array.
+Desta forma, temos elementos livres no fim do array e elementos a serem utilizados no
+inicío do array. Para animar um Bullet, primeiro é verificado se o objecto está a ser
+utilizado. Em caso afirmativo é feito o draw. Se o método draw() do pool retornar true,
+significa que o Bullet saiu fora do cenário. Por isso, é feito clear() e com a função splice() o
+Bullet é removido do inicío do array e depois é feito o push() no fim.
+
+26. Copie o código em baixo:
+function Ship() {
+this.speed = 1;
+this.bulletPool = new Pool(30);
+this.bulletPool.init();
+var fireRate = 15;
+var counter = 0;
+this.draw = function() {
+this.context.drawImage(imageRepository.spaceship, this.x,
+this.y);
+};
+this.move = function() {
+counter++;
+// Determine if the action is move action
+if (KEY_STATUS.left || KEY_STATUS.right ||
+KEY_STATUS.down || KEY_STATUS.up) {
+this.context.clearRect(this.x, this.y, this.width,
+this.height);
+if (KEY_STATUS.left) {
+this.x -= this.speed
+if (this.x < 0)
+this.x = -this.speed;
+} else if (KEY_STATUS.right) {
+this.x += this.speed
+if (this.x >= this.canvasWidth - this.width)
+this.x = this.canvasWidth - this.width;
+} else if (KEY_STATUS.up) {
+this.y -= this.speed
+if (this.y <= this.canvasHeight/4*3)
+this.y = this.canvasHeight/4*3;
+} else if (KEY_STATUS.down) {
+this.y += this.speed
+if (this.y >= this.canvasHeight - this.height)
+this.y = this.canvasHeight - this.height;
+}
+this.draw();
+}
+if (KEY_STATUS.space && counter >= fireRate) {
+this.fire();
+counter = 0;
+}
+};
+this.fire = function() {
+this.bulletPool.getTwo(this.x+6, this.y, 3,
+this.x+33, this.y, 3);
+};
+}
+Ship.prototype = new Drawable();
+
+Explique o código em cima. Aumente o número de Bullets disponíveis para disparar.
+Altere o código para que seja disparado apenas um Bullet (em vez de dois em simultâneo)
+do centro da nave (Ship).
+27. Na função construtora Game acrescente o seguinte código ao método init():
+this.init = function() {
+this.bgCanvas = document.getElementById('background');
+this.shipCanvas = document.getElementById('ship');
+this.mainCanvas = document.getElementById('main');
+// Test to see if canvas is supported. Only need to
+// check one canvas
+if (this.bgCanvas.getContext) {
+this.bgContext = this.bgCanvas.getContext('2d');
+this.shipContext = this.shipCanvas.getContext('2d');
+this.mainContext = this.mainCanvas.getContext('2d');
+// Initialize objects to contain their context and
+canvas
+// information
+Background.prototype.context = this.bgContext;
+Background.prototype.canvasWidth =
+this.bgCanvas.width;
+Background.prototype.canvasHeight =
+this.bgCanvas.height;
+Ship.prototype.context = this.shipContext;
+Ship.prototype.canvasWidth = this.shipCanvas.width;
+Ship.prototype.canvasHeight = this.shipCanvas.height;
+Bullet.prototype.context = this.mainContext;
+Bullet.prototype.canvasWidth = this.mainCanvas.width;
+Bullet.prototype.canvasHeight =
+this.mainCanvas.height;
+this.background = new Background();
+this.background.init(0,0);
+this.ship = new Ship();
+var shipStartX = this.shipCanvas.width/2 imageRepository.spaceship.width;
+var shipStartY = this.shipCanvas.height/4*3 +
+imageRepository.spaceship.height*2;
+this.ship.init(shipStartX, shipStartY,
+imageRepository.spaceship.width,
+imageRepository.spaceship.height);
+return true;
+} else {
+return false;
+}
+};
+
+No método start() é preciso fazer, this.ship.draw();, antes de chamar a função global
+animate(). Execute o programa para visualizar a nave sobre o fundo. Altere a posição
+inicial da nave (Ship) para o canto inferior direito canvas.
+28. Para mover a nave e para disparar é necessário utilizar os eventos do teclado para receber
+o input do utilizador. Assim, copie o seguinte código:
+KEY_CODES = {
+32: 'space',
+37: 'left',
+38: 'up',
+39: 'right',
+40: 'down',
+}
+KEY_STATUS = {};
+for (code in KEY_CODES) {
+KEY_STATUS[KEY_CODES[code]] = false;
+}
+document.onkeydown = function(e) {
+// Firefox and opera use charCode instead of keyCode to
+// return which key was pressed.
+var keyCode = (e.keyCode) ? e.keyCode : e.charCode;
+if (KEY_CODES[keyCode]) {
+e.preventDefault();
+KEY_STATUS[KEY_CODES[keyCode]] = true;
+}
+}
+document.onkeyup = function(e) {
+var keyCode = (e.keyCode) ? e.keyCode : e.charCode;
+if (KEY_CODES[keyCode]) {
+e.preventDefault();
+KEY_STATUS[KEY_CODES[keyCode]] = false;
+}
+}
+
+Para capturar as teclas pressionadas utiliza-se os eventos onkeyup e onkeydown. As funções
+handler destes eventos alteram no array KEY_STATUS, a tecla pressionada para true ou
+false.
+29. Antes de executar o programa é preciso acrescentar à função global animate() o seguinte
+código:
+…
+game.ship.move();
+game.ship.bulletPool.animate();
+
+Comente o resultado.
+
+Enemy e Enemy_Bullet
+30. Na função construtora App_Images(), crie novos objectos do tipo Image (“Enemy” e
+“enemy_Bullet”) para as imagens, “enemy.png” e “bullet_enemy”. A seguir, active o
+evento onload para estas duas imagens, tal como está para as restantes imagens. Não se
+esqueça de colocar o nome do ficheiro no atribute src dos novos objectos Image e de
+alterar o valor de numImages para o número total de imagens.
+31. Copie o código em baixo para definir a função construtora das naves Enemy:
+function Enemy() {
+var percentFire = 0.01;
+var chance = 0;
+this.alive = false;
+this.spawn = function(x, y, speed) {
+this.x = x;
+this.y = y;
+this.speed = speed;
+this.speedX = 0;
+this.speedY = speed;
+this.alive = true;
+this.leftEdge = this.x - 90;
+this.rightEdge = this.x + 90;
+this.bottomEdge = this.y + 160;
+};
+this.draw = function() {
+this.context.clearRect(this.x-1, this.y, this.width+1, this.height);
+this.x += this.speedX;
+this.y += this.speedY;
+if (this.x <= this.leftEdge) {
+this.speedX = this.speed;
+}
+else if (this.x >= this.rightEdge + this.width) {
+this.speedX = -this.speed;
+}
+else if (this.y >= this.bottomEdge) {
+this.speed = 1 .5;
+this.speedY = 0;
+this.y -= 5;
+this.speedX = -this.speed;
+}
+this.context.drawImage(imageRepository.enemy, this.x, this.y);
+chance = Math.random();
+if (chance < percentFire) {
+this.fire();
+}
+};
+this.fire = function() {
+game.enemyBulletPool.get(this.x+this.width/2, this.y+this.height, -2.5);
+}
+this.clear = function() {
+this.x = 0;
+this.y = 0;
+this.speed = 0;
+this.speedX = 0;
+this.speedY = 0;
+this.alive = false;
+};
+}
+Enemy.prototype = new Drawable();
+
+32. O jogo contém várias naves inimigas por isso vamos criar também um pool de objectos
+Enemy. Assim, é necessário fazer pequenas alterar o método init() na função construtora
+do pool:
+this.init = function(object) {
+if (object == "bullet") {
+for (var i = 0; i < size; i++) {
+// Initalize the object
+var bullet = new Bullet("bullet");
+bullet.init(0,0,
+imageRepository.bullet.width, imageRepository.bullet.height);
+pool[i] = bullet;
+}
+}
+else if (object == "enemy") {
+for (var i = 0; i < size; i++) {
+var enemy = new Enemy();
+enemy.init(0,0,
+imageRepository.enemy.width, imageRepository.enemy.height);
+pool[i] = enemy;
+}
+}
+else if (object == "enemyBullet") {
+for (var i = 0; i < size; i++) {
+var bullet = new Bullet("enemyBullet");
+bullet.init(0,0,
+imageRepository.enemyBullet.width,
+imageRepository.enemyBullet.height);
+pool[i] = bullet;
+}
+}
+};
+
+Para que se utilize a função construtora pool() com diferentes objectos é necessário passar
+o objecto como parâmetro no método init().
+33. Da mesma forma, a classe “Bullet” é também utilizada para gerar um pool de balas
+inimigas, para além das balas da nave controlada pelo utilizador. Por isso, é necessário
+também introduzir um parâmetro indicando o objecto. Faça as alterações apresentadas
+em baixo na função construtora “Bullet”:
+
+function Bullet(object) {
+this.alive = false;
+var self = object;
+
+…
+this.draw = function() {
+this.context.clearRect(this.x-1, this.y-1, this.width+1,
+this.height+1);
+this.y -= this.speed;
+if (self === "bullet" && this.y <= 0 - this.height) {
+return true;
+}
+else if (self === "enemyBullet" && this.y >=
+this.canvasHeight) {
+return true;
+}
+else {
+if (self === "bullet") {
+this.context.drawImage(imageRepository.bullet,
+this.x, this.y);
+}
+else if (self === "enemyBullet") {
+this.context.drawImage(imageRepository.enemyBullet, this.x,
+this.y);
+}
+return false;
+}
+};
+
+…
+As mudanças são no método draw(), no objecto que é passado como parâmetro na
+função construtora e na utilização do self.
+34. No método init() do “Game” é necessário colocar o canvas indicado na classe “Enemy”,
+construir as naves inimigas e as balas das naves inimigas. Acrescente o seguinte código
+ao método init() da função construtora “Game”:
+
+function Game() {
+this.init = function() {
+
+…
+Enemy.prototype.context = this.mainContext;
+Enemy.prototype.canvasWidth = this.mainCanvas.width;
+Enemy.prototype.canvasHeight = this.mainCanvas.height;
+this.background = new Background();
+this.background.init(0,0); // Set draw point to 0,0
+this.ship = new Ship();
+var shipStartX = this.shipCanvas.width/2 imageRepository.spaceship.width;
+var shipStartY = this.shipCanvas.height/4*3 +
+imageRepository.spaceship.height*2;
+this.ship.init(shipStartX, shipStartY,
+imageRepository.spaceship.width,
+imageRepository.spaceship.height);
+// Initialize the enemy pool object
+this.enemyPool = new Pool(30);
+this.enemyPool.init("enemy");
+var height = imageRepository.enemy.height;
+var width = imageRepository.enemy.width;
+var x = 100;
+var y = -height;
+var spacer = y * 1.5;
+for (var i = 1; i <= 18; i++) {
+this.enemyPool.get(x,y,0.5);
+x += width + 25;
+if (i % 6 == 0) {
+x = 100;
+y += spacer
+}
+}
+this.enemyBulletPool = new Pool(50);
+this.enemyBulletPool.init("enemyBullet");
+return true;
+} else {
+return false;
+}
+};
+
+35. Acrescente as duas linhas de código seguintes à função animate():
+…
+game.enemyPool.animate();
+game.enemyBulletPool.animate();
+
+36. Faça run (modo DEBUG) do programa e comente. Já aparecem as naves inimigas? É
+provável que não, porque falta na função construtora ship incluir o parâmetro “bullet” no
+atributo, this.bulletPool.init("bullet");
+37. Diminua o número de naves inimigas para 10 (2 filas de 5 inimigos). Coloque o conjunto
+dos inimigos mais para cima (junto ao limite superior do background). Diminua também a
+velocidade horizontal com que as naves inimigas se movimentam (movimento esquerdadireita).
+38. Não lhe parece que as naves inimigas disparam muitas balas? Diminua a percentagem de
+balas disparadas pelas naves inimigas.
+Colisões
+39. As colisões são uma das componentes mais importantes deste tipo de jogos, no que diz
+respeito à eficiência computacional do jogo. Para detectar colisões, é necessário verificar
+se a bounding box de cada objecto coincide com alguma bounding box dos restantes
+objectos. Esta comparação de todos com todos pode ser pesada computacionalmente se
+o número de objectos fôr elevado. Não é o caso deste jogo. Contudo, por uma questão
+de generalidade, a solução apresentada procura resolver esta questão. Nos próximos 3
+blocos de código copie a função construtora QuadTree correspondente ao algoritmo
+quadtree (melhor solução encontrada para este problema):
+function QuadTree(boundBox, lvl) {
+var maxObjects = 10;
+this.bounds = boundBox || {
+x: 0,
+y: 0,
+width: 0,
+height: 0
+};
+var objects = [];
+this.nodes = [];
+var level = lvl || 0;
+var maxLevels = 5;
+this.clear = function() {
+objects = [];
+for (var i = 0; i < this.nodes.length; i++) {
+this.nodes[i].clear();
+}
+this.nodes = [];
+};
+this.getAllObjects = function(returnedObjects) {
+for (var i = 0; i < this.nodes.length; i++) {
+this.nodes[i].getAllObjects(returnedObjects);
+}
+for (var i = 0, len = objects.length; i < len; i++) {
+returnedObjects.push(objects[i]);
+}
+return returnedObjects;
+};
+
+this.findObjects = function(returnedObjects, obj) {
+if (typeof obj === "undefined") {
+console.log("UNDEFINED OBJECT");
+return;
+}
+var index = this.getIndex(obj);
+if (index != -1 && this.nodes.length) {
+this.nodes[index].findObjects(returnedObjects, obj);
+}
+for (var i = 0, len = objects.length; i < len; i++) {
+returnedObjects.push(objects[i]);
+}
+};
+
+return returnedObjects;
+
+this.insert = function(obj) {
+if (typeof obj === "undefined") {
+return;
+}
+if (obj instanceof Array) {
+for (var i = 0, len = obj.length; i < len; i++) {
+this.insert(obj[i]);
+}
+return;
+}
+if (this.nodes.length) {
+var index = this.getIndex(obj);
+// Only add the object to a subnode if it can fit completely
+// within one
+if (index != -1) {
+this.nodes[index].insert(obj);
+return;
+}
+}
+objects.push(obj);
+if (objects.length > maxObjects && level < maxLevels) {
+if (this.nodes[0] == null) {
+this.split();
+}
+var i = 0;
+while (i < objects.length) {
+var index = this.getIndex(objects[i]);
+if (index != -1) {
+this.nodes[index].insert((objects.splice(i,1))[0]);
+}
+else {
+i++;
+}
+}
+}
+};
+
+O quadTree é uma estrutura de dados utilizada para dividir regiões 2D em regiões mais pequenas
+e mais fáceis de gerir. Funciona com uma árvore binária mas com 4 filhos (nós) em vez de dois.
+Começa por dividir o ecrã em quatro regiões como é indicado na figura.
+
+this.getIndex = function(obj) {
+var index = -1;
+var verticalMidpoint = this.bounds.x + this.bounds.width / 2;
+var horizontalMidpoint = this.bounds.y + this.bounds.height / 2;
+// Object can fit completely within the top quadrant
+var topQuadrant = (obj.y < horizontalMidpoint && obj.y + obj.height <
+horizontalMidpoint);
+// Object can fit completely within the bottom quandrant
+var bottomQuadrant = (obj.y > horizontalMidpoint);
+// Object can fit completely within the left quadrants
+if (obj.x < verticalMidpoint &&
+obj.x + obj.width < verticalMidpoint) {
+if (topQuadrant) {
+index = 1;
+}
+else if (bottomQuadrant) {
+index = 2;
+}
+}
+// Object can fix completely within the right quandrants
+else if (obj.x > verticalMidpoint) {
+if (topQuadrant) {
+index = 0;
+}
+else if (bottomQuadrant) {
+index = 3;
+}
+}
+return index;
+};
+this.split = function() {
+// Bitwise or [html5rocks]
+var subWidth = (this.bounds.width / 2) | 0;
+var subHeight = (this.bounds.height / 2) | 0;
+
+};
+
+this.nodes[0] = new QuadTree({
+x: this.bounds.x + subWidth,
+y: this.bounds.y,
+width: subWidth,
+height: subHeight
+}, level+1);
+this.nodes[1] = new QuadTree({
+x: this.bounds.x,
+y: this.bounds.y,
+width: subWidth,
+height: subHeight
+}, level+1);
+this.nodes[2] = new QuadTree({
+x: this.bounds.x,
+y: this.bounds.y + subHeight,
+width: subWidth,
+height: subHeight
+}, level+1);
+this.nodes[3] = new QuadTree({
+x: this.bounds.x + subWidth,
+y: this.bounds.y + subHeight,
+width: subWidth,
+height: subHeight
+}, level+1);
+
+De seguida vai introduzindo em cada nó objectos. A partir de um número máximo de
+objectos num nó, o espaço é partido novamente em quatro sub-regiões. Desta forma, objectos
+
+estão em nós diferentes (correspondem a zonas do ecrã diferentes) não podem colidir. O
+algoritmo de colisão só verifica se há colisões com objectos no mesmo nó.
+40. É necessário actualizar as restantes funções construtoras para esta funcionalidade.
+Vamos começar pela função abstracta Drawable. Copie o código em baixo para substituir
+o que tinha anteriormente para a função construtora Drawable.
+function Drawable() {
+this.init = function(x, y, width, height) {
+// Defualt variables
+this.x = x;
+this.y = y;
+this.width = width;
+this.height = height;
+}
+this.speed = 0;
+this.canvasWidth = 0;
+this.canvasHeight = 0;
+this.collidableWith = "";
+this.isColliding = false;
+this.type = "";
+// Define abstract function to be implemented in child objects
+this.draw = function() {
+};
+this.move = function() {
+};
+this.isCollidableWith = function(object) {
+return (this.collidableWith === object.type);
+};
+}
+
+Foram adicionados 2 novos atributos, isColliding para indicar se o objecto está a colidir
+com algum objecto e colliadableWith, um lista com os objectos que podem colidir com
+cada objecto. Finalmente, foi também acrescentado um método para retornar o valor do
+segundo novo atributo.
+
+41. No objecto “Bullet” alterou-se o método draw() e o clear(). No primeiro, é preciso
+verificar se o objecto está a colidir com alguém. No segundo, apenas se altera o atributo
+isColliding para false.
+
+this.draw = function() {
+this.context.clearRect(this.x-1, this.y-1, this.width+2,
+this.height+2);
+this.y -= this.speed;
+if (this.isColliding) {
+return true;
+}
+else if (self === "bullet" && this.y <= 0 - this.height) {
+return true;
+}
+else if (self === "enemyBullet" && this.y >=
+this.canvasHeight) {
+return true;
+}
+else {
+if (self === "bullet") {
+this.context.drawImage(imageRepository.bullet,
+this.x, this.y);
+}
+else if (self === "enemyBullet") {
+this.context.drawImage(imageRepository.enemyBullet,
+this.x, this.y);
+}
+return false;
+}
+};
+this.clear = function() {
+this.x = 0;
+this.y = 0;
+this.speed = 0;
+this.alive = false;
+this.isColliding = false;
+};
+
+42. No caso do objecto “Ship” é preciso atribuir um valor ao atributo collidableWith e
+desenhar a nave e disparar se não está a colidir no método move().
+
+function Ship() {
+this.speed = 3;
+this.bulletPool = new Pool(30);
+this.bulletPool.init("bullet");
+var fireRate = 15;
+var counter = 0;
+this.collidableWith = "enemyBullet";
+
+…
+this.move = function() {
+counter++;
+if (KEY_STATUS.left || KEY_STATUS.right ||
+KEY_STATUS.down || KEY_STATUS.up) {
+this.context.clearRect(this.x, this.y, this.width,
+this.height);
+
+…
+if (!this.isColliding) {
+this.draw();
+}
+}
+if (KEY_STATUS.space && counter >= fireRate &&
+!this.isColliding) {
+this.fire();
+counter = 0;
+}
+};
+
+…
+43. Da mesma forma, alterações idênticas são necessárias na classe “Enemy”.
+function Enemy() {
+var percentFire = .01;
+var chance = 0;
+this.alive = false;
+this.collidableWith = "bullet";
+this.type = "enemy";
+
+…
+this.draw = function() {
+
+…
+
+};
+
+if (!this.isColliding) {
+this.context.drawImage(imageRepository.enemy, this.x, this.y);
+chance = Math.random();
+if (chance < percentFire) {
+this.fire();
+}
+return false;
+}
+else {
+return true;
+}
+
+…
+this.clear = function() {
+this.x = 0;
+this.y = 0;
+this.speed = 0;
+this.speedX = 0;
+this.speedY = 0;
+this.alive = false;
+this.isColliding = false;
+};
+}
+
+44. A função construtora Pool fica:
+function Pool(maxSize) {
+var size = maxSize; // Max bullets allowed in the pool
+var pool = [];
+this.getPool = function() {
+var obj = [];
+for (var i = 0; i < size; i++) {
+if (pool[i].alive) {
+obj.push(pool[i]);
+}
+}
+return obj;
+}
+this.init = function(object) {
+if (object == "bullet") {
+for (var i = 0; i < size; i++) {
+// Initalize the object
+var bullet = new Bullet("bullet");
+bullet.init(0,0,
+imageRepository.bullet.width,imageRepository.bullet.height);
+bullet.collidableWith = "enemy";
+bullet.type = "bullet";
+pool[i] = bullet;
+}
+}
+else if (object == "enemy") {
+for (var i = 0; i < size; i++) {
+var enemy = new Enemy();
+enemy.init(0,0,
+imageRepository.enemy.width,imageRepository.enemy.height);
+pool[i] = enemy;
+}
+}
+else if (object == "enemyBullet") {
+for (var i = 0; i < size; i++) {
+var bullet = new Bullet("enemyBullet");
+bullet.init(0,0,
+imageRepository.enemyBullet.width,imageRepository.enemyBullet.height);
+bullet.collidableWith = "ship";
+bullet.type = "enemyBullet";
+pool[i] = bullet;
+}
+}
+};
+
+}
+
+…
+
+45. Na classe Game apenas uma linha no final da função init():
+
+…
+this.quadTree = new
+QuadTree({x:0,y:0,width:this.mainCanvas.width,height:this.mainCanvas
+.height});
+return true;
+} else {
+return false;
+}
+};
+
+46. Actualize a função animate()
+
+function animate() {
+// Insert objects into quadtree
+game.quadTree.clear();
+game.quadTree.insert(game.ship);
+game.quadTree.insert(game.ship.bulletPool.getPool());
+game.quadTree.insert(game.enemyPool.getPool());
+game.quadTree.insert(game.enemyBulletPool.getPool());
+detectCollision();
+// Animate game objects
+requestAnimFrame( animate );
+game.background.draw();
+game.ship.move();
+game.ship.bulletPool.animate();
+game.enemyPool.animate();
+game.enemyBulletPool.animate();
+}
+
+Na função animate é feito o clear() ao quadTree e são inseridos os objectos no quadTree
+para serem calculadas as colisões.
+47. Copie o código da função global detectCollision()
+function detectCollision() {
+var objects = [];
+game.quadTree.getAllObjects(objects);
+for (var x = 0, len = objects.length; x < len; x++) {
+game.quadTree.findObjects(obj = [], objects[x]);
+for (y = 0, length = obj.length; y < length; y++) {
+if (objects[x].collidableWith === obj[y].type &&
+(objects[x].x < obj[y].x + obj[y].width && objects[x].x +
+objects[x].width > obj[y].x && objects[x].y < obj[y].y +
+obj[y].height && objects[x].y + objects[y].height > obj[y].y)) {
+objects[x].isColliding = true;
+obj[y].isColliding = true;
+}
+}
+}
+};
+
+48. Execute o código. Deverá obter algo parecido com a seguinte figura:
+
+Áudio, Score e Restart Game
+49. Vamos começar com o Score. Actualize a folha de estilo com o seguinte código:
+.score {
+position: absolute;
+top: 105px;
+left: 570px;
+color: #FF7F00;
+font-family: Helvetica, sans-serif;
+cursor: default;
+}
+
+50. No ficheiro html acrescente a definição da secção para o score:
+
+…
+<canvas id="ship" width="600" height="360">
+</canvas>
+<div class="score">SCORE: <span id="score"></span></div>
+<script src="js/space_invaders.js
+
+Execute o programa em modo DEBUG.
+
+"></script>
+
+51. Para concluir o score, vamos criar um novo atributo na função construtora Game no
+método init(), a seguir à declaração do atributo quadtree (this.playerScore=0;). Na
+função
+
+animate()
+
+vamos
+
+apresentar
+
+no
+
+ecrã
+
+(document.getElementById('score').innerHTML
+
+o
+
+valor
+=
+
+do
+
+novo
+
+atributo
+
+game.playerScore;).
+
+Finalmente, no método draw() do objecto Enemy acrescente a seguinte linha:
+this.draw = function() {
+...
+if (!this.isColliding) {
+this.context.drawImage(imageRepository.enemy, this.x,
+this.y);
+// Enemy has a chance to shoot every movement
+chance = Math.floor(Math.random()*101);
+if (chance/100 < percentFire) {
+this.fire();
+}
+return false;
+}
+else {
+game.playerScore += 10;
+return true;
+}
+};
+
+Execute o programa e comente o resultado.
+52. Para adicionar áudio ao jogo, vamos criar um pool de sons, de forma semelhante ao que
+fizemos para os objectos, “Enemy”, “Enemy_Bullet” e “Bullet”.
+
+Assim, não será
+
+necessário carregar os ficheiros de áudio cada vez que são necessários. Para ter sons
+sobrepostos (e.g., sons das balas da nave controlada pelo utilizador), cada som deverá
+estar associado a um elemento Áudio. Vamos ter sons para o disparar de cada bala e para
+a explosão de cada nave inimiga. Acrescente ao programa a seguinte classe:
+
+function SoundPool(maxSize) {
+var size = maxSize;
+var pool = [];
+this.pool = pool;
+var currSound = 0;
+this.init = function(object) {
+if (object == "laser") {
+for (var i = 0; i < size; i++) {
+laser = new Audio("sounds/laser.wav");
+laser.volume = .12;
+laser.load();
+pool[i] = laser;
+}
+}
+else if (object == "explosion") {
+for (var i = 0; i < size; i++) {
+var explosion = new
+Audio("sounds/explosion.wav");
+explosion.volume = .1;
+explosion.load();
+pool[i] = explosion;
+}
+}
+};
+this.get = function() {
+if(pool[currSound].currentTime == 0 ||
+pool[currSound].ended) {
+pool[currSound].play();
+}
+currSound = (currSound + 1) % size;
+};
+}
+
+53. Adicione os objectos relativos ao áudio no método init() da função construtora Game:
+function Game() {
+this.init = function() {
+
+…
+
+this.laser = new SoundPool(10);
+this.laser.init("laser");
+this.explosion = new SoundPool(20);
+this.explosion.init("explosion");
+this.backgroundAudio = new
+Audio("sounds/kick_shock.wav");
+this.backgroundAudio.loop = true;
+this.backgroundAudio.volume = .25;
+this.backgroundAudio.load();
+this.gameOverAudio = new
+Audio("sounds/game_over.wav");
+this.gameOverAudio.loop = true;
+this.gameOverAudio.volume = .25;
+this.gameOverAudio.load();
+this.checkAudio =
+window.setInterval(function(){checkReadyState()},1000);
+
+O código anterior deverá ser colocado no fim do método init() a seguir à variável
+playerScore. Para assegurar que os sons são carregados adequadamente é criado um
+intervalo de tempo com o evento setInterval.
+54. Adicione a função construtora:
+function checkReadyState() {
+if (game.gameOverAudio.readyState === 4 &&
+game.backgroundAudio.readyState === 4) {
+window.clearInterval(game.checkAudio);
+document.getElementById('loading').style.display =
+"none";
+game.start();
+}
+}
+
+O jogo só irá começar após os sons estarem todos carregados no programa. Assim, retire
+o game.start() da função global init(). A função init() da classe Game não necessita de
+retornar um boolean. Pode remover o return True; e return False;.
+55. Crie o elemento “loading” que aparece na função anterior:
+
+…
+<div class="score">SCORE: <span id="score"></span></div>
+<div class="loading" id="loading">LOADING...<p>Please
+wait</p></div>
+<script src="js/space_invaders.js"></script>
+
+56. Adicione também na folha de estilo:
+.loading {
+position: absolute;
+top: 100px;
+left: 210px;
+color: #FF7F00;
+font-family: Helvetica, sans-serif;
+font-size: 30px;
+cursor: default;
+}
+
+Execute o programa. Explique o que aconteceu antes do jogo estar pronto para começar
+a jogar. Justifique.
+57. Vamos agora produzir os sons. No método fire da classe “Ship” adicione a seguinte linha
+de código:
+
+this.fire = function() {
+this.bulletPool.getTwo(this.x+6, this.y, 3,
+this.x+33, this.y, 3);
+game.laser.get();
+};
+
+58. No método draw() do objecto “Enemy” acrescente também uma linha de código:
+
+…
+else {
+game.playerScore += 10;
+game.explosion.get();
+return true;
+}
+
+59. Para começar o som do background, adicione no método start() do objecto Game a linha de
+código this.backgroundAudio.play(); Execute o código e divirta-se com os sons.
+Procure na Web e experimente outros sons .
+60. Para aumentar o desafio, sempre que o utilizador elimina todos as naves inimigas, vamos
+criar mais. Actualize a função construtora Game com o seguinte código:
+function Game() {
+this.init = function() {
+...
+this.enemyPool = new Pool(30);
+this.enemyPool.init("enemy");
+this.spawnWave();
+...
+}
+this.spawnWave = function() {
+var height = imageRepository.enemy.height;
+var width = imageRepository.enemy.width;
+var x = 100;
+var y = -height;
+var spacer = y * 1.5;
+for (var i = 1; i <= 18; i++) {
+this.enemyPool.get(x,y,2);
+x += width + 25;
+if (i % 6 == 0) {
+x = 100;
+y += spacer
+}
+}
+}
+
+61. Na função global animate() é preciso verificar se já não existem inimigos para criar mais.
+Adicione as seguintes duas linhas código (antes da função detectCollision()):
+
+if (game.enemyPool.getPool().length === 0) {
+game.spawnWave();
+}
+
+62. Execute o código. Comente o resultado.
+63. Para terminar, faltam as funcionalidades de “Game Over”, quando o jogador morre, e o
+“Restart Game”. Em primeiro lugar, vamos criar uma secção em html e vamos actualizar
+a folha de estilo:
+
+…
+<div class="score">SCORE: <span id="score"></span></div>
+<div class="game-over" id="game-over">GAME OVER<p><span
+onclick="game.restart()">Restart</span></p></div>
+<div class="loading" id="loading">LOADING...<p>Please
+wait</p></div>
+<script src="js/space_invaders.js
+
+"></script>
+
+…
+.game-over {
+position: absolute;
+top: 100px;
+left: 210px;
+color: #FF7F00;
+font-family: Helvetica, sans-serif;
+font-size: 30px;
+cursor: default;
+display: none;
+}
+.game-over span {
+font-size: 20px;
+cursor: pointer;
+position: relative;
+left: 50px;
+}
+.game-over span:hover {
+color: #FFD700;
+}
+
+64. De seguida, adicione os dois métodos seguintes ao objecto Game:
+
+…
+this.restart = function() {
+this.gameOverAudio.pause();
+document.getElementById('game-over').style.display =
+"none";
+this.bgContext.clearRect(0, 0, this.bgCanvas.width,
+this.bgCanvas.height);
+this.shipContext.clearRect(0, 0,
+this.shipCanvas.width, this.shipCanvas.height);
+this.mainContext.clearRect(0, 0,
+this.mainCanvas.width, this.mainCanvas.height);
+this.quadTree.clear();
+this.background.init(0,0);
+this.ship.init(this.shipStartX, this.shipStartY,
+imageRepository.spaceship.width,
+imageRepository.spaceship.height);
+this.enemyPool.init("enemy");
+this.spawnWave();
+this.enemyBulletPool.init("enemyBullet");
+this.playerScore = 0;
+this.backgroundAudio.currentTime = 0;
+this.backgroundAudio.play();
+this.start();
+};
+this.gameOver = function() {
+this.backgroundAudio.pause();
+this.gameOverAudio.currentTime = 0;
+this.gameOverAudio.play();
+document.getElementById('game-over').style.display =
+"block";
+};
+
+Explique estes dois métodos.
+65. Falta verificar quando a nave do utilizador é atingida para fazer game.gameOver() e na
+função animate() verificar se o utilizador não foi atingindo:
+
+function Ship() {
+this.speed = 3;
+this.bulletPool = new Pool(30);
+this.bulletPool.init("bullet");
+var fireRate = 15;
+var counter = 0;
+this.collidableWith = "enemyBullet";
+this.type = "ship";
+this.init = function(x, y, width, height) {
+// Defualt variables
+this.x = x;
+this.y = y;
+this.width = width;
+this.height = height;
+this.alive = true;
+this.isColliding = false;
+this.bulletPool.init("bullet");
+}
+this.draw = function() {
+this.context.drawImage(imageRepository.spaceship, this.x,
+this.y);
+};
+this.move = function() {
+counter++;
+if (KEY_STATUS.left || KEY_STATUS.right ||
+KEY_STATUS.down || KEY_STATUS.up) {
+this.context.clearRect(this.x, this.y, this.width,
+this.height);
+if (KEY_STATUS.left) {
+this.x -= this.speed
+if (this.x <= 0) // Kep player within the screen
+this.x = 0;
+} else if (KEY_STATUS.right) {
+this.x += this.speed
+if (this.x >= this.canvasWidth - this.width)
+this.x = this.canvasWidth - this.width;
+} else if (KEY_STATUS.up) {
+this.y -= this.speed
+if (this.y <= this.canvasHeight/4*3)
+this.y = this.canvasHeight/4*3;
+} else if (KEY_STATUS.down) {
+this.y += this.speed
+if (this.y >= this.canvasHeight - this.height)
+this.y = this.canvasHeight - this.height;
+}
+if (!this.isColliding) {
+this.draw();
+}
+else {
+this.alive = false;
+game.gameOver();
+}
+}
+
+Na se esqueça de actualizar o método init() na função construtora Ship.
+function animate() {
+document.getElementById('score').innerHTML =
+game.playerScore;
+// Insert objects into quadtree
+game.quadTree.clear();
+game.quadTree.insert(game.ship);
+game.quadTree.insert(game.ship.bulletPool.getPool());
+game.quadTree.insert(game.enemyPool.getPool());
+game.quadTree.insert(game.enemyBulletPool.getPool());
+detectCollision();
+if (game.enemyPool.getPool().length === 0) {
+game.spawnWave();
+}
+if (game.ship.alive) {
+requestAnimFrame( animate );
+game.background.draw();
+game.ship.move();
+game.ship.bulletPool.animate();
+game.enemyPool.animate();
+game.enemyBulletPool.animate();
+}
+}
+
+Execute o código. Ajuste o “Game Over” e o “Restart Game” para o centro do jogo.
+66. Não se esqueça de incluir o diagrama de classes do jogo no relatório.
+
+
