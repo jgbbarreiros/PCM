@@ -9,7 +9,7 @@
 
 /*}*/
 
-/*body {*/
+body {
     /*background: #fff;*/
     /*font-family: 'Lato', sans-serif;*/
     /*margin: 0;*/
@@ -17,8 +17,8 @@
     /*padding: 10px;*/
     /*/!*min-height: 2000px;*!/*/
     /*position: relative;*/
-    /*background: url(../imgs/eight_horns.png);*/
-/*}*/
+    background: url(../imgs/eight_horns.png);
+}
 
 /*a {*/
     /*color: #337ab7;*/
