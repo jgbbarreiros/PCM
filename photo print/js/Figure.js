@@ -283,12 +283,12 @@ function Text(text, x, y, s, color, canvas) {
         ctx.font = a.toString()+"px Lato";
         this.w = ctx.measureText(this.text).width;
         ctx.fillStyle = this.color;
-        ctx.fillText(this.text,this.x,this.y+this.s *.8);
+        ctx.fillText(this.text,this.x-this.w/2,this.y-this.s *.4+this.s *.8);
         ctx.restore();
     };
 
     this.overcheck = function(mx, my) {
-        return ((mx>=this.x)&&(mx<=(this.x+this.w))&&(my>=this.y)&&(my<=(this.y+this.s)));
+        return ((mx>=this.x-this.w/2)&&(mx<=(this.x-this.w/2+this.w))&&(my>=this.y-this.s *.4)&&(my<=(this.y-this.s *.4+this.s)));
     };
 }
 Text.prototype = new Figure();
@@ -302,11 +302,11 @@ function Picture(src, w, h, x, y, s, color, canvas) {
 
     this.draw = function() {
         var ctx = this.canvas.getContext("2d");
-        ctx.drawImage(this.src, this.x, this.y, this.w * this.s *.001, this.h * this.s *.001);
+        ctx.drawImage(this.src, this.x-this.w* this.s *.001/2, this.y-this.h* this.s *.001/2, this.w * this.s *.001, this.h * this.s *.001);
     };
 
     this.overcheck = function(mx, my) {
-        return ((mx>=this.x)&&(mx<=(this.x+this.w* this.s *.001))&&(my>=this.y)&&(my<=(this.y+this.h* this.s *.001)));
+        return ((mx>=this.x-this.w* this.s *.001/2)&&(mx<=(this.x-this.w* this.s *.001/2+this.w* this.s *.001))&&(my>=this.y-this.h* this.s *.001/2)&&(my<=(this.y-this.h* this.s *.001/2+this.h* this.s *.001)));
     };
 }
 Picture.prototype = new Figure();

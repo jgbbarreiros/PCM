@@ -4,9 +4,8 @@ var scratch = new Canvas(document.getElementById('scratch'));
 
 var fp = new PhotoPrint(scratch);
 
-fpallet.style('black', 5);
 fpallet.setColor('white');
-
+fpallet.style('black', 5);
 
 var bear = new Bear(100, 90, 50, "#452200", fpallet.canvas);
 var cat = new Cat(100, 250, 50, "brown", fpallet.canvas);
@@ -18,15 +17,17 @@ fpallet.add(bear);
 fpallet.add(flowerDonger);
 fpallet.add(flower);
 
-var bear2 = new Bear(100, 100, 50, '#452200', scratch.canvas);
-
-scratch.add(bear2);
-
 scratch.canvas.addEventListener('mousedown', drag, false);
 scratch.canvas.addEventListener('dblclick', duplicate, false);
 scratch.canvas.addEventListener('mousewheel', size, false);
-
 fpallet.canvas.addEventListener('mousedown', select, false);
+
+function removeEvents() {
+    scratch.canvas.removeEventListener('mousedown', drag, false);
+    scratch.canvas.removeEventListener('mousedown', insert, false);
+    scratch.canvas.removeEventListener('mousedown', insertText, false);
+    scratch.canvas.removeEventListener('mousedown', insertImage, false);
+}
 
 function select(ev) {
     var mx;
@@ -43,7 +44,7 @@ function select(ev) {
         if (figures[i].overcheck(mx, my)) {
             fpallet.selected = fpallet.copy(figures[i]);
             scratch.canvas.style.cursor = "pointer";
-            scratch.canvas.removeEventListener('mousedown', drag, false);
+            removeEvents();
             scratch.canvas.addEventListener('mousedown', insert, false);
             break;
         }

@@ -26,9 +26,7 @@ function PhotoPrint(canvas) {
         this.myText = prompt('Please enter your text', 'text');
         if (this.myText != null) {
             this.canvas.canvas.style.cursor = "pointer";
-            this.canvas.canvas.removeEventListener('mousedown', insert, false);
-            this.canvas.canvas.removeEventListener('mousedown', drag, false);
-            this.canvas.canvas.removeEventListener('mousedown', insertImage, false);
+            removeEvents();
             this.canvas.canvas.addEventListener('mousedown', insertText, false);
         }
     };
@@ -47,9 +45,7 @@ function PhotoPrint(canvas) {
         this.myImage.src = fileURL;
         this.myImage.onload = function () {
             fp.canvas.canvas.style.cursor = "pointer";
-            fp.canvas.canvas.removeEventListener('mousedown', insert, false);
-            fp.canvas.canvas.removeEventListener('mousedown', drag, false);
-            fp.canvas.canvas.removeEventListener('mousedown', insertText, false);
+            removeEvents();
             fp.canvas.canvas.addEventListener('mousedown', insertImage, false);
         };
 
