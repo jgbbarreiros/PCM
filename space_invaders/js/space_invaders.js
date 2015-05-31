@@ -167,7 +167,7 @@ function Enemy() {
         }
     };
     this.fire = function() {
-        game.enemyBulletPool.get(this.x+this.width/2, this.y+this.height, -2.5);
+        game.enemyBulletPool.get(this.x+this.width/2, this.y+this.height, -1.5);
     };
     this.clear = function() {
         this.x = 0;
@@ -239,7 +239,7 @@ function Ship() {
     this.speed = 1;
     this.bulletPool = new Pool(30);
     this.bulletPool.init("bullet");
-    var fireRate = 15;
+    var fireRate = 85;
     var counter = 0;
     this.draw = function() {
         this.context.drawImage(imageRepository.spaceship, this.x, this.y);
@@ -274,8 +274,8 @@ function Ship() {
         }
     };
     this.fire = function() {
-        this.bulletPool.getTwo(this.x+6, this.y, 3,
-            this.x+33, this.y, 3);
+        this.bulletPool.get(this.x+6, this.y, 2);
+        //this.bulletPool.getTwo(this.x+6, this.y, 3, this.x+33, this.y, 3);
     };
 }
 Ship.prototype = new Drawable();
