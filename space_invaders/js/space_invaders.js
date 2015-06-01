@@ -75,7 +75,7 @@ function App_images() {
 
 function Drawable() {
     this.init = function(x, y, width, height) {
-    // Defualt variables
+        // Defualt variables
         this.x = x;
         this.y = y;
         this.width = width;
@@ -84,10 +84,16 @@ function Drawable() {
     this.speed = 0;
     this.canvasWidth = 0;
     this.canvasHeight = 0;
+    this.collidableWith = "";
+    this.isColliding = false;
+    this.type = "";
     // Define abstract function to be implemented in child objects
     this.draw = function() {
     };
     this.move = function() {
+    };
+    this.isCollidableWith = function(object) {
+        return (this.collidableWith === object.type);
     };
 }
 
@@ -101,9 +107,12 @@ function Bullet(object) {
         this.alive = true;
     };
     this.draw = function() {
-        this.context.clearRect(this.x-1, this.y-1, this.width+1, this.height+1);
+        this.context.clearRect(this.x-1, this.y-1, this.width+2, this.height+2);
         this.y -= this.speed;
-        if (self === "bullet" && this.y <= 0 - this.height) {
+        if (this.isColliding) {
+            return true;
+        }
+        else if (self === "bullet" && this.y <= 0 - this.height) {
             return true;
         }
         else if (self === "enemyBullet" && this.y >= this.canvasHeight) {
@@ -124,6 +133,7 @@ function Bullet(object) {
         this.y = 0;
         this.speed = 0;
         this.alive = false;
+        this.isColliding = false;
     };
 }
 Bullet.prototype = new Drawable();
@@ -133,6 +143,8 @@ function Enemy() {
     var chance = 0;
     this.alive = false;
     this.checkBottom = true;
+    this.collidableWith = "bullet";
+    this.type = "enemy";
     this.spawn = function(x, y, speed) {
         this.x = x;
         this.y = y;
@@ -162,8 +174,16 @@ function Enemy() {
         }
         this.context.drawImage(imageRepository.enemy, this.x, this.y);
         chance = Math.random();
-        if (chance < percentFire) {
-            this.fire();
+        if (!this.isColliding) {
+            this.context.drawImage(imageRepository.enemy, this.x, this.y);
+            chance = Math.random();
+            if (chance < percentFire) {
+                this.fire();
+            }
+            return false;
+        }
+        else {
+            return true;
         }
     };
     this.fire = function() {
@@ -176,6 +196,7 @@ function Enemy() {
         this.speedX = 0;
         this.speedY = 0;
         this.alive = false;
+        this.isColliding = false;
     };
 }
 Enemy.prototype = new Drawable();
@@ -183,26 +204,42 @@ Enemy.prototype = new Drawable();
 function Pool(maxSize) {
     var size = maxSize; // Max bullets allowed in the pool
     var pool = [];
+    this.getPool = function() {
+        var obj = [];
+        for (var i = 0; i < size; i++) {
+            if (pool[i].alive) {
+                obj.push(pool[i]);
+            }
+        }
+        return obj;
+    };
     this.init = function(object) {
         if (object == "bullet") {
             for (var i = 0; i < size; i++) {
                 // Initalize the object
                 var bullet = new Bullet("bullet");
-                bullet.init(0,0, imageRepository.bullet.width, imageRepository.bullet.height);
+                bullet.init(0,0,
+                    imageRepository.bullet.width,imageRepository.bullet.height);
+                bullet.collidableWith = "enemy";
+                bullet.type = "bullet";
                 pool[i] = bullet;
             }
         }
         else if (object == "enemy") {
             for (var i = 0; i < size; i++) {
                 var enemy = new Enemy();
-                enemy.init(0,0, imageRepository.enemy.width, imageRepository.enemy.height);
+                enemy.init(0,0,
+                    imageRepository.enemy.width,imageRepository.enemy.height);
                 pool[i] = enemy;
             }
         }
         else if (object == "enemyBullet") {
             for (var i = 0; i < size; i++) {
                 var bullet = new Bullet("enemyBullet");
-                bullet.init(0,0, imageRepository.enemyBullet.width, imageRepository.enemyBullet.height);
+                bullet.init(0,0,
+                    imageRepository.enemyBullet.width,imageRepository.enemyBullet.height);
+                bullet.collidableWith = "ship";
+                bullet.type = "enemyBullet";
                 pool[i] = bullet;
             }
         }
@@ -241,6 +278,7 @@ function Ship() {
     this.bulletPool.init("bullet");
     var fireRate = 85;
     var counter = 0;
+    this.collidableWith = "enemyBullet";
     this.draw = function() {
         this.context.drawImage(imageRepository.spaceship, this.x, this.y);
     };
@@ -266,9 +304,11 @@ function Ship() {
                 if (this.y >= this.canvasHeight - this.height)
                     this.y = this.canvasHeight - this.height;
             }
-            this.draw();
+            if (!this.isColliding) {
+                this.draw();
+            }
         }
-        if (KEY_STATUS.space && counter >= fireRate) {
+        if (KEY_STATUS.space && counter >= fireRate && !this.isColliding) {
             this.fire();
             counter = 0;
         }
@@ -343,6 +383,7 @@ function Game() {
             }
             this.enemyBulletPool = new Pool(50);
             this.enemyBulletPool.init("enemyBullet");
+            this.quadTree = new QuadTree({x:0,y:0,width:this.mainCanvas.width,height:this.mainCanvas.height});
             return true;
         } else {
             return false;
@@ -356,6 +397,14 @@ function Game() {
 
 // This function must be global
 function animate() {
+    // Insert objects into quadtree
+    game.quadTree.clear();
+    game.quadTree.insert(game.ship);
+    game.quadTree.insert(game.ship.bulletPool.getPool());
+    game.quadTree.insert(game.enemyPool.getPool());
+    game.quadTree.insert(game.enemyBulletPool.getPool());
+    detectCollision();
+    // Animate game objects
     requestAnimFrame( animate );
     game.background.draw();
     game.ship.move();
@@ -376,3 +425,165 @@ window.requestAnimFrame = (function(){
             window.setTimeout(callback, 1000 / 60);
         };
 })();
+
+function QuadTree(boundBox, lvl) {
+    var maxObjects = 10;
+    this.bounds = boundBox || {
+            x: 0,
+            y: 0,
+            width: 0,
+            height: 0
+        };
+    var objects = [];
+    this.nodes = [];
+    var level = lvl || 0;
+    var maxLevels = 5;
+    this.clear = function () {
+        objects = [];
+        for (var i = 0; i < this.nodes.length; i++) {
+            this.nodes[i].clear();
+        }
+        this.nodes = [];
+    };
+    this.getAllObjects = function (returnedObjects) {
+        for (var i = 0; i < this.nodes.length; i++) {
+            this.nodes[i].getAllObjects(returnedObjects);
+        }
+        for (var i = 0, len = objects.length; i < len; i++) {
+            returnedObjects.push(objects[i]);
+        }
+        return returnedObjects;
+    };
+
+    this.findObjects = function (returnedObjects, obj) {
+        if (typeof obj === "undefined") {
+            console.log("UNDEFINED OBJECT");
+            return;
+        }
+        var index = this.getIndex(obj);
+        if (index != -1 && this.nodes.length) {
+            this.nodes[index].findObjects(returnedObjects, obj);
+        }
+        for (var i = 0, len = objects.length; i < len; i++) {
+            returnedObjects.push(objects[i]);
+        }
+        return returnedObjects;
+    };
+
+    this.insert = function (obj) {
+        if (typeof obj === "undefined") {
+            return;
+        }
+        if (obj instanceof Array) {
+            for (var i = 0, len = obj.length; i < len; i++) {
+                this.insert(obj[i]);
+            }
+            return;
+        }
+        if (this.nodes.length) {
+            var index = this.getIndex(obj);
+            // Only add the object to a subnode if it can fit completely
+            // within one
+            if (index != -1) {
+                this.nodes[index].insert(obj);
+                return;
+            }
+        }
+        objects.push(obj);
+        if (objects.length > maxObjects && level < maxLevels) {
+            if (this.nodes[0] == null) {
+                this.split();
+            }
+            var i = 0;
+            while (i < objects.length) {
+                var index = this.getIndex(objects[i]);
+                if (index != -1) {
+                    this.nodes[index].insert((objects.splice(i, 1))[0]);
+                }
+                else {
+                    i++;
+                }
+            }
+        }
+    };
+
+    this.getIndex = function (obj) {
+        var index = -1;
+        var verticalMidpoint = this.bounds.x + this.bounds.width / 2;
+        var horizontalMidpoint = this.bounds.y + this.bounds.height / 2;
+        // Object can fit completely within the top quadrant
+        var topQuadrant = (obj.y < horizontalMidpoint && obj.y + obj.height <
+        horizontalMidpoint);
+        // Object can fit completely within the bottom quandrant
+        var bottomQuadrant = (obj.y > horizontalMidpoint);
+        // Object can fit completely within the left quadrants
+        if (obj.x < verticalMidpoint &&
+            obj.x + obj.width < verticalMidpoint) {
+            if (topQuadrant) {
+                index = 1;
+            }
+            else if (bottomQuadrant) {
+                index = 2;
+            }
+        }
+        // Object can fix completely within the right quandrants
+        else if (obj.x > verticalMidpoint) {
+            if (topQuadrant) {
+                index = 0;
+            }
+            else if (bottomQuadrant) {
+                index = 3;
+            }
+        }
+        return index;
+    };
+
+    this.split = function () {
+        // Bitwise or [html5rocks]
+        var subWidth = (this.bounds.width / 2) | 0;
+        var subHeight = (this.bounds.height / 2) | 0;
+
+        this.nodes[0] = new QuadTree({
+            x: this.bounds.x + subWidth,
+            y: this.bounds.y,
+            width: subWidth,
+            height: subHeight
+        }, level + 1);
+        this.nodes[1] = new QuadTree({
+            x: this.bounds.x,
+            y: this.bounds.y,
+            width: subWidth,
+            height: subHeight
+        }, level + 1);
+        this.nodes[2] = new QuadTree({
+            x: this.bounds.x,
+            y: this.bounds.y + subHeight,
+            width: subWidth,
+            height: subHeight
+        }, level + 1);
+        this.nodes[3] = new QuadTree({
+            x: this.bounds.x + subWidth,
+            y: this.bounds.y + subHeight,
+            width: subWidth,
+            height: subHeight
+        }, level + 1);
+
+    };
+}
+
+function detectCollision() {
+    var objects = [];
+    game.quadTree.getAllObjects(objects);
+    for (var x = 0, len = objects.length; x < len; x++) {
+        game.quadTree.findObjects(obj = [], objects[x]);
+        for (y = 0, length = obj.length; y < length; y++) {
+            if (objects[x].collidableWith === obj[y].type &&
+                (objects[x].x < obj[y].x + obj[y].width && objects[x].x +
+                objects[x].width > obj[y].x && objects[x].y < obj[y].y +
+                obj[y].height && objects[x].y + objects[y].height > obj[y].y)) {
+                objects[x].isColliding = true;
+                obj[y].isColliding = true;
+            }
+        }
+    }
+};
