@@ -1,10 +1,5 @@
 <images>
-    <image class="beach">
-        <path>Images/beach/img_1.jpg</path>
-        <dominantcolor>#A04000</dominantcolor>
-    </image>
-    <image class="beach">
-        <path>Images/beach/img_2.jpg</path>
-        <dominantcolor>#A0A080</dominantcolor>
+    <image color="yellow">
+        <path>"imgs/beach/img_1"</path>
     </image>
 </images>
