@@ -11,7 +11,7 @@ function main() {
 function Image_Processing_Color(canvas) {
     this.canvas = canvas;
     this.ctx = this.canvas.getContext("2d");
-    this.num_pixel_Color = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    this.hist = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     this.red = new Color(204, 0, 0);
     this.orange = new Color(251, 148, 11);
     this.yellow = new Color(255, 255, 0);
@@ -54,12 +54,12 @@ function Image_Processing_Color(canvas) {
 
     this.build_Color_Rect = function() {
 
-        for (var i = 0; i < this.num_pixel_Color.length; i++) {
+        for (var i = 0; i < this.hist.length; i++) {
             var ctx = this.canvas.getContext("2d");
             ctx.save();
             ctx.fillStyle = "black";
             ctx.font = "25px Arial";
-            ctx.fillText(this.num_pixel_Color[i].toString(),i*75,295);
+            ctx.fillText(this.hist[i].toString(),i*75,295);
             var c = this.colors[i];
             ctx.fillStyle = 'rgb(' + c.r.toString() + ',' + c.g.toString() + ',' + c.b.toString() + ')';
             ctx.fillRect(i*75, 300, 50, 50);
@@ -82,7 +82,7 @@ function Image_Processing_Color(canvas) {
                     (c.g-me < g < c.g+me) &&
                     (c.b-me < b < c.b+me) &&
                     ((Math.abs(c.r-r) + Math.abs(c.g-g) + Math.abs(c.b-b)) < me)) {
-                    this.num_pixel_Color[j] += 1;
+                    this.hist[j] += 1;
                     break;
                 }
 

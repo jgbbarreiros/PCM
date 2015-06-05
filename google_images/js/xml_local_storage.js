@@ -1,3 +1,6 @@
+var keywords = ["beach", "birthday", "face", "indoor", "manmade", "marrige",
+                 "nature", "no_people", "outdoor", "party", "people", "snow"];
+
 function XMLData(file) {
     this.filename = file;
 
@@ -11,21 +14,39 @@ function XMLData(file) {
     };
 
     this.readXMLImages = function(num_images) {
-        var images = [];
-        var loaded_images = 1;
-        var xml_images = this.loadXML().getElementsByTagName("image");
-        for (var i = 0; i < num_images; i++) {
-            var img = new Image();
-            img.onload = function () {
-                loaded_images += 1;
-                images.push(img);
-                if (num_images = loaded_images)
-                    ImagesLoaded(images);
-            };
-            img.src = (xml_images[i].getElementsByTagName("path")[0].childNodes[0].nodeValue).toString();
+        var images_info = [];
+        var xml = this.loadXML();
+
+        for (var i = 0; i < keywords.length; i ++) {
+            var images_class = xml.getElementsByClassName(keywords[i]);
+            document.write("<h1>" + keywords[i] + ":</h1>");
+            for (var j = 0; j < num_images; j++) {
+                var img = new Image();
+                var path = images_class[j].getElementsByTagName("path")[0].childNodes[0].nodeValue;
+                img.src = path;
+                var keyword = images_class[j].getAttribute("class").value;
+                images_info.push(new ImageInfo(img, path, keyword));
+                document.write("<p>" + (j+1) + "->" + path + "</p>");
+            }
         }
+        return images_info;
     };
 }
+
+function ImageInfo(img, path, keyword) {
+    this.img = img;
+    this.path = path;
+    this.keyword = keyword;
+    this.hist = undefined;
+}
+
+//var loaded_images = 0;
+//img.onload = function () {
+//    loaded_images += 1;
+//    images_arr.push(new ImageInfo(img, path));
+//    if (num_images == loaded_images)
+//        ImagesLoaded(images_arr);
+//};
 
 function LocalStorageXML(xml_d) {
     this.xml_d= xml_d;

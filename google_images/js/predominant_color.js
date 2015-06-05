@@ -1,15 +1,15 @@
-red    = new Color(204,   0,   0,    "red");
-orange = new Color(251, 148,  11, "orange");
-yellow = new Color(255, 255,   0, "yellow");
-green  = new Color(  0, 204,   0,  "green");
-teal   = new Color(  3, 192, 198,   "teal");
-blue   = new Color(  0,   0, 255,   "blue");
-purple = new Color(118,  44, 167, "purple");
-pink   = new Color(255, 152, 191,   "pink");
-white  = new Color(255, 255, 255,  "white");
-gray   = new Color(153, 153, 153,   "gray");
-black  = new Color(  0,   0,   0,  "black");
-brown  = new Color(136,  84,  24,  "brown");
+var red    = new Color(204,   0,   0,    "red");
+var orange = new Color(251, 148,  11, "orange");
+var yellow = new Color(255, 255,   0, "yellow");
+var green  = new Color(  0, 204,   0,  "green");
+var teal   = new Color(  3, 192, 198,   "teal");
+var blue   = new Color(  0,   0, 255,   "blue");
+var purple = new Color(118,  44, 167, "purple");
+var pink   = new Color(255, 152, 191,   "pink");
+var white  = new Color(255, 255, 255,  "white");
+var gray   = new Color(153, 153, 153,   "gray");
+var black  = new Color(  0,   0,   0,  "black");
+var brown  = new Color(136,  84,  24,  "brown");
 
 
 function Color(r, g, b, name) {
@@ -23,10 +23,10 @@ function Color(r, g, b, name) {
 function ImageProcessingColor(canvas) {
     this.canvas = canvas;
     this.ctx = this.canvas.getContext("2d");
-    this.num_pixel_Color = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    this.hist = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     this.colors = [red, orange, yellow, green, teal, blue, purple, pink, white, gray, black, brown];
 
-    this.perdominateColor = function(img){
+    this.colorHist = function(img){
         this.ctx.drawImage(img, 0, 0, img.width*.5, img.height*.5);
         var pixels = this.ctx.getImageData(0, 0, img.width, img.height);
         var me = 130;
@@ -40,22 +40,23 @@ function ImageProcessingColor(canvas) {
                     (c.g-me < g < c.g+me) &&
                     (c.b-me < b < c.b+me) &&
                     ((Math.abs(c.r-r) + Math.abs(c.g-g) + Math.abs(c.b-b)) < me)) {
-                    this.num_pixel_Color[j] += 1;
+                    this.hist[j] += 1;
                     break;
                 }
             }
         }
-        this.build_Color_Rect();
-        return this.colors[this.num_pixel_Color.indexOf(Math.max.apply(Math, this.num_pixel_Color))]
+        //this.build_Color_Rect();
+        //this.colors[this.hist.indexOf(Math.max.apply(Math, this.hist))]
+        return this.hist;
     };
 
     this.build_Color_Rect = function() {
-        for (var i = 0; i < this.num_pixel_Color.length; i++) {
+        for (var i = 0; i < this.hist.length; i++) {
             var h = 500;
             this.ctx.save();
             this.ctx.fillStyle = "black";
             this.ctx.font = "15px Arial";
-            this.ctx.fillText(this.num_pixel_Color[i].toString(),i*75, h-5);
+            this.ctx.fillText(this.hist[i].toString(),i*75, h-5);
             this.ctx.fillStyle = this.colors[i].color;
             this.ctx.fillRect(i*75, h, 50, 50);
             this.ctx.restore();
