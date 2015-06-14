@@ -1,5 +1,5 @@
-var keywords = ["beach", "birthday", "face", "indoor", "manmade", "marrige",
-                 "nature", "no_people", "outdoor", "party", "people", "snow"];
+var keywords = ["beach", "birthday", "face", "indoor", "manmade/artificial", "manmade/manmade",
+                "manmade/urban", "marriage", "nature", "no_people", "outdoor", "party", "people", "snow"];
 
 function XMLData(file) {
     this.filename = file;
@@ -13,23 +13,30 @@ function XMLData(file) {
         return xmlhttp.responseXML;
     };
 
-    this.readXMLImages = function(num_images) {
-        var images_info = [];
+    this.readXMLImages = function(num_imgs) {
+        var imgs_all = [];
         var xml = this.loadXML();
 
         for (var i = 0; i < keywords.length; i ++) {
-            var images_class = xml.getElementsByClassName(keywords[i]);
-            document.write("<h1>" + keywords[i] + ":</h1>");
-            for (var j = 0; j < num_images; j++) {
+            var imgs_class = xml.getElementsByClassName(keywords[i]);
+            var imgs_by_keyword = [];
+            //document.write("<h1>" + keywords[i] + ":</h1>");
+            for (var j = 0; j < num_imgs; j++) {
                 var img = new Image();
-                var path = images_class[j].getElementsByTagName("path")[0].childNodes[0].nodeValue;
+                var path = imgs_class[j].getElementsByTagName("path")[0].childNodes[0].nodeValue;
+                //imgs_by_keyword[j].img.onload = function() {
+                //    imgs_loaded += 1;
+                //    if (imgs_loaded == imgs_to_load) {
+                //        allImgsLoaded();
+                //    }
+                //};
                 img.src = path;
-                var keyword = images_class[j].getAttribute("class").value;
-                images_info.push(new ImageInfo(img, path, keyword));
-                document.write("<p>" + (j+1) + "->" + path + "</p>");
+                imgs_by_keyword.push(new ImageInfo(img, path, keywords[i]));
+                //document.write("<p>" + (j+1) + "->" + path + "</p>");
             }
+            imgs_all.push(imgs_by_keyword);
         }
-        return images_info;
+        return imgs_all;
     };
 }
 
@@ -48,53 +55,62 @@ function ImageInfo(img, path, keyword) {
 //        ImagesLoaded(images_arr);
 //};
 
-function LocalStorageXML(xml_d) {
-    this.xml_d= xml_d;
-    this.cores = ["Azul", "Amarelo", "Vermelho", "Verde"];
-    this.localStorageName = "birthday";
+function LocalStorageXML() {
+    //this.xml_d= xml_d;
+    //this.cores = ["Azul", "Amarelo", "Vermelho", "Verde"];
+    //this.localStorageName = "birthday";
 
-    this.saveXMLLS = function () {
-        var xmlRowString = "<images>";
-
-        var xmlDoc = this.xml_d.loadXML();
-        var x = xmlDoc.getElementsByTagName("image");
-        index = 0;
-        for (var i = 0; i < this.cores.length; i++) {
-            for (var j = 0; j < 4; j++) {
-                var path = x[index].getElementsByTagName("path")[0].childNodes[0].nodeValue;
-                index++;
-                xmlRowString += '<image class="' + this.cores[i] + '"><path>' + path + '</path> </image>';
+    this.saveXMLLS = function (imgs_all){
+        for (var i = 0; i < imgs_all.length; i ++) {
+            var xmlRowString = '<images>';
+            for (var j = 0; j < colors.length; j++) {
+                xmlRowString += '<image class="' + colors[j].name + '">';
+                //this.sortByColor(imgs_all[i], j);
+                imgs_all[i].sort(
+                    function (a, b) {
+                        var keyA = a.hist[j];
+                        var keyB = b.hist[j];
+                        if (keyA < keyB) return 1;
+                        if (keyA > keyB) return -1;
+                        return 0;
+                    }
+                );
+                for (var k = 0; k < imgs_all[i].length; k++) {
+                    xmlRowString += '<path>"' + imgs_all[i][k].path + '"</path>';
+                }
+                xmlRowString += '</image>';
             }
-        }
-        xmlRowString += "</images>";
-
-        // Grava a string "xmlRowString" para o armazenamento local
-        if (typeof(localStorage) == 'undefined')
-            alert('Your browser does not support HTML5 localStorage. Try upgrading.');
-        else {
-            try {
-                localStorage.setItem(this.localStorageName, xmlRowString);
-            }
-            catch (e) {
-                alert("save failed!");
-                if (e == QUOTA_EXCEEDED_ERR)
-                    alert('Quota exceeded!');
+            xmlRowString += '</images>';
+            if (typeof(localStorage) == 'undefined')
+                alert('Your browser does not support HTML5 localStorage. Try upgrading.');
+            else {
+                try {
+                    localStorage.setItem(keywords[i], xmlRowString);
+                }
+                catch (e) {
+                    alert("save failed!");
+                    if (e == QUOTA_EXCEEDED_ERR)
+                        alert('Quota exceeded!');
+                }
             }
         }
     };
 
     this.readXMLLS = function () {
-        var localStorageRow = localStorage.getItem(this.localStorageName);
+        for (var i = 0; i < keywords.length; i ++) {
+            document.write("<h1>" + keywords[i] + "</h1>");
+            var localStorageRow = localStorage.getItem(keywords[i]);
 
-        if (window.DOMParser) {
-            var parser = new DOMParser();
-            var xmlDoc = parser.parseFromString(localStorageRow, "text/xml");
-        }
-        var x = xmlDoc.getElementsByTagName("image");
-
-        for (i = 0; i < x.length; i++) {
-            if (x[i].attributes["class"].value == "Azul") {
-                document.write("<p>" + x[i].getElementsByTagName("path")[0].childNodes[0].nodeValue + "</p>");
+            if (window.DOMParser) {
+                var parser = new DOMParser();
+                var xmlDoc = parser.parseFromString(localStorageRow, "text/xml");
+            }
+            for (var j = 0; j < colors.length; j++) {
+                var imgs_color = xmlDoc.getElementsByClassName(colors[j].name)[0];
+                document.write("<h2>" + colors[j].name + "</h2>");
+                for (var k = 0; k < imgs_color.childNodes.length; k++) {
+                    document.write("<p>" + imgs_color.childNodes[k].childNodes[0].nodeValue + "</p>");
+                }
             }
         }
 
